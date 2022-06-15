@@ -3,7 +3,7 @@
 ## Tier 1: MVP Shopping Experience
 
 ### As a customer/visitor, I want to be able to:
-- access a deployed version of the website so I can browse and purchase products.
+- [x] access a deployed version of the website so I can browse and purchase products.
 - view all available products so I can pick from a variety.
 - view a single product so I can see more details.
 - add a product to my cart so I can collect my desired products in one place.
