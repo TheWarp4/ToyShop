@@ -72,3 +72,6 @@ Database Setup
       collaborator on the app.
 
 Now, you should be deployed!
+
+new branches created using following command: git checkout -b “name-of-branch” (-b creates new branch)
+
