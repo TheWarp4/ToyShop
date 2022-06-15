@@ -19,13 +19,11 @@ async function seed() {
       username: "cody",
       password: "123",
       email: "cody123@gmail.com",
-      type: 'admin'
     }),
     User.create({
       username: "murphy",
       password: "123",
       email: "murphy123@gmail.com",
-      type: 'customer'
     }),
     Product.create({
       price: 49.99,

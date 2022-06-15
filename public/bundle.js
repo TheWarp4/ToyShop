@@ -2139,8 +2139,13 @@ class Routes extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       path: "/signup",
       component: _components_AuthForm__WEBPACK_IMPORTED_MODULE_2__.Signup
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
+<<<<<<< HEAD
       path: "/products/:id",
       exact: true,
+=======
+      exact: true,
+      path: "/products/:id",
+>>>>>>> e208c4605846224a7d1cc2eefe40e701be787775
       component: _components_SingleProduct__WEBPACK_IMPORTED_MODULE_6__["default"]
     })));
   }
