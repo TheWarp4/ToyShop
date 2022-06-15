@@ -19,3 +19,8 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.single-product {
+  align-items: center;
+  padding-left: 40%;
+}

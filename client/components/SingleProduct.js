@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Navbar from './Navbar'
 import axios from 'axios'
 
 
@@ -11,7 +10,6 @@ function SingleProduct(props) {
   const fetchProduct = async (id) => {
     try {
       const {data} = await axios.get(`/api/products/${id}`)
-      console.log(data.singleProduct)
       setProduct(data.singleProduct)
     }
     catch (error) {
@@ -26,12 +24,12 @@ function SingleProduct(props) {
   }, [])
 
   return (
-    <div>
-      <img src = {product.image}/>
-      <div>{product.productName}</div>
-      <div>{product.description}</div>
-      <div>{product.category}</div>
-      <div>{product.price}</div>
+    <div className = 'single-product'>
+      <img src = {product.image} />
+      <div>Name: {product.productName}</div>
+      <div>Description: {product.description}</div>
+      <div>Category: {product.category}</div>
+      <div>Price: {product.price}</div>
     </div>
   )
 }
