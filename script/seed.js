@@ -18,7 +18,7 @@ async function seed() {
     Product.create({price: 19.99, description: 'Barbie Dreamtopia', category: 'BARBIE', image: 'https://albaniandubs.weebly.com/uploads/5/7/8/2/57825701/barbi-e-liqenit-te-mjellmave-2003-albanian-dubs_1.jpg', productName: 'Barbie - Liqenit te Mjellmave'}),
     Product.create({price: 74.99, description: 'Jurassic TREX Colossal Figure for Ages 12+', category: 'JURASSIC', image: 'https://i5.walmartimages.com/asr/b9ee23c9-d147-4853-98c7-81d539f4eb28.3aabe75528efac54c112ee83edfd1be2.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF', productName: 'Jurassic World - TREX FIGURE'}),
     Product.create({price: 22.99, description: 'Optimus Prime Figure for Ages 8+', category: 'TRANSFORMERS', image: 'https://m.media-amazon.com/images/I/81NZSeXQHDL._AC_SX522_.jpg', productName: 'Transformers - Optimus Prime Figure'}),
-    Product.create({price: 14.99, description: 'Soft Stuffed Animal', category: 'STUFFED ANIMAL', image:'https://images-na.ssl-images-amazon.com/images/I/51Tahu98IiL.__AC_SY300_SX300_QL70_FMwebp_.jpg', productName: 'Squishmallow'}),
+    Product.create({price: 14.99, description: 'Soft Stuffed Animal', category: 'STUFFED ANIMALS', image:'https://images-na.ssl-images-amazon.com/images/I/51Tahu98IiL.__AC_SY300_SX300_QL70_FMwebp_.jpg', productName: 'Squishmallow'}),
 
   ])
 
