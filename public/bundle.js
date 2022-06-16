@@ -2240,9 +2240,9 @@ const AllProducts = () => {
   const handleATC = async id => {
     try {
       console.log('ADDED TO CART!', id);
-      const res = await axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/shoppingcarts', {
-        user: 1,
-        itemQuantity: 1,
+      const res = await axios__WEBPACK_IMPORTED_MODULE_1___default().put('/api/users/:userid/shoppingCart', {
+        user: 4,
+        itemQuantity: +1,
         productId: id
       });
       console.log(res);
@@ -2305,6 +2305,9 @@ const AuthForm = props => {
     handleSubmit,
     error
   } = props;
+  console.log({
+    displayName
+  });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleSubmit,
     name: name
@@ -2413,6 +2416,10 @@ const Home = props => {
   const {
     username
   } = props;
+  const {
+    id
+  } = props;
+  console.log(props.id);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Welcome, ", username));
 };
 /**
@@ -2421,7 +2428,8 @@ const Home = props => {
 
 const mapState = state => {
   return {
-    username: state.auth.username
+    username: state.auth.username,
+    id: state.auth.id
   };
 };
 

@@ -6,7 +6,7 @@ const ShoppingCart = db.define("shoppingCart", {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      min: 1,
+      min: 0,
     }
   }
 });
