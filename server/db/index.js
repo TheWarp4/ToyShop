@@ -9,14 +9,14 @@ const CartSession = require('./models/CartSession')
 
 
 // ASSOCIATIONS:
-// User.hasOne(ShoppingCart)
-// ShoppingCart.belongsTo(User)
+User.hasOne(ShoppingCart)
+ShoppingCart.belongsTo(User)
 
-// Product.hasMany(ShoppingCart)
-// ShoppingCart.hasMany(Product)
+Product.hasMany(ShoppingCart)
+ShoppingCart.belongsTo(Product)
 
-// CartSession.belongsTo(ShoppingCart)
-// ShoppingCart.hasOne(CartSession)
+CartSession.belongsTo(ShoppingCart)
+ShoppingCart.hasOne(CartSession)
 
 
 module.exports = {
