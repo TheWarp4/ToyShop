@@ -34,9 +34,9 @@ form div {
 .account-button {
   cursor: pointer;
   padding-left: 600px;
-
 }
-.cart-button, .product-info {
+.cart-button,
+.product-info {
   cursor: pointer;
 }
 
@@ -61,4 +61,8 @@ form div {
 .product-info {
   width: 200px;
   height: 260px;
+}
+
+.login-button {
+  width: 30px;
 }
