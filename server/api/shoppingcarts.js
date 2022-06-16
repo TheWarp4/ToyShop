@@ -13,11 +13,25 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
-    const shoppingcarts = await ShoppingCart.findAll();
-    res.json(shoppingcarts);
+    const shoppingcart = await ShoppingCart.findOne({
+      where: { userId: req.params.userId },
+    });
+    res.json(shoppingcart);
   } catch (err) {
     next(err);
+  }
+});
+
+router.put("/:userId", async (req, res, next) => {
+  try {
+    const shoppingcart = await ShoppingCart.findOne({
+      where: { userId: req.params.userId },
+    });
+    await shoppingcart.update(req.body);
+    res.json(shoppingcart);
+  } catch (error) {
+    next(error);
   }
 });
