@@ -21,9 +21,9 @@ const AllProducts = () => {
   const handleATC = async (id) => {
     try {
     console.log('ADDED TO CART!', id)
-    const res = await axios.post('/api/shoppingcarts', {
-      user: 1,
-      itemQuantity: 1,
+    const res = await axios.put('/api/users/:userid/shoppingCart', {
+      user: 4,
+      itemQuantity: +1,
       productId: id,
     })
     console.log(res)

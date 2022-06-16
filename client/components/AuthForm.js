@@ -7,7 +7,7 @@ import {authenticate} from '../store'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
+  console.log({displayName})
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -63,6 +63,7 @@ const mapDispatch = dispatch => {
       const username = evt.target.username.value
       const password = evt.target.password.value
       dispatch(authenticate(username, password, formName))
+
     }
   }
 }
