@@ -24,3 +24,41 @@ form div {
   align-items: center;
   padding-left: 40%;
 }
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.account-button {
+  cursor: pointer;
+  padding-left: 600px;
+
+}
+.cart-button, .product-info {
+  cursor: pointer;
+}
+
+.cart-title {
+  text-align: center;
+  margin-top: 50px;
+  font-family: Georgia, sans-serif;
+}
+
+.products-photo {
+  width: 200px;
+  height: 200px;
+}
+
+.allProducts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.product-info {
+  width: 200px;
+  height: 260px;
+}
