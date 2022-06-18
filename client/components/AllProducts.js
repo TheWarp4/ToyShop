@@ -21,11 +21,13 @@ const AllProducts = (props) => {
 
   const handleAddToCart = async (userId, productId) => {
     try {
-      console.log(userId, "userId");
-      await axios.put(`/api/shoppingcarts/${userId}`, {
-        productId,
-        userId,
-      });
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
+      const createShoppingCart = await axios.post('/api/shoppingcarts', {
+        orderSessionId: getOrderSessionId.data.id,
+        productId: productId,
+        itemQuantity: 1,
+      })
+      console.log(createShoppingCart)
     } catch (error) {
       console.log(error);
     }

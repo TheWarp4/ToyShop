@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const ShoppingCart = db.define("shoppingCart", {
+const ShoppingCart = db.define("ShoppingCart", {
   itemQuantity: {
     type: Sequelize.INTEGER,
     allowNull: false,

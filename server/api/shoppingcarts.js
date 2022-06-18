@@ -13,16 +13,25 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.post("/", async (req, res, next) => {
+  try {
+    res.status(201).send(await ShoppingCart.create(req.body))
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:userId", async (req, res, next) => {
   try {
     const shoppingcart = await ShoppingCart.findOne({
-      where: { userId: req.params.userId },
+      where: { orderSessionId: req.params.userId },
     });
     res.json(shoppingcart);
   } catch (err) {
     next(err);
   }
 });
+
 
 router.put("/:userId", async (req, res, next) => {
   try {
@@ -35,3 +44,5 @@ router.put("/:userId", async (req, res, next) => {
     next(error);
   }
 });
+
+
