@@ -2200,6 +2200,105 @@ const mapDispatch = dispatch => {
 
 /***/ }),
 
+/***/ "./client/components/AddProduct.js":
+/*!*****************************************!*\
+  !*** ./client/components/AddProduct.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+
+const AddProduct = () => {
+  const [product, setProduct] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    productName: "",
+    price: 0,
+    category: "",
+    image: "",
+    description: ""
+  });
+
+  const handleSubmit = async function (event) {
+    try {
+      event.preventDefault();
+      const {
+        data
+      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/products", product);
+      setProduct({
+        productName: "",
+        price: 0,
+        category: "",
+        image: "",
+        description: ""
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChange = event => {
+    setProduct({ ...product,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    id: "product-form",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "productName"
+  }, "Product Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "productName",
+    onChange: handleChange,
+    value: product.productName
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "price"
+  }, "Price:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "price",
+    onChange: handleChange,
+    value: product.price
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "category"
+  }, "Category:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+    name: "category",
+    onChange: handleChange,
+    value: product.category
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "LEGOS"
+  }, "LEGOS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "TRANSFORMERS"
+  }, "TRANSFORMERS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "JURASSIC"
+  }, "JURASSIC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "image",
+    onChange: handleChange,
+    value: product.image
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "description"
+  }, "Description:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "description",
+    onChange: handleChange,
+    value: product.description
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "submit"
+  }, "Submit"));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddProduct);
+
+/***/ }),
+
 /***/ "./client/components/AllProducts.js":
 /*!******************************************!*\
   !*** ./client/components/AllProducts.js ***!
@@ -2399,6 +2498,106 @@ function Cart() {
 
 /***/ }),
 
+/***/ "./client/components/EditProduct.js":
+/*!******************************************!*\
+  !*** ./client/components/EditProduct.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+
+const EditProduct = props => {
+  const [product, setProduct] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    productName: "",
+    price: 0,
+    category: "",
+    image: "",
+    description: ""
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {});
+
+  const handleSubmit = async function (event) {
+    try {
+      event.preventDefault();
+      const {
+        data
+      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().put("/api/products", product);
+      setProduct({
+        productName: "",
+        price: 0,
+        category: "",
+        image: "",
+        description: ""
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChange = event => {
+    setProduct({ ...product,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    id: "product-form",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "productName"
+  }, "Product Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "productName",
+    onChange: handleChange,
+    value: product.productName
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "price"
+  }, "Price:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "price",
+    onChange: handleChange,
+    value: product.price
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "category"
+  }, "Category:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+    name: "category",
+    onChange: handleChange,
+    value: product.category
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "LEGOS"
+  }, "LEGOS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "TRANSFORMERS"
+  }, "TRANSFORMERS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "JURASSIC"
+  }, "JURASSIC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "image",
+    onChange: handleChange,
+    value: product.image
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "description"
+  }, "Description:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "description",
+    onChange: handleChange,
+    value: product.description
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "submit"
+  }, "Submit"));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditProduct);
+
+/***/ }),
+
 /***/ "./client/components/Home.js":
 /*!***********************************!*\
   !*** ./client/components/Home.js ***!
@@ -2413,6 +2612,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _AddProduct__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddProduct */ "./client/components/AddProduct.js");
+
 
 
 /**
@@ -2427,7 +2628,7 @@ const Home = props => {
     id
   } = props;
   console.log(props.id);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Welcome, ", username));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Welcome, ", username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_AddProduct__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 };
 /**
  * CONTAINER
@@ -2537,6 +2738,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _EditProduct__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditProduct */ "./client/components/EditProduct.js");
+
 
 
 
@@ -2559,6 +2762,7 @@ function SingleProduct(props) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchProduct(props.match.params.id);
   }, []);
+  console.log("THIS IS PRODUCT", product);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "single-product"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {

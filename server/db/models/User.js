@@ -21,10 +21,10 @@ const User = db.define("user", {
     allowNull: true,
     validate: { isEmail: true },
   },
-  // type: {
-  //   type: Sequelize.ENUM(['admin', 'customer']),
-  //   defaultValue: 'customer',
-  // },
+  type: {
+    type: Sequelize.ENUM(["admin", "customer"]),
+    defaultValue: "customer",
+  },
 });
 
 module.exports = User;
@@ -69,6 +69,17 @@ User.findByToken = async function (token) {
   }
 };
 
+User.isAdmin = async function (token) {
+  try {
+    const { id } = await jwt.verify(token, process.env.JWT);
+    const user = await User.findByPk(id);
+    return user.type === "admin";
+  } catch (ex) {
+    const error = Error("is not admin");
+    error.status = 401;
+    throw error;
+  }
+};
 /**
  * hooks
  */
