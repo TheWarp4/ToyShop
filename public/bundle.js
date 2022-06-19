@@ -2396,26 +2396,48 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
 const Cart = props => {
-  const [shoppingCart, setShoppingCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]); // const fetchShoppingCart = async (userId) => {
-  //   try {
-  //     const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-  //     console.log(getOrderSessionId)
-  //     const fetchShoppingCart = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
-  //     console.log(fetchShoppingCart)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const [shoppingCart, setShoppingCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)( // fetchShoppingCart(props.userId),
-  []);
+  const fetchShoppingCart = async userId => {
+    try {
+      const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
+      const {
+        data
+      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/shoppingcarts/${getOrderSessionId.data.id}`);
+      data.map(async prodData => {
+        const productInfo = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/products/${prodData.productId}`);
+        setShoppingCart(prevCart => [...prevCart, productInfo.data.singleProduct]);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (props.userId) fetchShoppingCart(props.userId);
+  }, [props.userId]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
     className: "cart-title"
-  }, "Shopping Cart"));
+  }, "Shopping Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "shopping-cart"
+  }, shoppingCart.map(product => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    key: product.id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "product-info-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    className: "sc-photo",
+    src: `${product.image}`,
+    onClick: () => {
+      location.href = `/products/${product.id}`;
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "product-details"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "sc-product-name"
+  }, product.productName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "$", product.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "delete-sc-item"
+  }, "X"))))));
 };
 
 const mapState = state => {

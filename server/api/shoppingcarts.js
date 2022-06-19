@@ -23,7 +23,7 @@ router.post("/", async (req, res, next) => {
 
 router.get("/:userId", async (req, res, next) => {
   try {
-    const shoppingcart = await ShoppingCart.findOne({
+    const shoppingcart = await ShoppingCart.findAll({
       where: { orderSessionId: req.params.userId },
     });
     res.json(shoppingcart);

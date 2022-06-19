@@ -66,3 +66,32 @@ form div {
 .login-button {
   width: 30px;
 }
+
+.product-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 60px;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 300px; */
+}
+
+.sc-photo {
+  width: 120px;
+  height: 120px;
+  margin-left: 150px;
+  cursor: pointer;
+}
+
+.delete-sc-item {
+  margin-right: 150px;
+}
+
+.sc-product-name {
+  width: 250px;
+  text-align: center;
+}
