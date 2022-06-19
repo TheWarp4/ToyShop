@@ -32,25 +32,11 @@ const User = db.define("user", {
   },
   cardExp: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: true,
   },
-<<<<<<< HEAD
   cardCvn: {
     type: Sequelize.STRING,
-    allowNull: true
-=======
-  cardNumber: {
-    type: Sequelize.STRING,
     allowNull: true,
-  },
-  cardExp: {
-    type: Sequelize.STRING,
-    allowNull: true,
-  },
-  cardKey: {
-    type: Sequelize.STRING,
-    allowNull: true,
->>>>>>> b9c83bab50f47b72fcf98fa6d1aa2ce64ad531d0
   }
 });
 

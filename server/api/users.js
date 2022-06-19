@@ -25,7 +25,6 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-<<<<<<< HEAD
 router.put("/:userId", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId);
@@ -35,17 +34,6 @@ router.put("/:userId", async (req, res, next) => {
     next(error);
   }
 });
-=======
-router.put('/:userId', async (req, res, next) => {
-  try {
-    console.log("USERID: ",req.params.userId, "BODY: ", req.body)
-    const singleUser = await User.update(req.body, {where: {id: req.params.userId}})
-    res.json(singleUser)
-  } catch (err) {
-    next(err)
-  }
-})
->>>>>>> b9c83bab50f47b72fcf98fa6d1aa2ce64ad531d0
 
 // router.get('/:userid/shoppingCart', async (req, res, next) => {
 //   try {
