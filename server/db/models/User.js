@@ -25,6 +25,23 @@ const User = db.define("user", {
   //   type: Sequelize.ENUM(['admin', 'customer']),
   //   defaultValue: 'customer',
   // },
+  cardNum: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: true
+  },
+  cardExp: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  cardCvn: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  type: {
+    type: Sequelize.ENUM(["admin", "customer"]),
+    defaultValue: "customer",
+  },
 });
 
 module.exports = User;
@@ -68,7 +85,6 @@ User.findByToken = async function (token) {
     throw error;
   }
 };
-
 /**
  * hooks
  */

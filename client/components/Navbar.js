@@ -5,7 +5,7 @@ import { logout } from "../store";
 import { BiCart, BiHomeAlt, BiPurchaseTagAlt } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, id }) => (
   <div>
     <nav>
       <div className="navbar-container">
@@ -23,7 +23,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         />
         {isLoggedIn ? (
           <>
-            <Link to="/user/">
+            <Link to={`/user/${id}`}>
               <FaUserAlt size={30} />
             </Link>
             <a href="#" onClick={handleClick}>
@@ -50,6 +50,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    id: state.auth.id
   };
 };
 
