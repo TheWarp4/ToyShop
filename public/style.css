@@ -66,3 +66,64 @@ form div {
 .login-button {
   width: 30px;
 }
+
+.product-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 300px; */
+}
+
+.sc-photo {
+  width: 120px;
+  height: 120px;
+  margin-left: 150px;
+  cursor: pointer;
+}
+
+.delete-sc-item {
+  margin-right: 150px;
+}
+
+.sc-product-name {
+  width: 250px;
+  text-align: center;
+}
+
+.sc-horizontal-line {
+  width: 80%;
+}
+
+.sc-quantity {
+  /* width: 50%; */
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  /* margin-top: 10px; */
+}
+
+.sc-incrementer {
+  margin: 10px;
+  width: 25px
+}
+
+.sc-subtotal-checkout {
+  float: right;
+  margin-right: 100px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-checkout-btn {
+  height: 30px;
+  margin-top: 10px;
+}

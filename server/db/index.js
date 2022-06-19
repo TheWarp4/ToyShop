@@ -5,18 +5,15 @@ const db = require('./db')
 const User = require('./models/User')
 const Product = require('./models/Product')
 const ShoppingCart = require('./models/ShoppingCart')
-const CartSession = require('./models/CartSession')
+const OrderSession = require('./models/OrderSession')
 
 
 // ASSOCIATIONS:
-User.hasOne(ShoppingCart)
-ShoppingCart.belongsTo(User)
+User.hasMany(OrderSession)
+OrderSession.belongsTo(User)
 
-Product.hasMany(ShoppingCart)
-ShoppingCart.belongsTo(Product)
-
-CartSession.belongsTo(ShoppingCart)
-ShoppingCart.hasOne(CartSession)
+OrderSession.belongsToMany(Product, {through: 'ShoppingCart'})
+Product.belongsToMany(OrderSession, {through: 'ShoppingCart'})
 
 
 module.exports = {
@@ -25,6 +22,6 @@ module.exports = {
     User,
     Product,
     ShoppingCart,
-    CartSession
+    OrderSession
   },
 }

@@ -8,6 +8,9 @@ import { connect } from "react-redux";
 const AllProducts = (props) => {
   const [products, setProducts] = useState([{}]);
 
+  const fetchCartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]')
+  const [cart, setCart] = useState(fetchCartFromLocalStorage);
+
   const getProducts = () => {
     try {
       (async () => {
@@ -21,17 +24,21 @@ const AllProducts = (props) => {
 
   const handleAddToCart = async (userId, productId) => {
     try {
-      console.log(userId, "userId");
-      await axios.put(`/api/shoppingcarts/${userId}`, {
-        productId,
-        userId,
-      });
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
+      await axios.post('/api/shoppingcarts', {
+        orderSessionId: getOrderSessionId.data.id,
+        productId: productId,
+        itemQuantity: 1,
+      })
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(getProducts, []);
+  useEffect(() => {
+    getProducts();
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }, [props.userId, cart])
 
   return (
     <div className="allProducts">
@@ -49,7 +56,12 @@ const AllProducts = (props) => {
             <div>${product.price}</div>
             <button
               onClick={() => {
-                handleAddToCart(props.userId, product.id);
+                props.isLoggedIn ? (
+                handleAddToCart(props.userId, product.id)
+                ) :
+                (
+                  setCart(prevCart => [...prevCart, product ])
+                  )
               }}
             >
               <FaShoppingCart />
@@ -66,6 +78,7 @@ const mapState = (state) => {
   return {
     username: state.auth.username,
     userId: state.auth.id,
+    isLoggedIn: !!state.auth.id,
   };
 };
 
