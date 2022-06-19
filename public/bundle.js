@@ -2398,6 +2398,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const Cart = props => {
   const [shoppingCart, setShoppingCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [total, setTotal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.00);
 
   const fetchShoppingCart = async userId => {
     try {
@@ -2408,15 +2409,28 @@ const Cart = props => {
       data.map(async prodData => {
         const productInfo = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/products/${prodData.productId}`);
         setShoppingCart(prevCart => [...prevCart, productInfo.data.singleProduct]);
+        setTotal(prevTotal => prevTotal + parseFloat(productInfo.data.singleProduct.price));
       });
     } catch (error) {
       console.log(error);
     }
   };
 
+  const deleteFromShoppingCart = async (userId, productId) => {
+    const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
+    console.log(getOrderSessionId);
+    const {
+      data
+    } = await axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"](`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}`);
+    console.log(data);
+  };
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (props.userId) fetchShoppingCart(props.userId);
+    if (props.userId) {
+      fetchShoppingCart(props.userId);
+    }
   }, [props.userId]);
+  console.log(total);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
     className: "cart-title"
   }, "Shopping Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2436,8 +2450,11 @@ const Cart = props => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "sc-product-name"
   }, product.productName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "$", product.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "delete-sc-item"
-  }, "X"))))));
+    className: "delete-sc-item",
+    onClick: () => deleteFromShoppingCart(props.userId, product.id)
+  }, "X")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", {
+    className: "sc-horizontal-line"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "SubTotal: $", total)));
 };
 
 const mapState = state => {

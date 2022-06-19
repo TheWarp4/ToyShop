@@ -71,7 +71,9 @@ form div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 60px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
 }
 
 .product-details {
@@ -94,4 +96,8 @@ form div {
 .sc-product-name {
   width: 250px;
   text-align: center;
+}
+
+.sc-horizontal-line {
+  width: 80%;
 }
