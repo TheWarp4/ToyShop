@@ -24,8 +24,8 @@
 ### As an administrator, I want to be able to:
 - [X] have validated data to ensure reliability.
   - [X] *i.e. each customer that creates an account should only be able to do so once with a single email address.*
-- [ ] have full rights to make backend requests to add, edit, and remove products.
-  - [ ] *No one else should have access.*
+- [X] have full rights to make backend requests to add, edit, and remove products.
+  - [X] *No one else should have access.*
 - [ ] view user information.
   - [ ] *No one else should have access.*
 

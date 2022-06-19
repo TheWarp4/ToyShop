@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product, ShoppingCart },
+  models: { User, Product, OrderSession, ShoppingCart },
 } = require("../server/db");
 
 /**
@@ -81,14 +81,11 @@ async function seed() {
   const user1 = await User.findByPk(1);
   const user2 = await User.findByPk(2);
 
-  const shoppingCart1 = await ShoppingCart.create({ itemQuantity: 0 });
-  const shoppingCart2 = await ShoppingCart.create({ itemQuantity: 0 });
+  const orderSession1 = await OrderSession.create({status: "open"});
+  const orderSession2 = await OrderSession.create({status: "open"});
 
-  await user1.setShoppingCart(shoppingCart1);
-  await user2.setShoppingCart(shoppingCart2);
-  // console.log('CHECKING THIS', Object.keys(this.__proto__))
-  // await shoppingCart1.setUser(user1)
-  // await shoppingCart2.setUser(user2)
+  await user1.addOrderSession(orderSession1)
+  await user2.addOrderSession(orderSession2)
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
