@@ -46,6 +46,41 @@ router.put("/:userId", async (req, res, next) => {
   }
 });
 
+// router.put("/:ordersessionId/:productId", async (req, res, next) => {
+//   try {
+//     const shoppingcart = await ShoppingCart.findOne({
+//       where: { orderSessionId: req.params.ordersessionId, productId: req.params.productId },
+//     });
+//     await shoppingcart.update(req.body);
+//     res.json(shoppingcart);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+router.put("/:ordersessionId/:productId/decrement", async (req, res, next) => {
+    try {
+      const shoppingcart = await ShoppingCart.decrement(
+        {itemQuantity: 1},
+        {where: { orderSessionId: req.params.ordersessionId, productId: req.params.productId },
+    });
+      res.json(shoppingcart);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+router.put("/:ordersessionId/:productId/increment", async (req, res, next) => {
+  try {
+    const shoppingcart = await ShoppingCart.increment(
+      {itemQuantity: 1},
+      {where: { orderSessionId: req.params.ordersessionId, productId: req.params.productId },
+  });
+    res.json(shoppingcart);
+  } catch (error) {
+    next(error);
+  }
+});
 router.delete("/:ordersessionId/:productId", async (req, res, next) => {
   try {
     const shoppingcart = await ShoppingCart.findOne({

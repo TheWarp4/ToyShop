@@ -101,3 +101,29 @@ form div {
 .sc-horizontal-line {
   width: 80%;
 }
+
+.sc-quantity {
+  /* width: 50%; */
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  /* margin-top: 10px; */
+}
+
+.sc-incrementer {
+  margin: 10px;
+  width: 25px
+}
+
+.sc-subtotal-checkout {
+  float: right;
+  margin-right: 100px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-checkout-btn {
+  height: 30px;
+  margin-top: 10px;
+}
