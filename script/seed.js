@@ -25,6 +25,12 @@ async function seed() {
       password: "123",
       email: "murphy123@gmail.com",
     }),
+    User.create({
+      username: "admin",
+      password: "123",
+      email: "admin@gmail.com",
+      type: "admin",
+    }),
   ]);
 
   const products = await Promise.all([
@@ -69,18 +75,17 @@ async function seed() {
     }),
   ]);
 
-// User.hasOne(ShoppingCart)
-// ShoppingCart.belongsTo(User)
+  // User.hasOne(ShoppingCart)
+  // ShoppingCart.belongsTo(User)
 
-  const user1 = await User.findByPk(1)
-  const user2 = await User.findByPk(2)
+  const user1 = await User.findByPk(1);
+  const user2 = await User.findByPk(2);
 
   const orderSession1 = await OrderSession.create({status: "open"});
   const orderSession2 = await OrderSession.create({status: "open"});
 
   await user1.addOrderSession(orderSession1)
   await user2.addOrderSession(orderSession2)
-
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);

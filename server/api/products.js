@@ -21,3 +21,36 @@ router.get("/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+router.post("/", async (req, res, next) => {
+  try {
+    await Product.create(req.body);
+    res.sendStatus(201);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/:productId", async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.productId);
+    await product.destroy();
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/:productId", async (req, res, next) => {
+  try {
+    console.log("Hit put products api!");
+    const product = await Product.findByPk(req.params.productId);
+    console.log("Found product!", req.body);
+
+    await product.update(req.body);
+    console.log("updated product");
+    res.json(product);
+  } catch (error) {
+    next(error);
+  }
+});
