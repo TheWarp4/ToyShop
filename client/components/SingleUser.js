@@ -70,7 +70,7 @@ function SingleUser(props) {
           <button type="submit" onClick={handleSubmit}>submit</button>
         </div>
       </form>
-      <div>Current Password: {user.password}</div>
+      <div>Current Password: *****</div>
       <form>
         <div>
           <label htmlFor="password">
