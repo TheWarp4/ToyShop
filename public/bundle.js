@@ -2235,6 +2235,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const AllProducts = props => {
   const [products, setProducts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{}]);
+  const fetchCartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]');
+  const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(fetchCartFromLocalStorage);
 
   const getProducts = () => {
     try {
@@ -2252,18 +2254,20 @@ const AllProducts = props => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
-      const createShoppingCart = await axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/shoppingcarts', {
+      await axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/shoppingcarts', {
         orderSessionId: getOrderSessionId.data.id,
         productId: productId,
         itemQuantity: 1
       });
-      console.log(createShoppingCart);
     } catch (error) {
       console.log(error);
     }
   };
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(getProducts, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    getProducts();
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [props.userId, cart]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "allProducts"
   }, products.map((product, i) => {
@@ -2278,7 +2282,7 @@ const AllProducts = props => {
       }
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "$", product.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       onClick: () => {
-        handleAddToCart(props.userId, product.id);
+        props.isLoggedIn ? handleAddToCart(props.userId, product.id) : setCart(prevCart => [...prevCart, product]);
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_fa__WEBPACK_IMPORTED_MODULE_3__.FaShoppingCart, null), "Add To Cart"));
   }));
@@ -2287,7 +2291,8 @@ const AllProducts = props => {
 const mapState = state => {
   return {
     username: state.auth.username,
-    userId: state.auth.id
+    userId: state.auth.id,
+    isLoggedIn: !!state.auth.id
   };
 };
 
@@ -2508,7 +2513,8 @@ const Cart = props => {
 const mapState = state => {
   return {
     username: state.auth.username,
-    userId: state.auth.id
+    userId: state.auth.id,
+    isLoggedIn: !!state.auth.id
   };
 };
 

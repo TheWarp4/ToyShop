@@ -97,6 +97,7 @@ const mapState = (state) => {
   return {
     username: state.auth.username,
     userId: state.auth.id,
+    isLoggedIn: !!state.auth.id,
   };
 };
 
