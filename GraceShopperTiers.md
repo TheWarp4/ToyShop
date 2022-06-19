@@ -51,13 +51,13 @@
     - [ ] **Guest-to-logged-in-user:** Initially, I'm not logged in, and I add items to my cart. When I eventually log in, I want to see those same items I added when I was logged in still in my cart, in addition to the items I may have had in my cart from a previous logged in session.
 
 ### As a logged-in customer, I want to be able to:
-- see my order history so I can remember my previously purchased items and their prices at the time of purchase.
-- view and edit my user profile so I can update my information when necessary.
+- [ ] see my order history so I can remember my previously purchased items and their prices at the time of purchase.
+- [ ] view and edit my user profile so I can update my information when necessary.
 
 ### As an administrator, I want to be able to:
-- allow customers to have a variety of payment method options in order to increase checkout conversion.
-  - *Begin by integrating Stripe, and, if interested, dive into integrating PayPal, Venmo, Braintree, or Bitcoin.*
-- edit products and manage users through a dashboard so I can easily make changes and assessments as necessary.
+- [ ] allow customers to have a variety of payment method options in order to increase checkout conversion.
+  - [ ] *Begin by integrating Stripe, and, if interested, dive into integrating PayPal, Venmo, Braintree, or Bitcoin.*
+- [ ] edit products and manage users through a dashboard so I can easily make changes and assessments as necessary.
 
 </details>
 
