@@ -25,6 +25,19 @@ const User = db.define("user", {
   //   type: Sequelize.ENUM(['admin', 'customer']),
   //   defaultValue: 'customer',
   // },
+  cardNum: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: true
+  },
+  cardExp: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  cardCvn: {
+    type: Sequelize.STRING,
+    allowNull: true
+  }
 });
 
 module.exports = User;
