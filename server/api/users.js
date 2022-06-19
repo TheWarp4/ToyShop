@@ -27,6 +27,16 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
+router.put("/:userId", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId);
+    await user.update(req.body);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // router.get('/:userid/shoppingCart', async (req, res, next) => {
 //   try {
 //     const users = await User.findAll({

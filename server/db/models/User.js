@@ -21,6 +21,23 @@ const User = db.define("user", {
     allowNull: true,
     validate: { isEmail: true },
   },
+  // type: {
+  //   type: Sequelize.ENUM(['admin', 'customer']),
+  //   defaultValue: 'customer',
+  // },
+  cardNum: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: true
+  },
+  cardExp: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  cardCvn: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   type: {
     type: Sequelize.ENUM(["admin", "customer"]),
     defaultValue: "customer",
