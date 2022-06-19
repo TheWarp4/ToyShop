@@ -1,8 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 
-const AddProduct = () => {
+const AddProduct = (props) => {
   const [product, setProduct] = useState({
     productName: "",
     price: 0,
@@ -32,37 +33,49 @@ const AddProduct = () => {
   };
 
   return (
-    <form id="product-form" onSubmit={handleSubmit}>
-      <label htmlFor="productName">Product Name:</label>
-      <input
-        name="productName"
-        onChange={handleChange}
-        value={product.productName}
-      />
+    props.userType !== "admin" || (
+      <form id="product-form" onSubmit={handleSubmit}>
+        <label htmlFor="productName">Product Name:</label>
+        <input
+          name="productName"
+          onChange={handleChange}
+          value={product.productName}
+        />
 
-      <label htmlFor="price">Price:</label>
-      <input name="price" onChange={handleChange} value={product.price} />
+        <label htmlFor="price">Price:</label>
+        <input name="price" onChange={handleChange} value={product.price} />
 
-      <label htmlFor="category">Category:</label>
-      <select name="category" onChange={handleChange} value={product.category}>
-        <option value="LEGOS">LEGOS</option>
-        <option value="TRANSFORMERS">TRANSFORMERS</option>
-        <option value="JURASSIC">JURASSIC</option>
-      </select>
+        <label htmlFor="category">Category:</label>
+        <select
+          name="category"
+          onChange={handleChange}
+          value={product.category}
+        >
+          <option value="LEGOS">LEGOS</option>
+          <option value="TRANSFORMERS">TRANSFORMERS</option>
+          <option value="JURASSIC">JURASSIC</option>
+        </select>
 
-      <label htmlFor="image"></label>
-      <input name="image" onChange={handleChange} value={product.image} />
+        <label htmlFor="image"></label>
+        <input name="image" onChange={handleChange} value={product.image} />
 
-      <label htmlFor="description">Description:</label>
-      <input
-        name="description"
-        onChange={handleChange}
-        value={product.description}
-      />
+        <label htmlFor="description">Description:</label>
+        <input
+          name="description"
+          onChange={handleChange}
+          value={product.description}
+        />
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit">Submit</button>
+      </form>
+    )
   );
 };
 
-export default AddProduct;
+const mapState = (state) => {
+  return {
+    userType: state.auth.type,
+  };
+};
+
+export default connect(mapState)(AddProduct);

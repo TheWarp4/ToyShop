@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EditProduct from "./EditProduct";
+import DeleteProduct from "./DeleteProduct";
+import { connect } from "react-redux";
 
 function SingleProduct(props) {
   // LOCAL STATE
@@ -21,7 +23,8 @@ function SingleProduct(props) {
     fetchProduct(props.match.params.id);
   }, []);
 
-  console.log("THIS IS PRODUCT", product);
+  console.log("Props: ", props);
+
   return (
     <div className="single-product">
       <img src={product.image} />
@@ -29,8 +32,18 @@ function SingleProduct(props) {
       <div>Description: {product.description}</div>
       <div>Category: {product.category}</div>
       <div>Price: {product.price}</div>
+      {props.userType === "customer" || (
+        <DeleteProduct product={product} history={props.history} />
+      )}
+      {props.userType === "customer" || <EditProduct product={product} />}
     </div>
   );
 }
 
-export default SingleProduct;
+const mapState = (state) => {
+  return {
+    userType: state.auth.type,
+  };
+};
+
+export default connect(mapState)(SingleProduct);

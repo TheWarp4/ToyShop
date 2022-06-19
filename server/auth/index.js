@@ -34,11 +34,3 @@ router.get("/me", async (req, res, next) => {
     next(ex);
   }
 });
-
-router.get("/admin", async (req, res, next) => {
-  try {
-    res.send(await User.isAdmin(req.headers.authorization));
-  } catch (ex) {
-    next(ex);
-  }
-});

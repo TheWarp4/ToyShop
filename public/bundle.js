@@ -2214,11 +2214,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
 
 
 
-const AddProduct = () => {
+
+const AddProduct = props => {
   const [product, setProduct] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     productName: "",
     price: 0,
@@ -2251,7 +2253,7 @@ const AddProduct = () => {
     });
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+  return props.userType !== "admin" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     id: "product-form",
     onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
@@ -2295,7 +2297,13 @@ const AddProduct = () => {
   }, "Submit"));
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddProduct);
+const mapState = state => {
+  return {
+    userType: state.auth.type
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapState)(AddProduct));
 
 /***/ }),
 
@@ -2498,6 +2506,46 @@ function Cart() {
 
 /***/ }),
 
+/***/ "./client/components/DeleteProduct.js":
+/*!********************************************!*\
+  !*** ./client/components/DeleteProduct.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+
+const DeleteProduct = props => {
+  const handleClick = async function (event) {
+    try {
+      event.preventDefault();
+      console.log(props);
+      await axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"](`/api/products/${props.product.id}`);
+      props.history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "button",
+    onClick: handleClick
+  }, "Delete");
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DeleteProduct);
+
+/***/ }),
+
 /***/ "./client/components/EditProduct.js":
 /*!******************************************!*\
   !*** ./client/components/EditProduct.js ***!
@@ -2520,23 +2568,23 @@ const EditProduct = props => {
   const [product, setProduct] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     productName: "",
     price: 0,
-    category: "",
-    image: "",
+    category: "LEGOS",
     description: ""
   });
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {});
 
   const handleSubmit = async function (event) {
     try {
-      event.preventDefault();
+      event.preventDefault(); // parse price to Int
+
+      product.price = parseInt(product.price);
       const {
         data
-      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().put("/api/products", product);
+      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/products/${props.product.id}`, product);
       setProduct({
         productName: "",
         price: 0,
         category: "",
-        image: "",
+        // image: "",
         description: ""
       });
     } catch (err) {
@@ -2578,12 +2626,6 @@ const EditProduct = props => {
   }, "TRANSFORMERS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
     value: "JURASSIC"
   }, "JURASSIC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-    htmlFor: "image"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    name: "image",
-    onChange: handleChange,
-    value: product.image
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
     htmlFor: "description"
   }, "Description:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     name: "description",
@@ -2739,6 +2781,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _EditProduct__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditProduct */ "./client/components/EditProduct.js");
+/* harmony import */ var _DeleteProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteProduct */ "./client/components/DeleteProduct.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
 
 
 
@@ -2762,15 +2808,26 @@ function SingleProduct(props) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchProduct(props.match.params.id);
   }, []);
-  console.log("THIS IS PRODUCT", product);
+  console.log("Props: ", props);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "single-product"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     src: product.image
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Name: ", product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Description: ", product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Category: ", product.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Price: ", product.price));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Name: ", product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Description: ", product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Category: ", product.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Price: ", product.price), props.userType === "customer" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DeleteProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    product: product,
+    history: props.history
+  }), props.userType === "customer" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_EditProduct__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    product: product
+  }));
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SingleProduct);
+const mapState = state => {
+  return {
+    userType: state.auth.type
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_4__.connect)(mapState)(SingleProduct));
 
 /***/ }),
 
@@ -2811,12 +2868,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../history */ "./client/history.js");
 
 
-const TOKEN = 'token';
+const TOKEN = "token";
 /**
  * ACTION TYPES
  */
 
-const SET_AUTH = 'SET_AUTH';
+const SET_AUTH = "SET_AUTH";
 /**
  * ACTION CREATORS
  */
@@ -2834,7 +2891,7 @@ const me = () => async dispatch => {
   const token = window.localStorage.getItem(TOKEN);
 
   if (token) {
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().get('/auth/me', {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().get("/auth/me", {
       headers: {
         authorization: token
       }
@@ -2858,7 +2915,7 @@ const authenticate = (username, password, method) => async dispatch => {
 };
 const logout = () => {
   window.localStorage.removeItem(TOKEN);
-  _history__WEBPACK_IMPORTED_MODULE_1__["default"].push('/login');
+  _history__WEBPACK_IMPORTED_MODULE_1__["default"].push("/login");
   return {
     type: SET_AUTH,
     auth: {}
