@@ -23,8 +23,6 @@ function SingleProduct(props) {
     fetchProduct(props.match.params.id);
   }, []);
 
-  console.log("Props: ", props);
-
   return (
     <div className="single-product">
       <img src={product.image} />

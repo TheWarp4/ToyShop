@@ -6,7 +6,6 @@ const DeleteProduct = (props) => {
   const handleClick = async function (event) {
     try {
       event.preventDefault();
-      console.log(props);
       await axios.delete(`/api/products/${props.product.id}`);
       props.history.push("/");
     } catch (error) {

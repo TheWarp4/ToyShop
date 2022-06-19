@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import AddProduct from "./AddProduct";
+import AllUsers from "./AllUsers";
 
 /**
  * COMPONENT
@@ -8,12 +9,16 @@ import AddProduct from "./AddProduct";
 export const Home = (props) => {
   const { username } = props;
   const { id } = props;
-  console.log(props.id);
 
   return (
     <div>
       <h3>Welcome, {username}</h3>
       <AddProduct />
+      <div>
+        <div>
+          <AllUsers />
+        </div>
+      </div>
     </div>
   );
 };
