@@ -3,7 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 
-function GuestCart(props) {
+function GuestCart() {
   const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]')
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
   const [total, setTotal] = useState(0.00);
@@ -34,7 +34,6 @@ function GuestCart(props) {
       }
     })
   }
-
 
   const handleDelete = (productid) => {
     localStorage.setItem('cart', JSON.stringify(cart.filter((element) =>
