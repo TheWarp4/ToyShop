@@ -1,3 +1,23 @@
+ const { faker } = require('@faker-js/faker')
+
+ faker.commerce.productDescription()
+ faker.commerce.price(100, 200)
+ faker.commerce.productName()
+
+
+
+ // "LEGOS" https://www.pennlive.com/resizer/W-M-ACGvuLR-NwYnQmIBGLhivBk=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/XE6N3UD2RJEU5LS6Q6C7K2PUTA.jpg
+
+ // BARBIE https://www.rd.com/wp-content/uploads/2015/09/GettyImages-459000267-2-scaled.jpg?resize=768,512
+
+ // JURASSIC https://m.media-amazon.com/images/I/71uD-zJwM3S._AC_SX425_.jpg
+
+ // TRANSFORMERS https://m.media-amazon.com/images/I/61-Vf1z+fSL._AC_SX425_.jpg
+
+ // STUFFED ANIMALS https://m.media-amazon.com/images/I/71oNgt0-dYL._AC_SX425_.jpg
+
+
+
 "use strict";
 
 const {
@@ -12,6 +32,50 @@ const {
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
+
+  const populateUserData = async () => {
+    try {
+    for (let i = 0; i < 200; i++) {
+      const username = faker.internet.userName(); // Rowan Nikolaus
+      const password = faker.internet.password()
+      const randomEmail = faker.internet.email()
+      await User.create({
+        username: username,
+        password: password,
+        email: randomEmail,
+      })
+    }
+  }
+    catch(err) {
+      console.log(err)
+    }
+}
+
+const populateProductData = async () => {
+
+  const productDummyData = [["LEGOS", "https://www.pennlive.com/resizer/W-M-ACGvuLR-NwYnQmIBGLhivBk=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/XE6N3UD2RJEU5LS6Q6C7K2PUTA.jpg"], ["BARBIE", "https://www.rd.com/wp-content/uploads/2015/09/GettyImages-459000267-2-scaled.jpg?resize=768,512"], ["JURASSIC", "https://m.media-amazon.com/images/I/71uD-zJwM3S._AC_SX425_.jpg"], ["TRANSFORMERS", "https://m.media-amazon.com/images/I/61-Vf1z+fSL._AC_SX425_.jpg"], ["STUFFED ANIMALS", "https://m.media-amazon.com/images/I/71oNgt0-dYL._AC_SX425_.jpg"]]
+
+  try {
+  for (let i = 0; i < 200; i++) {
+    const description = faker.commerce.productDescription()
+    const price = faker.commerce.price(5, 100)
+    const productName = faker.commerce.productName()
+    let randomCatagoryNumber = Math.floor(Math.random() * 5)
+    console.log(productDummyData[randomCatagoryNumber][0])
+    Product.create({
+      price: price,
+      description: description,
+      category: productDummyData[randomCatagoryNumber][0],
+      image:
+        productDummyData[randomCatagoryNumber][1],
+      productName: productName,
+    })
+  }
+}
+  catch(err) {
+    console.log(err)
+  }
+}
 
   // Creating Users
   const users = await Promise.all([
@@ -32,6 +96,8 @@ async function seed() {
       type: "admin",
     }),
   ]);
+
+  await populateUserData()
 
   const products = await Promise.all([
     Product.create({
@@ -75,6 +141,7 @@ async function seed() {
     }),
   ]);
 
+  populateProductData ();
   // User.hasOne(ShoppingCart)
   // ShoppingCart.belongsTo(User)
 
