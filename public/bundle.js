@@ -2369,7 +2369,7 @@ const AllProducts = props => {
   const getProducts = () => {
     try {
       (async () => {
-        if (filter.type) {
+        if (filter.type && filter.type !== "ALL") {
           const {
             data
           } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/products/${filter.type}`);
@@ -3260,7 +3260,7 @@ const ProductFilterbar = ({
   filter,
   setFilter
 }) => {
-  const categories = ["LEGOS", "TRANSFORMERS", "JURASSIC", "BARBIE", "STUFFED ANIMALS"];
+  const categories = ["ALL", "LEGOS", "TRANSFORMERS", "JURASSIC", "BARBIE", "STUFFED ANIMALS"];
 
   const handleChange = e => {
     setFilter({

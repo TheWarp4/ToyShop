@@ -17,7 +17,7 @@ const AllProducts = (props) => {
   const getProducts = () => {
     try {
       (async () => {
-        if (filter.type) {
+        if (filter.type && filter.type !== "ALL") {
           const { data } = await axios.get(`/api/products/${filter.type}`);
           setProducts(data.filteredProducts);
         } else {

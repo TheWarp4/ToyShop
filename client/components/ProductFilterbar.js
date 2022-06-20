@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const ProductFilterbar = ({ filter, setFilter }) => {
   const categories = [
+    "ALL",
     "LEGOS",
     "TRANSFORMERS",
     "JURASSIC",

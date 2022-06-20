@@ -227,7 +227,7 @@ form div {
 }
 
 .product-categories {
-  padding: 10px;
+  padding: 1px;
   border-bottom: 1px solid #ebedec;
 }
 
@@ -239,11 +239,11 @@ form div {
   flex-wrap: wrap;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .product-categories li {
-  width: 150px;
+  width: 135px;
   text-align: center;
   background: #e9ecf1;
   border-right: 1px solid #c1c4c9;
