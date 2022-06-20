@@ -18,13 +18,12 @@ function GuestCheckout() {
     sumTotal(cart)
   }, [cart])
 
-  console.log(cart)
   return (
     <div id="gc-container">
       <div className="container-left">
         <div className="gc-contactinfo-prevuser">
           <div>Contact Information</div>
-          <Link to="/signup">Already Have an Account? Log in</Link>
+          <Link to="/login">Already Have an Account? Log in</Link>
         </div>
         <input
           className="gc-email-input"
@@ -81,8 +80,8 @@ function GuestCheckout() {
       <div className="container-right">
         <div className="gc-shopping-cart">Shopping Cart</div>
             {cart.map((product, i) => (
-              <div>
-              <div key={i} className="gc-product-container">
+              <div key={i}>
+              <div  className="gc-product-container">
                 <img className= 'gc-product-photo' src = {product.image}/>
                 <div>
                 {product.productName}

@@ -81,6 +81,15 @@ router.put("/:ordersessionId/:productId/increment", async (req, res, next) => {
     next(error);
   }
 });
+
+// router.post("/:ordersessionId", async (req, res, next) => {
+//   try {
+//     res.status(201).send(await ShoppingCart.create(req.body))
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 router.delete("/:ordersessionId/:productId", async (req, res, next) => {
   try {
     const shoppingcart = await ShoppingCart.findOne({
