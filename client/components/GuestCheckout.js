@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function GuestCheckout() {
   return (
-    <Link>Cart</Link>
+    <div>Cart</div>
   )
 }
 
