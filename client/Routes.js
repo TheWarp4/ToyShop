@@ -10,6 +10,7 @@ import AllUsers from "./components/AllUsers";
 import Cart from "./components/Cart";
 import SingleUser from "./components/SingleUser"
 import Checkout from "./components/Checkout";
+import GuestCart from "./components/GuestCart";
 
 /**
  * COMPONENT

@@ -8,14 +8,16 @@ const Cart = (props) => {
 
   const fetchShoppingCart = async (userId) => {
     try {
+      const shopCart = [];
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
       const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
       data.map( async (prodData) => {
         const productInfo = await axios.get(`/api/products/${prodData.productId}`)
         productInfo.data.singleProduct.itemQuantity = prodData.itemQuantity
-        setShoppingCart(prevCart => [...prevCart, productInfo.data.singleProduct])
+        shopCart.push(productInfo.data.singleProduct)
         setTotal(prevTotal => prevTotal + parseFloat(productInfo.data.singleProduct.price)*prodData.itemQuantity)
       })
+      setShoppingCart(shopCart)
     } catch (error) {
       console.log(error);
     }
@@ -23,26 +25,32 @@ const Cart = (props) => {
 
   const deleteFromShoppingCart = async (userId, productId) => {
     const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-    console.log(getOrderSessionId)
-    const {data} = await axios.delete(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}`)
-    console.log(data)
+    await axios.delete(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}`)
+    setShoppingCart([])
+    setTotal(0.00)
+    fetchShoppingCart(props.userId)
   }
 
   const handleDecrement = async (userId, productId) => {
     const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-    console.log(getOrderSessionId)
-    const {data} = await axios.put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/decrement`, {itemQuantity: 1})
-    console.log(data)
+    await axios.put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/decrement`)
+    setShoppingCart([])
+    setTotal(0.00)
+    fetchShoppingCart(props.userId)
+
   }
 
   const handleIncrement = async (userId, productId) => {
     const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-    console.log(getOrderSessionId)
     await axios.put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`)
+    setShoppingCart([])
+    setTotal(0.00)
+    fetchShoppingCart(props.userId)
+
   }
 
   useEffect(() => {
-    if (props.userId) {
+    if(props.userId) {
       fetchShoppingCart(props.userId)
     }
   }, [props.userId])
