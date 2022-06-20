@@ -50,8 +50,6 @@ function GuestCart(props) {
     sumTotal(cart)
   }, [cart])
 
-  console.log(cart)
-
   return (
     <div>
       <h1 className='cart-title'>Shopping Cart</h1>

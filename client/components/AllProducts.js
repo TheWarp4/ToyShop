@@ -1,6 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa";
 import { connect } from "react-redux";
 
 const AllProducts = (props) => {
