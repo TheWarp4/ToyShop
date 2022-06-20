@@ -2347,8 +2347,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_icons_fa__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-icons/fa */ "./node_modules/react-icons/fa/index.esm.js");
+/* harmony import */ var react_icons_fa__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-icons/fa */ "./node_modules/react-icons/fa/index.esm.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _ProductFilterbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ProductFilterbar */ "./client/components/ProductFilterbar.js");
+
 
 
 
@@ -2358,16 +2360,26 @@ __webpack_require__.r(__webpack_exports__);
 
 const AllProducts = props => {
   const [products, setProducts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{}]);
-  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]');
+  const [filter, setFilter] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    type: ""
+  });
+  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart") || "[]");
   const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(fetchCartFromLocalStorage);
 
   const getProducts = () => {
     try {
       (async () => {
-        const {
-          data
-        } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/products");
-        setProducts(data);
+        if (filter.type) {
+          const {
+            data
+          } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/products/${filter.type}`);
+          setProducts(data.filteredProducts);
+        } else {
+          const {
+            data
+          } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/products");
+          setProducts(data);
+        }
       })();
     } catch (error) {
       console.error(error);
@@ -2377,7 +2389,7 @@ const AllProducts = props => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
-      await axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/shoppingcarts', {
+      await axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/shoppingcarts", {
         orderSessionId: getOrderSessionId.data.id,
         productId: productId,
         itemQuantity: 1
@@ -2389,9 +2401,12 @@ const AllProducts = props => {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     getProducts();
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [props.userId, cart]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [props.userId, cart, filter]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ProductFilterbar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    filter: filter,
+    setFilter: setFilter
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "allProducts"
   }, products.map((product, i) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2407,8 +2422,8 @@ const AllProducts = props => {
       onClick: () => {
         props.isLoggedIn ? handleAddToCart(props.userId, product.id) : guestCart(cart, product, setCart);
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_fa__WEBPACK_IMPORTED_MODULE_3__.FaShoppingCart, null), "Add To Cart"));
-  }));
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_fa__WEBPACK_IMPORTED_MODULE_4__.FaShoppingCart, null), "Add To Cart"));
+  })));
 };
 
 const isProductInCart = (arr, productId) => {
@@ -3224,6 +3239,51 @@ const mapDispatch = dispatch => {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapState, mapDispatch)(Navbar));
+
+/***/ }),
+
+/***/ "./client/components/ProductFilterbar.js":
+/*!***********************************************!*\
+  !*** ./client/components/ProductFilterbar.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+const ProductFilterbar = ({
+  filter,
+  setFilter
+}) => {
+  const categories = ["LEGOS", "TRANSFORMERS", "JURASSIC", "BARBIE", "STUFFED ANIMALS"];
+
+  const handleChange = e => {
+    setFilter({
+      type: e.target.innerHTML
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "product-categories"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, categories.map((category, i) => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+      key: i,
+      onClick: handleChange,
+      className: filter.type === category ? "active" : ""
+    }, category);
+  })));
+};
+/**
+ * CONTAINER
+ */
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProductFilterbar);
 
 /***/ }),
 
