@@ -2347,7 +2347,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_icons_fa__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-icons/fa */ "./node_modules/react-icons/fa/index.esm.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
 
 
 
@@ -2404,7 +2407,7 @@ const AllProducts = props => {
       onClick: () => {
         props.isLoggedIn ? handleAddToCart(props.userId, product.id) : guestCart(cart, product, setCart);
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(FaShoppingCart, null), "Add To Cart"));
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_fa__WEBPACK_IMPORTED_MODULE_3__.FaShoppingCart, null), "Add To Cart"));
   }));
 };
 
@@ -2938,7 +2941,6 @@ function GuestCart(props) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     sumTotal(cart);
   }, [cart]);
-  console.log(cart);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
     className: "cart-title"
   }, "Shopping Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -3222,7 +3224,6 @@ __webpack_require__.r(__webpack_exports__);
 
 function SingleUser(props) {
   // LOCAL STATE
-  console.log(props, "this is props");
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     username: '',
     password: '',
@@ -3237,7 +3238,6 @@ function SingleUser(props) {
       const {
         data
       } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/users/${id}`);
-      console.log(data, "this is data");
       setUser(data);
     } catch (error) {
       console.log(error);
@@ -3266,14 +3266,12 @@ function SingleUser(props) {
   };
 
   const handleChange = event => {
-    console.log(event.target.name);
     setUser({ ...user,
       [event.target.name]: event.target.value
     });
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log(props, "this is props");
     fetchUser(props.match.params.id);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {

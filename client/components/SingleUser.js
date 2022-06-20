@@ -4,7 +4,6 @@ import axios from 'axios'
 
 function SingleUser(props) {
   // LOCAL STATE
-  console.log(props, "this is props")
   const [user, setUser] = useState({
     username: '',
     password: '',
@@ -17,7 +16,6 @@ function SingleUser(props) {
   const fetchUser = async (id) => {
     try {
       const {data} = await axios.get(`/api/users/${id}`)
-      console.log(data, "this is data")
       setUser(data)
     }
     catch (error) {
@@ -47,12 +45,10 @@ function SingleUser(props) {
   };
 
   const handleChange = (event) => {
-    console.log(event.target.name)
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
   useEffect(() => {
-    console.log(props, "this is props")
     fetchUser(props.match.params.id)
   }, [])
 
