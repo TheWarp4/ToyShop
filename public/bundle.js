@@ -2423,7 +2423,6 @@ const isProductInCart = (arr, productId) => {
 
 const guestCart = (cart, product, setCart) => {
   const [isInCart, index] = isProductInCart(cart, product.id);
-  console.log(isInCart, index);
 
   if (isInCart) {
     cart[index].itemQuantity += 1;
