@@ -8,8 +8,9 @@ import { connect } from "react-redux";
 const AllProducts = (props) => {
   const [products, setProducts] = useState([{}]);
 
-  const fetchCartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]')
+  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]')
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
+  console.log(cart)
 
   const getProducts = () => {
     try {
@@ -58,12 +59,11 @@ const AllProducts = (props) => {
               onClick={() => {
                 props.isLoggedIn ? (
                 handleAddToCart(props.userId, product.id)
-                ) :
-                (
-                  setCart(prevCart => [...prevCart, product ])
-                  )
-              }}
-            >
+                ) : (
+                  guestCart(cart, product, setCart)
+                )
+                }
+              }>
               <FaShoppingCart />
               Add To Cart
             </button>
@@ -73,6 +73,28 @@ const AllProducts = (props) => {
     </div>
   );
 };
+
+const isProductInCart = (arr, productId) => {
+
+  for (let i = 0; i < arr.length; i++ ){
+    if ((arr[i].id) === (productId)) {
+      console.log('FOUND A MATCH')
+      return [true, i];
+    }
+  }
+  return [false, -1];
+  }
+
+const guestCart = (cart, product, setCart) => {
+  const [isInCart, index] = isProductInCart(cart, product.id);
+  console.log(isInCart,index)
+  if (isInCart) {
+    cart[index].itemQuantity += 1;
+  }
+  else {
+  product.itemQuantity = 1;
+  setCart(prevCart => [...prevCart, product ])}
+  }
 
 const mapState = (state) => {
   return {
