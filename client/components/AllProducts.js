@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
 import { connect } from "react-redux";
 
 const AllProducts = (props) => {
@@ -10,7 +8,6 @@ const AllProducts = (props) => {
 
   const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]')
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
-  console.log(cart)
 
   const getProducts = () => {
     try {
@@ -78,7 +75,6 @@ const isProductInCart = (arr, productId) => {
 
   for (let i = 0; i < arr.length; i++ ){
     if ((arr[i].id) === (productId)) {
-      console.log('FOUND A MATCH')
       return [true, i];
     }
   }
