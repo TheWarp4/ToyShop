@@ -2388,7 +2388,6 @@ const AllProducts = props => {
   });
   const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart") || "[]");
   const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(fetchCartFromLocalStorage);
-  console.log(props);
 
   const getProducts = () => {
     try {
@@ -2475,8 +2474,7 @@ const guestCart = (cart, product, setCart) => {
 
   if (isInCart) {
     cart[index].itemQuantity += 1;
-    console.log(cart);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
   } else {
     product.itemQuantity = 1;
     setCart(prevCart => [...prevCart, product]);
@@ -2585,9 +2583,6 @@ const AuthForm = props => {
     handleSubmit,
     error
   } = props;
-  console.log({
-    displayName
-  });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: event => {
       handleSubmit(event);
@@ -2838,9 +2833,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Checkout(props) {
-  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]');
+  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart") || "[]");
   const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(fetchCartFromLocalStorage);
-  const [total, setTotal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.00);
+  const [total, setTotal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.0);
   const [shoppingCart, setShoppingCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
 
   const fetchLocalCart = () => {
@@ -2851,7 +2846,6 @@ function Checkout(props) {
   };
 
   const handleSavingInfo = () => {
-    console.log(document.getElementsByClassName("gc-email-input")[0]);
     localStorage.setItem("email", `${document.getElementsByClassName("gc-email-input")}`);
   };
 
@@ -3548,7 +3542,6 @@ const OrderHistory = ({
         data
       } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/users/${userId}/orderHistory`);
       setOrderHistory(data);
-      console.log(data);
     })();
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {

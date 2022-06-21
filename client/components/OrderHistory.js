@@ -7,7 +7,6 @@ const OrderHistory = ({ userId }) => {
     (async () => {
       const { data } = await axios.get(`/api/users/${userId}/orderHistory`);
       setOrderHistory(data);
-      console.log(data);
     })();
   }, []);
 
