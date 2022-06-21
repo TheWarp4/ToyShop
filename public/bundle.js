@@ -2591,7 +2591,7 @@ const AuthForm = props => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: event => {
       handleSubmit(event);
-      props.history.push("/home");
+      props.history.push("/products");
     },
     name: name
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
@@ -2619,16 +2619,16 @@ const AuthForm = props => {
 
 const mapLogin = state => {
   return {
-    name: 'login',
-    displayName: 'Login',
+    name: "login",
+    displayName: "Login",
     error: state.auth.error
   };
 };
 
 const mapSignup = state => {
   return {
-    name: 'signup',
-    displayName: 'Sign Up',
+    name: "signup",
+    displayName: "Sign Up",
     error: state.auth.error
   };
 };
