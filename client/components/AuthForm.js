@@ -10,7 +10,10 @@ const AuthForm = props => {
   console.log({displayName})
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={(event) => {
+        handleSubmit(event);
+        props.history.push("/home")
+      }} name={name}>
         <div>
           <label htmlFor="username">
             <small>Username</small>

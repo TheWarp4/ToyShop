@@ -13,6 +13,7 @@ import Checkout from "./components/Checkout";
 import GuestCart from "./components/GuestCart";
 import GuestCheckout from "./components/GuestCheckout";
 import Payment from "./components/Payment";
+import OrderConfirmation from "./components/OrderConfirmation";
 
 /**
  * COMPONENT
@@ -42,6 +43,7 @@ class Routes extends Component {
             <Route path="/cart" exact component={Cart} />
             <Route path="/checkout" exact component={Checkout} />
             <Route exact path="/checkout/payment" component={Payment} />
+            <Route exact path="/checkout/order-complete" component={OrderConfirmation} />
 
           </Switch>
         ) : (
@@ -55,7 +57,7 @@ class Routes extends Component {
             <Route path="/cart" exact component={GuestCart} />
             <Route path="/checkout" exact component={GuestCheckout} />
             <Route exact path="/checkout/payment" component={Payment} />
-
+            <Route exact path="/checkout/order-complete" component={OrderConfirmation} />
           </Switch>
         )}
       </div>
