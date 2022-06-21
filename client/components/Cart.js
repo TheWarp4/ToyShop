@@ -55,12 +55,24 @@ const Cart = (props) => {
 
   const handleDecrement = async (userId, productId) => {
     const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-    await axios.put(
+    const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
+    const [foundProduct] = data.filter((product)=> product.productId == productId)
+    if (foundProduct.itemQuantity == 1) {
+      await axios.delete(
+        `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}`
+      );
+      setShoppingCart([]);
+      setTotal(0.0);
+      fetchShoppingCart(props.userId);
+    }
+    else {
+          await axios.put(
       `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/decrement`
     );
     setShoppingCart([]);
     setTotal(0.0);
     fetchShoppingCart(props.userId);
+    }
   };
 
   const handleIncrement = async (userId, productId) => {
