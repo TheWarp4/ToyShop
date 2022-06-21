@@ -8,7 +8,7 @@ import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
 import AllUsers from "./components/AllUsers";
 import Cart from "./components/Cart";
-import SingleUser from "./components/SingleUser"
+import SingleUser from "./components/SingleUser";
 import Checkout from "./components/Checkout";
 import GuestCart from "./components/GuestCart";
 import GuestCheckout from "./components/GuestCheckout";
@@ -43,12 +43,16 @@ class Routes extends Component {
             <Route path="/cart" exact component={Cart} />
             <Route path="/checkout" exact component={Checkout} />
             <Route exact path="/checkout/payment" component={Payment} />
-            <Route exact path="/checkout/order-complete" component={OrderConfirmation} />
-
+            <Route
+              exact
+              path="/checkout/order-complete"
+              component={OrderConfirmation}
+            />
           </Switch>
         ) : (
           <Switch>
             <Route path="/" exact component={AllProducts} />
+            <Route path="/home" component={AllProducts} />
             <Route path="/products" exact component={AllProducts} />
             {/* <Route path='/' exact component={ Login } /> */}
             <Route path="/login" component={Login} />
@@ -57,7 +61,11 @@ class Routes extends Component {
             <Route path="/cart" exact component={GuestCart} />
             <Route path="/checkout" exact component={GuestCheckout} />
             <Route exact path="/checkout/payment" component={Payment} />
-            <Route exact path="/checkout/order-complete" component={OrderConfirmation} />
+            <Route
+              exact
+              path="/checkout/order-complete"
+              component={OrderConfirmation}
+            />
           </Switch>
         )}
       </div>
