@@ -51,12 +51,8 @@ router.delete("/:productId", async (req, res, next) => {
 
 router.put("/:productId", async (req, res, next) => {
   try {
-    console.log("Hit put products api!");
     const product = await Product.findByPk(req.params.productId);
-    console.log("Found product!", req.body);
-
     await product.update(req.body);
-    console.log("updated product");
     res.json(product);
   } catch (error) {
     next(error);

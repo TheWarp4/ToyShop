@@ -13,7 +13,7 @@ const AllProducts = (props) => {
     window.localStorage.getItem("cart") || "[]"
   );
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
-
+    console.log(props)
   const getProducts = () => {
     try {
       (async () => {

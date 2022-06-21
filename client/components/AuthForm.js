@@ -55,6 +55,7 @@ const mapSignup = state => {
   }
 }
 
+
 const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
@@ -64,9 +65,13 @@ const mapDispatch = dispatch => {
       const password = evt.target.password.value
       dispatch(authenticate(username, password, formName))
 
+
     }
   }
 }
 
+
+
 export const Login = connect(mapLogin, mapDispatch)(AuthForm)
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+

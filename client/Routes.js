@@ -12,6 +12,7 @@ import SingleUser from "./components/SingleUser"
 import Checkout from "./components/Checkout";
 import GuestCart from "./components/GuestCart";
 import GuestCheckout from "./components/GuestCheckout";
+import Payment from "./components/Payment";
 
 /**
  * COMPONENT
@@ -29,7 +30,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            {/* <Redirect to="/home" /> */}
+
             <Route path="/" exact component={AllProducts} />
             <Route path="/products" exact component={AllProducts} />
             <Route path="/users" exact component={AllUsers} />
@@ -40,6 +41,8 @@ class Routes extends Component {
             <Route path="/user/:id" exact component={SingleUser} />
             <Route path="/cart" exact component={Cart} />
             <Route path="/checkout" exact component={Checkout} />
+            <Route exact path="/checkout/payment" component={Payment} />
+
           </Switch>
         ) : (
           <Switch>
@@ -51,6 +54,8 @@ class Routes extends Component {
             <Route path="/products/:id" exact component={SingleProduct} />
             <Route path="/cart" exact component={GuestCart} />
             <Route path="/checkout" exact component={GuestCheckout} />
+            <Route exact path="/checkout/payment" component={Payment} />
+
           </Switch>
         )}
       </div>

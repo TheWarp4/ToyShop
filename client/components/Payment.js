@@ -1,23 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import state from "../../public/states";
 import axios from "axios";
 import { connect } from "react-redux";
 
-function Checkout(props) {
+function Payment(props) {
 
   const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]')
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
   const [total, setTotal] = useState(0.00);
   const [shoppingCart, setShoppingCart] = useState([]);
-
-const fetchLocalCart = () => {
-  cart.map((localProduct) => {
-    setShoppingCart(prevCart => [...prevCart, localProduct])
-    setTotal(prevTotal => prevTotal + parseFloat(localProduct.price)*localProduct.itemQuantity)
-  })
-}
-
 
   const fetchShoppingCart = async (userId) => {
     try {
@@ -29,18 +20,31 @@ const fetchLocalCart = () => {
         setShoppingCart(prevCart => [...prevCart, productInfo.data.singleProduct])
         setTotal(prevTotal => prevTotal + parseFloat(productInfo.data.singleProduct.price)*prodData.itemQuantity)
       })
-
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleOrderStatusChange = async (userId) => {
+    try {
+      await axios.put(`/api/ordersessions/${userId}`, {
+        status: 'completed',
+      })
+      await axios.post(`/api/ordersessions/${userId}`)
+      console.log('done')
+    }
+    catch (error){
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
+    if (props.userId)
     fetchShoppingCart(props.userId)
-    fetchLocalCart()
-  }, [])
+  }, [props.userId])
 
   return (
-    <div id="gc-container">
+<div id="gc-container">
       <div className="container-left">
         <div className="gc-contactinfo-prevuser">
           <div>Contact Information</div>
@@ -50,54 +54,34 @@ const fetchLocalCart = () => {
           placeholder="Email"
           type="text"
         ></input>
-        <div className="gc-shipping-address-title">Shipping Address</div>
-        <div className="gc-name-input">
+        <div className="gc-shipping-address-title">Payment</div>
           <input
-            className="gc-first-name"
-            placeholder="First name"
+            className="gc-card-number"
+            placeholder="Card Number"
+            type="text"
+          />
+        <input
+          className="gc-nameoncard-input"
+          placeholder="Name on Card"
+          type="text"
+        />
+        <div className="gc-exp-cvc-input">
+          <input
+            className="gc-exp-input"
+            placeholder="Expiration Date"
             type="text"
           ></input>
           <input
-            className="gc-last-name"
-            placeholder="Last name"
+            className="gc-CVC-input"
+            placeholder="Security Code"
             type="text"
-          ></input>
+          />
+
         </div>
-        <input
-          className="gc-address-input"
-          placeholder="Address"
-          type="text"
-        ></input>
-        <input
-          className="gc-address-line2-input"
-          placeholder="Apartment, suite, etc. (optional)"
-          type="text"
-        ></input>
-        <input className="gc-city-input" placeholder="City" type="text"></input>
-        <div className="gc-country-state-zip-input">
-          <select id="gc-country-input" name="country" type="text">
-            <option>United States</option>
-          </select>
-          <select id="gc-state-input" type="text">
-            <option>State</option>
-            {state.map((state, i) => (
-              <option key={`gc-${i}`}>{state}</option>
-            ))}
-          </select>
-          <input
-            id="gc-zipcode-input"
-            placeholder="ZIP Code"
-            type="text"
-          ></input>
-        </div>
-        <input
-          className="gc-phone-input"
-          placeholder="Phone"
-          type="text"
-        ></input>
         <button className="gc-payment-btn" onClick={() => {
-          location.href = `/checkout/payment`;
-        }}>Continue to Payment</button>
+          handleOrderStatusChange(props.userId);
+          // location.href = `/checkout/order-complete`;
+        }}>Pay Now</button>
       </div>
 
       <hr className="gc-container-divider"/>
@@ -124,6 +108,11 @@ const fetchLocalCart = () => {
             </div>
             <hr/>
             <div id="gc-subtotal-total-price">
+              <div>Shipping</div>
+            <div>FREE</div>
+            </div>
+            <hr/>
+            <div id="gc-subtotal-total-price">
               <div>Total</div>
             <div>${total.toFixed(2)}USD</div>
             </div>
@@ -132,7 +121,6 @@ const fetchLocalCart = () => {
     </div>
   );
 }
-
 const mapState = (state) => {
   return {
     username: state.auth.username,
@@ -140,5 +128,5 @@ const mapState = (state) => {
     isLoggedIn: !!state.auth.id,
   };
 };
+export default connect(mapState)(Payment);
 
-export default connect(mapState)(Checkout);

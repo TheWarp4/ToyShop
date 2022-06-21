@@ -4,29 +4,40 @@ import { connect } from "react-redux";
 
 const Cart = (props) => {
   const [shoppingCart, setShoppingCart] = useState([]);
-  const [total, setTotal] = useState(0.0);
+  const [total, setTotal] = useState(0.00);
+  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]')
+
+  const [cart, setCart] = useState(fetchCartFromLocalStorage);
+
+  const mergeLocalCart = async (userId) => {
+    try {
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
+      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
+      cart.map(async (prodData) => {
+        await axios.post(`/api/shoppingcarts`, {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: prodData.id,
+          itemQuantity: prodData.itemQuantity,
+        })
+      })
+      localStorage.setItem('cart', JSON.stringify([]))
+
+    }
+      catch (err){
+        console.log(err)
+      }
+    }
 
   const fetchShoppingCart = async (userId) => {
     try {
-      const shopCart = [];
-      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-      const { data } = await axios.get(
-        `/api/shoppingcarts/${getOrderSessionId.data.id}`
-      );
-      data.map(async (prodData) => {
-        const productInfo = await axios.get(
-          `/api/products/${prodData.productId}`
-        );
-        productInfo.data.singleProduct.itemQuantity = prodData.itemQuantity;
-        shopCart.push(productInfo.data.singleProduct);
-        setTotal(
-          (prevTotal) =>
-            prevTotal +
-            parseFloat(productInfo.data.singleProduct.price) *
-              prodData.itemQuantity
-        );
-      });
-      setShoppingCart(shopCart);
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
+      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
+      data.map( async (prodData) => {
+        const productInfo = await axios.get(`/api/products/${prodData.productId}`)
+        productInfo.data.singleProduct.itemQuantity = prodData.itemQuantity
+        setShoppingCart(prevCart => [...prevCart, productInfo.data.singleProduct])
+        setTotal(prevTotal => prevTotal + parseFloat(productInfo.data.singleProduct.price)*prodData.itemQuantity)
+      })
     } catch (error) {
       console.log(error);
     }
@@ -63,10 +74,11 @@ const Cart = (props) => {
   };
 
   useEffect(() => {
-    if (props.userId) {
-      fetchShoppingCart(props.userId);
+    if(props.userId) {
+      mergeLocalCart(props.userId);
+      fetchShoppingCart(props.userId)
     }
-  }, [props.userId]);
+  }, [props.userId, cart])
 
   return (
     <div>
