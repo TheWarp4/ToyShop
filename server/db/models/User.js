@@ -42,6 +42,11 @@ const User = db.define("user", {
     type: Sequelize.ENUM(["admin", "customer"]),
     defaultValue: "customer",
   },
+  imageUrl: {
+    type: Sequelize.TEXT,
+    defaultValue:
+      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F8%2F89%2FPortrait_Placeholder.png&f=1&nofb=1",
+  },
 });
 
 module.exports = User;
