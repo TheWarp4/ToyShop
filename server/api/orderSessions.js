@@ -27,7 +27,7 @@ router.get("/:userId", async (req, res, next) => {
 router.put("/:userId", async (req, res, next) => {
   try {
     const orderSession = await OrderSession.findOne({
-      where: { userId: req.params.userId, status: 'open'  },
+      where: { userId: req.params.userId, status: 'open' },
     });
     await orderSession.update(req.body)
     res.json(orderSession);

@@ -41,6 +41,7 @@ const AllProducts = (props) => {
       `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
     );
     }
+
     else{
       await axios.post("/api/shoppingcarts", {
         orderSessionId: getOrderSessionId.data.id,
@@ -106,6 +107,8 @@ const guestCart = (cart, product, setCart) => {
   const [isInCart, index] = isProductInCart(cart, product.id);
   if (isInCart) {
     cart[index].itemQuantity += 1;
+    console.log(cart)
+    localStorage.setItem('cart', JSON.stringify(cart))
   } else {
     product.itemQuantity = 1;
     setCart((prevCart) => [...prevCart, product]);
