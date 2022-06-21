@@ -48,7 +48,8 @@ const fetchLocalCart = () => {
         <input
           className="gc-email-input"
           placeholder="Email"
-          type="text"
+          type="email"
+          required='required'
         ></input>
         <div className="gc-shipping-address-title">Shipping Address</div>
         <div className="gc-name-input">

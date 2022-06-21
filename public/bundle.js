@@ -2400,11 +2400,21 @@ const AllProducts = props => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
-      await axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/shoppingcarts", {
-        orderSessionId: getOrderSessionId.data.id,
-        productId: productId,
-        itemQuantity: 1
-      });
+      const {
+        data
+      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/shoppingcarts/${getOrderSessionId.data.id}`);
+      const [foundProduct] = data.filter(product => product.productId == productId);
+
+      if (foundProduct) {
+        const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
+        await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`);
+      } else {
+        await axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/shoppingcarts", {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: productId,
+          itemQuantity: 1
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -2694,10 +2704,22 @@ const Cart = props => {
 
   const handleDecrement = async (userId, productId) => {
     const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
-    await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/decrement`);
-    setShoppingCart([]);
-    setTotal(0.0);
-    fetchShoppingCart(props.userId);
+    const {
+      data
+    } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/shoppingcarts/${getOrderSessionId.data.id}`);
+    const [foundProduct] = data.filter(product => product.productId == productId);
+
+    if (foundProduct.itemQuantity == 1) {
+      await axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"](`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}`);
+      setShoppingCart([]);
+      setTotal(0.0);
+      fetchShoppingCart(props.userId);
+    } else {
+      await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/decrement`);
+      setShoppingCart([]);
+      setTotal(0.0);
+      fetchShoppingCart(props.userId);
+    }
   };
 
   const handleIncrement = async (userId, productId) => {
@@ -2838,7 +2860,8 @@ function Checkout(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Contact Information")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-email-input",
     placeholder: "Email",
-    type: "text"
+    type: "email",
+    required: "required"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "gc-shipping-address-title"
   }, "Shipping Address"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {

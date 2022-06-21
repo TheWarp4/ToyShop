@@ -33,15 +33,26 @@ const AllProducts = (props) => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
+    const [foundProduct] = data.filter((product)=> product.productId == productId)
+    if (foundProduct) {
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+    await axios.put(
+      `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
+    );
+    }
+    else{
       await axios.post("/api/shoppingcarts", {
         orderSessionId: getOrderSessionId.data.id,
         productId: productId,
         itemQuantity: 1,
       });
+    }
     } catch (error) {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     getProducts();
