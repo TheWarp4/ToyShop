@@ -2633,7 +2633,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const Cart = props => {
   const [shoppingCart, setShoppingCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const [total, setTotal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.00);
+  const [total, setTotal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.0);
 
   const fetchShoppingCart = async userId => {
     try {
@@ -2658,7 +2658,7 @@ const Cart = props => {
     const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
     await axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"](`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}`);
     setShoppingCart([]);
-    setTotal(0.00);
+    setTotal(0.0);
     fetchShoppingCart(props.userId);
   };
 
@@ -2666,7 +2666,7 @@ const Cart = props => {
     const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
     await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/decrement`);
     setShoppingCart([]);
-    setTotal(0.00);
+    setTotal(0.0);
     fetchShoppingCart(props.userId);
   };
 
@@ -2674,7 +2674,7 @@ const Cart = props => {
     const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
     await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`);
     setShoppingCart([]);
-    setTotal(0.00);
+    setTotal(0.0);
     fetchShoppingCart(props.userId);
   };
 
@@ -3242,6 +3242,66 @@ const mapDispatch = dispatch => {
 
 /***/ }),
 
+/***/ "./client/components/OrderHistory.js":
+/*!*******************************************!*\
+  !*** ./client/components/OrderHistory.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+const OrderHistory = ({
+  userId
+}) => {
+  const [orderHistory, setOrderHistory] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    (async () => {
+      const {
+        data
+      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/users/${userId}/orderHistory`);
+      setOrderHistory(data);
+      console.log(data);
+    })();
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "order-history"
+  }, orderHistory.map(order => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: order.id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Purchased date: ", order.updatedAt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "single-order-history"
+    }, order.products.map(product => {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Order, {
+        product: product,
+        key: product.id
+      });
+    })));
+  }));
+};
+
+const Order = ({
+  product
+}) => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "order-history-product"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    src: product.image
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "$", product.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Quantity: ", product.ShoppingCart.itemQuantity));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OrderHistory);
+
+/***/ }),
+
 /***/ "./client/components/ProductFilterbar.js":
 /*!***********************************************!*\
   !*** ./client/components/ProductFilterbar.js ***!
@@ -3365,18 +3425,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _OrderHistory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OrderHistory */ "./client/components/OrderHistory.js");
+
 
 
 
 function SingleUser(props) {
   // LOCAL STATE
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    username: '',
-    password: '',
-    email: '',
-    cardNum: '',
-    cardExp: '',
-    cardCvn: ''
+    username: "",
+    password: "",
+    email: "",
+    cardNum: "",
+    cardExp: "",
+    cardCvn: ""
   });
 
   const fetchUser = async id => {
@@ -3397,12 +3459,12 @@ function SingleUser(props) {
       alert("EVENT");
       await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/users/${props.match.params.id}`, user);
       setUser({
-        username: '',
-        password: '',
-        email: '',
-        cardNum: '',
-        cardExp: '',
-        cardCvn: ''
+        username: "",
+        password: "",
+        email: "",
+        cardNum: "",
+        cardExp: "",
+        cardCvn: ""
       });
     } catch (err) {
       console.error(err);
@@ -3422,7 +3484,9 @@ function SingleUser(props) {
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "single-user"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Current Username: ", user.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_OrderHistory__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    userId: props.match.params.id
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Current Username: ", user.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
     htmlFor: "username"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("small", null, "Change Username: ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     name: "username",
@@ -3457,7 +3521,7 @@ function SingleUser(props) {
     name: "cardNum",
     onChange: handleChange,
     placeholder: "Card Number",
-    value: user.cardNum || ''
+    value: user.cardNum || ""
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
@@ -3466,7 +3530,7 @@ function SingleUser(props) {
     name: "cardExp",
     onChange: handleChange,
     placeholder: "XX-XX-XXX",
-    value: user.cardExp || ''
+    value: user.cardExp || ""
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
@@ -3475,7 +3539,7 @@ function SingleUser(props) {
     name: "cardCvn",
     onChange: handleChange,
     placeholder: "XXX",
-    value: user.cardCvn || ''
+    value: user.cardCvn || ""
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {

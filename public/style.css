@@ -260,3 +260,27 @@ form div {
   background: #7fc469;
   color: #fff;
 }
+
+.order-history {
+}
+
+.single-order-history {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.single-order-history.hide-history {
+  display: block;
+}
+
+.order-history-product {
+  border-style: solid;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.order-history-product img {
+  width: auto;
+  height: 130px;
+}
