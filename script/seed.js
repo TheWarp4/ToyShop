@@ -24,14 +24,111 @@ const {
   db,
   models: { User, Product, OrderSession, ShoppingCart },
 } = require("../server/db");
-
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
+ *
+ *
  */
+
+
+
+
+
+
+
+
+const populateShoppingCartData = async() => {
+
+
+  // create an array of 3 unique numbers to associate with the 200 products in the database
+  let threeUniqueProductIds = () => {
+      let productNumbersArray = []
+      while (productNumbersArray.length < 3) {
+        // console.log(i)
+        // console.log(productNumbersArray)
+        let randomProductIndex = Math.floor(Math.random() * 199) + 1
+        // console.log(randomProductIndex)
+        // console.log((productNumbersArray.includes(randomProductIndex)))
+         if (productNumbersArray.includes(randomProductIndex)) {
+         continue
+         } else {
+          productNumbersArray.push(randomProductIndex)
+         }
+      }
+      return productNumbersArray
+    }
+    // i in this for loop is associated with userId
+    for (let i = 1; i < 200; i++) {
+      // create orderSession for each user
+      const user = await User.findByPk(i);
+      const orderSession = await OrderSession.create({status: "open"});
+      await user.addOrderSession(orderSession)
+      // loop over 3 product numbers and create a shoppingCart for each userId and productId
+      let productIds = threeUniqueProductIds()
+      for (let j = 0; j < productIds.length; j++) {
+        await ShoppingCart.create({"orderSessionId":i,"productId": productIds[j],"itemQuantity":1})
+      }
+
+      // productIds.forEach((productId) => {
+      //   console.log("productId: ", productId, "i: ", i)
+      // const addShoppingCart = async () => {
+      //   await ShoppingCart.create({"orderSessionId":i,"productId":productId,"itemQuantity":1}
+      //   )}
+      //   addShoppingCart()
+      //  })
+    }
+  }
+
+
+
+  // original: error: relation "ShoppingCarts" does not exist
+  // or  original: error: relation "orderSessions" does not exist
+  // deletes table in database *mind expolsion*
+
+
+
+
+
+
+
+
+
+/*
+ We've separated the `seed` function from the `runSeed` function.
+ This way we can isolate the error handling and exit trapping.
+ The `seed` function is concerned only with modifying the database.
+*/
+async function runSeed() {
+  console.log("seeding...");
+  try {
+    await seed();
+  } catch (err) {
+    console.error(err);
+    process.exitCode = 1;
+  } finally {
+    console.log("closing db connection");
+    await db.close();
+    console.log("db connection closed");
+  }
+}
+
+/*
+  Execute the `seed` function, IF we ran this module directly (`node seed`).
+  `Async` functions always return a promise, so we can use `catch` to handle
+  any errors that might occur inside of `seed`.
+*/
+if (module === require.main) {
+  runSeed();
+}
+
 async function seed() {
-  await db.sync({ force: true }); // clears db and matches models to tables
-  console.log("db synced!");
+await db.sync({ force: true }); // clears db and matches models to tables
+console.log("db synced!");
+
+//await ShoppingCart.create(req.body)
+
+
 
   const populateUserData = async () => {
     try {
@@ -61,7 +158,6 @@ const populateProductData = async () => {
     const price = faker.commerce.price(5, 100)
     const productName = faker.commerce.productName()
     let randomCatagoryNumber = Math.floor(Math.random() * 5)
-    console.log(productDummyData[randomCatagoryNumber][0])
     Product.create({
       price: price,
       description: description,
@@ -97,7 +193,9 @@ const populateProductData = async () => {
     }),
   ]);
 
+  await populateProductData ()
   await populateUserData()
+  await populateShoppingCartData()
 
   const products = await Promise.all([
     Product.create({
@@ -141,7 +239,9 @@ const populateProductData = async () => {
     }),
   ]);
 
-  populateProductData ();
+
+
+
   // User.hasOne(ShoppingCart)
   // ShoppingCart.belongsTo(User)
 
@@ -154,7 +254,7 @@ const populateProductData = async () => {
   await user1.addOrderSession(orderSession1)
   await user2.addOrderSession(orderSession2)
 
-  console.log(`seeded ${users.length} users`);
+  console.log(`seeded lotsa users`);
   console.log(`seeded successfully`);
   return {
     users: {
@@ -162,34 +262,7 @@ const populateProductData = async () => {
       murphy: users[1],
     },
   };
-}
 
-/*
- We've separated the `seed` function from the `runSeed` function.
- This way we can isolate the error handling and exit trapping.
- The `seed` function is concerned only with modifying the database.
-*/
-async function runSeed() {
-  console.log("seeding...");
-  try {
-    await seed();
-  } catch (err) {
-    console.error(err);
-    process.exitCode = 1;
-  } finally {
-    console.log("closing db connection");
-    await db.close();
-    console.log("db connection closed");
-  }
-}
-
-/*
-  Execute the `seed` function, IF we ran this module directly (`node seed`).
-  `Async` functions always return a promise, so we can use `catch` to handle
-  any errors that might occur inside of `seed`.
-*/
-if (module === require.main) {
-  runSeed();
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)

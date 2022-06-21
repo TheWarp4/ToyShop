@@ -16,6 +16,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    console.log(req.body, "THIS IS REQ.BODY")
     res.status(201).send(await ShoppingCart.create(req.body))
   } catch (error) {
     next(error);
