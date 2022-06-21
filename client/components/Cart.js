@@ -28,13 +28,6 @@ const Cart = (props) => {
       }
     }
 
-  // const fetchLocalCart = () => {
-  //   cart.map((localProduct) => {
-  //     setShoppingCart(prevCart => [...prevCart, localProduct])
-  //     setTotal(prevTotal => prevTotal + parseFloat(localProduct.price)*localProduct.itemQuantity)
-  //   })
-  // }
-
   const fetchShoppingCart = async (userId) => {
     try {
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
@@ -51,30 +44,34 @@ const Cart = (props) => {
   };
 
   const deleteFromShoppingCart = async (userId, productId) => {
-    const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-    await axios.delete(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}`)
-    setShoppingCart([])
-    setTotal(0.00)
-    fetchShoppingCart(props.userId)
-  }
+    const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+    await axios.delete(
+      `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}`
+    );
+    setShoppingCart([]);
+    setTotal(0.0);
+    fetchShoppingCart(props.userId);
+  };
 
   const handleDecrement = async (userId, productId) => {
-    const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-    await axios.put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/decrement`)
-    setShoppingCart([])
-    setTotal(0.00)
-    fetchShoppingCart(props.userId)
-
-  }
+    const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+    await axios.put(
+      `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/decrement`
+    );
+    setShoppingCart([]);
+    setTotal(0.0);
+    fetchShoppingCart(props.userId);
+  };
 
   const handleIncrement = async (userId, productId) => {
-    const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-    await axios.put(`/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`)
-    setShoppingCart([])
-    setTotal(0.00)
-    fetchShoppingCart(props.userId)
-
-  }
+    const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+    await axios.put(
+      `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
+    );
+    setShoppingCart([]);
+    setTotal(0.0);
+    fetchShoppingCart(props.userId);
+  };
 
   useEffect(() => {
     if(props.userId) {
@@ -85,49 +82,68 @@ const Cart = (props) => {
 
   return (
     <div>
-      <h1 className='cart-title'>Shopping Cart</h1>
+      <h1 className="cart-title">Shopping Cart</h1>
       <div className="shopping-cart">
         {shoppingCart.map((product) => (
-          <div key = {product.id}>
+          <div key={product.id}>
             <div className="product-info-container">
-              <img className= 'sc-photo' src = {`${product.image}`}
+              <img
+                className="sc-photo"
+                src={`${product.image}`}
                 onClick={() => {
                   location.href = `/products/${product.id}`;
                 }}
-                />
+              />
               <div className="product-details">
                 <div>
-              <div className="sc-product-name">{product.productName}</div>
-              <div className="sc-quantity">
-                <button className="sc-incrementer" onClick={() => {handleDecrement(props.userId, product.id)}}>-</button>
-                {product.itemQuantity}
-                <button className="sc-incrementer" onClick={() => {handleIncrement(props.userId, product.id)}}>+</button>
+                  <div className="sc-product-name">{product.productName}</div>
+                  <div className="sc-quantity">
+                    <button
+                      className="sc-incrementer"
+                      onClick={() => {
+                        handleDecrement(props.userId, product.id);
+                      }}
+                    >
+                      -
+                    </button>
+                    {product.itemQuantity}
+                    <button
+                      className="sc-incrementer"
+                      onClick={() => {
+                        handleIncrement(props.userId, product.id);
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
-              </div>
               <div>${product.price}</div>
-              <button className="delete-sc-item"
+              <button
+                className="delete-sc-item"
                 onClick={() => deleteFromShoppingCart(props.userId, product.id)}
-              >X</button>
+              >
+                X
+              </button>
             </div>
-            <hr className="sc-horizontal-line"/>
+            <hr className="sc-horizontal-line" />
           </div>
         ))}
         <div className="sc-subtotal-checkout">
-        <div className="sc-subtotal">SubTotal: ${total.toFixed(2)}</div>
-        <button className="sc-checkout-btn"
-        onClick={() => {
-                location.href = `/checkout`;
-              }}
-              >
-          Check Out
-        </button>
+          <div className="sc-subtotal">SubTotal: ${total.toFixed(2)}</div>
+          <button
+            className="sc-checkout-btn"
+            onClick={() => {
+              location.href = `/checkout`;
+            }}
+          >
+            Check Out
+          </button>
         </div>
       </div>
     </div>
-
-  )
-}
+  );
+};
 
 const mapState = (state) => {
   return {

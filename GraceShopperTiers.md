@@ -30,29 +30,30 @@
   - [X] *No one else should have access.*
 
 ### As an engineer, I want to:
-- [ ] have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories below.
-  - [ ] *By doing this, you really set yourselves up to tackle many of the points throughout the tiers. In the long run, this will save you, potentially, tons of time.*
-  - [ ] *For example, seed hundreds of products with dummy data so that when you get to the “pagination” user story, you won’t have to worry about adding more products.*
-  - [ ] *Likewise, add a bunch of users with products in their carts so editing the cart can be worked on without already having the “add to cart” functionality built out.*
+- [x] have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories below.
+  - [x] *By doing this, you really set yourselves up to tackle many of the points throughout the tiers. In the long run, this will save you, potentially, tons of time.*
+  - [x] *For example, seed hundreds of products with dummy data so that when you get to the “pagination” user story, you won’t have to worry about adding more products.*
+  - [x] *Likewise, add a bunch of users with products in their carts so editing the cart can be worked on without already having the “add to cart” functionality built out.*
 - [ ] user data to be secure so that no one can unrightfully manipulate information.
+
 ## TIER 2: E-Commerce Essentials
 
 <details><summary>Click Here To Open</summary>
 
 ### As a customer, I want to be able to:
-- [ ] see all products that belong to a certain category.
-  - [ ] *Keep this simple. For example, a product can only belong to one category.*
-- [ ] explore an aesthetically pleasing website so I can easily navigate around and enjoy the experience (UI/UX).
+- [x] see all products that belong to a certain category.
+  - [x] *Keep this simple. For example, a product can only belong to one category.*
+- [x] explore an aesthetically pleasing website so I can easily navigate around and enjoy the experience (UI/UX).
   - [ ] *This includes front-end data validations. For example, if certain fields of a form are required and must be in a specific format, this is obvious to the user.*
-- [ ] have a persistent cart so I can revisit and pick up where I left off.
-  - [ ] *There are two more experiences to consider here. Explore your favorite websites to see what the intended behavior is for the following cases:*
-    - [ ] **Guest-only:** I don't want to create an account, but I want my cart to persist between browser refreshes.
-      - [ ] Look into front-end storage for this one.
+- [x] have a persistent cart so I can revisit and pick up where I left off.
+  - [x] *There are two more experiences to consider here. Explore your favorite websites to see what the intended behavior is for the following cases:*
+    - [x] **Guest-only:** I don't want to create an account, but I want my cart to persist between browser refreshes.
+      - [x] Look into front-end storage for this one.
     - [ ] **Guest-to-logged-in-user:** Initially, I'm not logged in, and I add items to my cart. When I eventually log in, I want to see those same items I added when I was logged in still in my cart, in addition to the items I may have had in my cart from a previous logged in session.
 
 ### As a logged-in customer, I want to be able to:
 - [ ] see my order history so I can remember my previously purchased items and their prices at the time of purchase.
-- [ ] view and edit my user profile so I can update my information when necessary.
+- [x] view and edit my user profile so I can update my information when necessary.
 
 ### As an administrator, I want to be able to:
 - [ ] allow customers to have a variety of payment method options in order to increase checkout conversion.

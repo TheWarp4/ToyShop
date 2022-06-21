@@ -31,6 +31,7 @@ function Payment(props) {
         status: 'completed',
       })
       await axios.post(`/api/ordersessions/${userId}`)
+      console.log('done')
     }
     catch (error){
       console.log(error)
@@ -79,7 +80,7 @@ function Payment(props) {
         </div>
         <button className="gc-payment-btn" onClick={() => {
           handleOrderStatusChange(props.userId);
-          location.href = `/checkout/order-complete`;
+          // location.href = `/checkout/order-complete`;
         }}>Pay Now</button>
       </div>
 

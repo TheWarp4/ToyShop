@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User },
+  models: { User, OrderSession, ShoppingCart, Product },
 } = require("../db");
 module.exports = router;
 
@@ -24,6 +24,30 @@ router.get("/:userId", async (req, res, next) => {
     res.json(singleUser);
   } catch (err) {
     next(err);
+  }
+});
+
+router.get("/:userId/orderHistory", async (req, res, next) => {
+  try {
+    const orderHistory = await User.findOne({
+      where: {
+        id: req.params.userId,
+      },
+      include: [
+        {
+          model: OrderSession,
+          where: {
+            status: "completed",
+          },
+          include: {
+            model: Product,
+          },
+        },
+      ],
+    });
+    res.json(orderHistory.orderSessions);
+  } catch (error) {
+    next(error);
   }
 });
 
