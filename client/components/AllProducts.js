@@ -73,8 +73,10 @@ const AllProducts = (props) => {
                   location.href = `/products/${product.id}`;
                 }}
               />
+              <div className="product-name-price">
               <div>{product.productName}</div>
               <div>${product.price}</div>
+              </div>
               <button
                 onClick={() => {
                   props.isLoggedIn
@@ -89,6 +91,8 @@ const AllProducts = (props) => {
           );
         })}
       </div>
+      <div className="fa-3x">
+  </div>
     </div>
   );
 };
