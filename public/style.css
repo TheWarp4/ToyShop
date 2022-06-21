@@ -127,13 +127,6 @@ form div {
   margin-top: 10px;
 }
 
-.gc-contactinfo-prevuser {
-  display: flex;
-  justify-content: space-between;
-  width: 90.75%;
-  margin-top: 40px;
-}
-
 .gc-email-input, .gc-address-input, .gc-address-line2-input, .gc-city-input, .gc-phone-input, .gc-card-number, .gc-nameoncard-input {
   height: 30px;
   width: 90%;
@@ -298,13 +291,13 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90.75%;
+  width: 90%;
   margin-top: 15px;
   height: 35px;
 }
 
 .gc-exp-input, .gc-CVC-input {
-  height: 35px;
-  width: 48%;
+  height: 30px;
+  width: 49%;
 }
 

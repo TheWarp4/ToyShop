@@ -46,42 +46,49 @@ function Payment(props) {
   return (
 <div id="gc-container">
       <div className="container-left">
-        <div className="gc-contactinfo-prevuser">
-          <div>Contact Information</div>
-        </div>
-        <input
-          className="gc-email-input"
-          placeholder="Email"
-          type="text"
-        ></input>
+        <form
+          method="POST"
+          action="/checkout/order-completet"
+          onSubmit={() => {handleOrderStatusChange(props.userId)}}>
+
         <div className="gc-shipping-address-title">Payment</div>
           <input
             className="gc-card-number"
             placeholder="Card Number"
             type="text"
+            minLength='15'
+            maxLength='16'
+            required
           />
         <input
           className="gc-nameoncard-input"
           placeholder="Name on Card"
           type="text"
+          required
         />
         <div className="gc-exp-cvc-input">
           <input
             className="gc-exp-input"
             placeholder="Expiration Date"
             type="text"
+            required
+            minLength='4'
+            maxLength='6'
           ></input>
           <input
             className="gc-CVC-input"
             placeholder="Security Code"
             type="text"
+            required
+            minLength='3'
+            maxLength='4'
           />
 
         </div>
-        <button className="gc-payment-btn" onClick={() => {
-          handleOrderStatusChange(props.userId);
-          // location.href = `/checkout/order-complete`;
-        }}>Pay Now</button>
+        <a href="/checkout/payment">
+          <input type='submit' value='Pay Now' className="gc-payment-btn"></input>
+        </a>
+        </form>
       </div>
 
       <hr className="gc-container-divider"/>
