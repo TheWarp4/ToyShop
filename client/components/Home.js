@@ -20,7 +20,6 @@ export const Home = (props) => {
     try {
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
       const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
-      console.log(data)
       cart.map(async (prodData) => {
         await axios.post(`/api/shoppingcarts`, {
           orderSessionId: getOrderSessionId.data.id,

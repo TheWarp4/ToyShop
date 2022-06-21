@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 
 const AllProducts = (props) => {
   const [products, setProducts] = useState([{}]);
-
   const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]')
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
 

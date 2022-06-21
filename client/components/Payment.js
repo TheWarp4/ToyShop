@@ -1,9 +1,131 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { connect } from "react-redux";
 
-function Payment() {
+function Payment(props) {
+
+  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]')
+  const [cart, setCart] = useState(fetchCartFromLocalStorage);
+  const [total, setTotal] = useState(0.00);
+  const [shoppingCart, setShoppingCart] = useState([]);
+
+  const fetchShoppingCart = async (userId) => {
+    try {
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
+      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
+      data.map( async (prodData) => {
+        const productInfo = await axios.get(`/api/products/${prodData.productId}`)
+        productInfo.data.singleProduct.itemQuantity = prodData.itemQuantity;
+        setShoppingCart(prevCart => [...prevCart, productInfo.data.singleProduct])
+        setTotal(prevTotal => prevTotal + parseFloat(productInfo.data.singleProduct.price)*prodData.itemQuantity)
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOrderStatusChange = async (userId) => {
+    try {
+      await axios.put(`/api/ordersessions/${userId}`, {
+        status: 'completed',
+      })
+      await axios.post(`/api/ordersessions/${userId}`)
+    }
+    catch (error){
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (props.userId)
+    fetchShoppingCart(props.userId)
+  }, [props.userId])
+
   return (
-    <div>Payment</div>
-  )
-}
+<div id="gc-container">
+      <div className="container-left">
+        <div className="gc-contactinfo-prevuser">
+          <div>Contact Information</div>
+        </div>
+        <input
+          className="gc-email-input"
+          placeholder="Email"
+          type="text"
+        ></input>
+        <div className="gc-shipping-address-title">Payment</div>
+          <input
+            className="gc-card-number"
+            placeholder="Card Number"
+            type="text"
+          />
+        <input
+          className="gc-nameoncard-input"
+          placeholder="Name on Card"
+          type="text"
+        />
+        <div className="gc-exp-cvc-input">
+          <input
+            className="gc-exp-input"
+            placeholder="Expiration Date"
+            type="text"
+          ></input>
+          <input
+            className="gc-CVC-input"
+            placeholder="Security Code"
+            type="text"
+          />
 
-export default Payment
+        </div>
+        <button className="gc-payment-btn" onClick={() => {
+          handleOrderStatusChange(props.userId);
+          location.href = `/checkout/order-complete`;
+        }}>Pay Now</button>
+      </div>
+
+      <hr className="gc-container-divider"/>
+
+      <div className="container-right">
+        <div className="gc-shopping-cart">Shopping Cart</div>
+            {shoppingCart.map((product, i) => (
+              <div key={i}>
+              <div className="gc-product-container">
+                <img className= 'gc-product-photo' src = {product.image}/>
+                <div>
+                {product.productName}
+                </div>
+                <div>
+                  ${product.price*product.itemQuantity}
+                </div>
+              </div>
+              <hr/>
+              </div>
+            ))}
+            <div id="gc-subtotal-total-price">
+              <div>Subtotal</div>
+            <div>${total.toFixed(2)}</div>
+            </div>
+            <hr/>
+            <div id="gc-subtotal-total-price">
+              <div>Shipping</div>
+            <div>FREE</div>
+            </div>
+            <hr/>
+            <div id="gc-subtotal-total-price">
+              <div>Total</div>
+            <div>${total.toFixed(2)}USD</div>
+            </div>
+
+      </div>
+    </div>
+  );
+}
+const mapState = (state) => {
+  return {
+    username: state.auth.username,
+    userId: state.auth.id,
+    isLoggedIn: !!state.auth.id,
+  };
+};
+export default connect(mapState)(Payment);
+

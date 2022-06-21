@@ -135,7 +135,7 @@ form div {
   margin-top: 40px;
 }
 
-.gc-email-input, .gc-address-input, .gc-address-line2-input, .gc-city-input, .gc-phone-input {
+.gc-email-input, .gc-address-input, .gc-address-line2-input, .gc-city-input, .gc-phone-input, .gc-card-number, .gc-nameoncard-input {
   height: 30px;
   width: 90%;
   margin-top: 15px;
@@ -152,7 +152,6 @@ form div {
 .gc-first-name, .gc-last-name {
   height: 30px;
   width: 90.75%;
-
 }
 
 .gc-name-input {
@@ -231,6 +230,22 @@ form div {
   width: 160px;
   color: white;
   background-color: black;
-  border-radius: 10px;
+  border-radius: 3px;
   cursor: pointer;
+  border-color: black;
 }
+
+.gc-exp-cvc-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90.75%;
+  margin-top: 15px;
+  height: 35px;
+}
+
+.gc-exp-input, .gc-CVC-input {
+  height: 35px;
+  width: 48%;
+}
+
