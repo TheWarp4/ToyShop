@@ -146,7 +146,9 @@ const Cart = (props) => {
           <button
             className="sc-checkout-btn"
             onClick={() => {
+              if (shoppingCart.length >= 1) {
               location.href = `/checkout`;
+              }
             }}
           >
             Check Out

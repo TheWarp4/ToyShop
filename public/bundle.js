@@ -2778,7 +2778,9 @@ const Cart = props => {
   }, "SubTotal: $", total.toFixed(2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "sc-checkout-btn",
     onClick: () => {
-      location.href = `/checkout`;
+      if (shoppingCart.length >= 1) {
+        location.href = `/checkout`;
+      }
     }
   }, "Check Out"))));
 };
@@ -2857,11 +2859,14 @@ function Checkout(props) {
     className: "container-left"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "gc-contactinfo-prevuser"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Contact Information")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Contact Information")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    method: "POST",
+    action: "/checkout/payment"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-email-input",
     placeholder: "Email",
     type: "email",
-    required: "required"
+    required: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "gc-shipping-address-title"
   }, "Shipping Address"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2869,15 +2874,18 @@ function Checkout(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-first-name",
     placeholder: "First name",
-    type: "text"
+    type: "text",
+    required: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-last-name",
     placeholder: "Last name",
-    type: "text"
+    type: "text",
+    required: true
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-address-input",
     placeholder: "Address",
-    type: "text"
+    type: "text",
+    required: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-address-line2-input",
     placeholder: "Apartment, suite, etc. (optional)",
@@ -2885,7 +2893,8 @@ function Checkout(props) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-city-input",
     placeholder: "City",
-    type: "text"
+    type: "text",
+    required: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "gc-country-state-zip-input"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
@@ -2894,23 +2903,31 @@ function Checkout(props) {
     type: "text"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", null, "United States")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
     id: "gc-state-input",
-    type: "text"
+    type: "text",
+    required: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", null, "State"), _public_states__WEBPACK_IMPORTED_MODULE_1__["default"].map((state, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
     key: `gc-${i}`
   }, state))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     id: "gc-zipcode-input",
     placeholder: "ZIP Code",
-    type: "text"
+    type: "text",
+    minLength: "5",
+    maxLength: "5",
+    required: true
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-phone-input",
     placeholder: "Phone",
-    type: "text"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "gc-payment-btn",
-    onClick: () => {
-      location.href = `/checkout/payment`;
-    }
-  }, "Continue to Payment")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", {
+    type: "tel",
+    minLength: "10",
+    maxLength: "11",
+    required: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    href: "/checkout/payment"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "submit",
+    value: "Continue to Payment",
+    className: "gc-payment-btn"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", {
     className: "gc-container-divider"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "container-right"
@@ -3567,38 +3584,49 @@ function Payment(props) {
     id: "gc-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "container-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    method: "POST",
+    action: "/checkout/order-completet",
+    onSubmit: () => {
+      handleOrderStatusChange(props.userId);
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "gc-contactinfo-prevuser"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Contact Information")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    className: "gc-email-input",
-    placeholder: "Email",
-    type: "text"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "gc-shipping-address-title"
   }, "Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-card-number",
     placeholder: "Card Number",
-    type: "text"
+    type: "text",
+    minLength: "15",
+    maxLength: "16",
+    required: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-nameoncard-input",
     placeholder: "Name on Card",
-    type: "text"
+    type: "text",
+    required: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "gc-exp-cvc-input"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-exp-input",
     placeholder: "Expiration Date",
-    type: "text"
+    type: "text",
+    required: true,
+    minLength: "4",
+    maxLength: "6"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-CVC-input",
     placeholder: "Security Code",
-    type: "text"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "gc-payment-btn",
-    onClick: () => {
-      handleOrderStatusChange(props.userId); // location.href = `/checkout/order-complete`;
-    }
-  }, "Pay Now")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", {
+    type: "text",
+    required: true,
+    minLength: "3",
+    maxLength: "4"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    href: "/checkout/payment"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "submit",
+    value: "Pay Now",
+    className: "gc-payment-btn"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", {
     className: "gc-container-divider"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "container-right"
