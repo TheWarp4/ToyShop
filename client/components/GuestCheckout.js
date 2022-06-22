@@ -22,10 +22,14 @@ function GuestCheckout() {
     <div id="gc-container">
       <div className="container-left">
         <div className="gc-contactinfo-prevuser">
-          <div>Contact Information</div>
+          <div className="gc-contact-info-header">Contact Information</div>
           <Link to="/login">Already Have an Account? Log in</Link>
         </div>
+        <form
+          method="POST"
+          action="/checkout/payment"
 
+          >
         <input
           className="gc-email-input"
           placeholder="Email"
@@ -76,11 +80,12 @@ function GuestCheckout() {
           placeholder="Phone"
           type="text"
         ></input>
-
+            <a href="/checkout/payment">
+          <input type='submit' value='Continue to Payment' className="gc-payment-btn" ></input>
+        </a>
+        </form>
       </div>
-
       <hr className="gc-container-divider"/>
-
       <div className="container-right">
         <div className="gc-shopping-cart">Shopping Cart</div>
             {cart.map((product, i) => (
