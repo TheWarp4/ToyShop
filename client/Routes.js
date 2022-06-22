@@ -8,10 +8,13 @@ import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
 import AllUsers from "./components/AllUsers";
 import Cart from "./components/Cart";
-import SingleUser from "./components/SingleUser"
+import SingleUser from "./components/SingleUser";
 import Checkout from "./components/Checkout";
 import GuestCart from "./components/GuestCart";
 import GuestCheckout from "./components/GuestCheckout";
+import Payment from "./components/Payment";
+import OrderConfirmation from "./components/OrderConfirmation";
+import GuestPayment from "./components/GuestPayment";
 
 /**
  * COMPONENT
@@ -29,7 +32,6 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            {/* <Redirect to="/home" /> */}
             <Route path="/" exact component={AllProducts} />
             <Route path="/users" exact component={AllUsers}/>
             <Route path="/products" exact component={AllProducts} />
@@ -41,10 +43,17 @@ class Routes extends Component {
             <Route path="/user/:id" exact component={SingleUser} />
             <Route path="/cart" exact component={Cart} />
             <Route path="/checkout" exact component={Checkout} />
+            <Route exact path="/checkout/payment" component={Payment} />
+            <Route
+              exact
+              path="/checkout/order-complete"
+              component={OrderConfirmation}
+            />
           </Switch>
         ) : (
           <Switch>
             <Route path="/" exact component={AllProducts} />
+            <Route path="/home" component={AllProducts} />
             <Route path="/products" exact component={AllProducts} />
             {/* <Route path='/' exact component={ Login } /> */}
             <Route path="/login" component={Login} />
@@ -52,6 +61,12 @@ class Routes extends Component {
             <Route path="/products/:id" exact component={SingleProduct} />
             <Route path="/cart" exact component={GuestCart} />
             <Route path="/checkout" exact component={GuestCheckout} />
+            <Route exact path="/checkout/payment" component={GuestPayment} />
+            <Route
+              exact
+              path="/checkout/order-complete"
+              component={OrderConfirmation}
+            />
           </Switch>
         )}
       </div>

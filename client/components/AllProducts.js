@@ -4,20 +4,46 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { connect } from "react-redux";
+import ProductFilterbar from "./ProductFilterbar";
+import ReactPaginate from "react-paginate";
 
 const AllProducts = (props) => {
   const [products, setProducts] = useState([{}]);
-
+  const [filter, setFilter] = useState({ type: "" });
   const fetchCartFromLocalStorage = JSON.parse(
     window.localStorage.getItem("cart") || "[]"
   );
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
 
+  // pagination:
+
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const productsPerPage = 24;
+
+  const paginate = (data) => {
+    let numberOfProductsVistited = page * productsPerPage;
+    setTotalPages(Math.ceil(data.length / productsPerPage));
+    return data.slice(
+      numberOfProductsVistited,
+      numberOfProductsVistited + productsPerPage
+    );
+  };
+
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
+
   const getProducts = () => {
     try {
       (async () => {
-        const { data } = await axios.get("/api/products");
-        setProducts(data);
+        if (filter.type && filter.type !== "ALL") {
+          const { data } = await axios.get(`/api/products/${filter.type}`);
+          setProducts(paginate(data.filteredProducts));
+        } else {
+          const { data } = await axios.get("/api/products");
+          setProducts(paginate(data));
+        }
       })();
     } catch (error) {
       console.error(error);
@@ -27,11 +53,45 @@ const AllProducts = (props) => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-      await axios.post("/api/shoppingcarts", {
-        orderSessionId: getOrderSessionId.data.id,
-        productId: productId,
-        itemQuantity: 1,
+      const { data } = await axios.get(
+        `/api/shoppingcarts/${getOrderSessionId.data.id}`
+      );
+      const [foundProduct] = data.filter(
+        (product) => product.productId == productId
+      );
+      if (foundProduct) {
+        const getOrderSessionId = await axios.get(
+          `/api/ordersessions/${userId}`
+        );
+        await axios.put(
+          `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
+        );
+      } else {
+        await axios.post("/api/shoppingcarts", {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: productId,
+          itemQuantity: 1,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const mergeLocalCart = async (userId) => {
+    try {
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+      const { data } = await axios.get(
+        `/api/shoppingcarts/${getOrderSessionId.data.id}`
+      );
+      cart.map(async (prodData) => {
+        await axios.post(`/api/shoppingcarts`, {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: prodData.id,
+          itemQuantity: prodData.itemQuantity,
+        });
       });
+      localStorage.setItem("cart", JSON.stringify([]));
     } catch (error) {
       console.log(error);
     }
@@ -39,36 +99,56 @@ const AllProducts = (props) => {
 
   useEffect(() => {
     getProducts();
+    if (props.userId) {
+      mergeLocalCart(props.userId);
+    }
     localStorage.setItem("cart", JSON.stringify(cart));
-  }, [props.userId, cart]);
+  }, [props.userId, cart, filter, page]);
 
   return (
-    <div className="allProducts">
-      {products.map((product, i) => {
-        return (
-          <div className="product-info" key={i}>
-            <img
-              className="products-photo"
-              src={product.image}
-              onClick={() => {
-                location.href = `/products/${product.id}`;
-              }}
-            />
-            <div>{product.productName}</div>
-            <div>${product.price}</div>
-            <button
-              onClick={() => {
-                props.isLoggedIn
-                  ? handleAddToCart(props.userId, product.id)
-                  : guestCart(cart, product, setCart);
-              }}
-            >
-              <FaShoppingCart />
-              Add To Cart
-            </button>
-          </div>
-        );
-      })}
+    <div>
+      <ProductFilterbar filter={filter} setFilter={setFilter} />
+      <div className="allProducts">
+        {products.map((product, i) => {
+          return (
+            <div className="product-info" key={i}>
+              <img
+                className="products-photo"
+                src={product.image}
+                onClick={() => {
+                  location.href = `/products/${product.id}`;
+                }}
+              />
+              <div className="product-name-price">
+                <div>{product.productName}</div>
+                <div>${product.price}</div>
+              </div>
+              <button
+                onClick={() => {
+                  props.isLoggedIn
+                    ? handleAddToCart(props.userId, product.id)
+                    : guestCart(cart, product, setCart);
+                }}
+              >
+                <FaShoppingCart />
+                Add To Cart
+              </button>
+            </div>
+          );
+        })}
+      </div>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={totalPages}
+        onPageChange={changePage}
+        containerClassName={"navigationButtons"}
+        previousLinkClassName={"previousButton"}
+        nextLinkClassName={"nextButton"}
+        disabledClassName={"navigationDisabled"}
+        activeClassName={"navigationActive"}
+      />
+      ;<div className="fa-3x"></div>
     </div>
   );
 };
@@ -86,6 +166,7 @@ const guestCart = (cart, product, setCart) => {
   const [isInCart, index] = isProductInCart(cart, product.id);
   if (isInCart) {
     cart[index].itemQuantity += 1;
+    localStorage.setItem("cart", JSON.stringify(cart));
   } else {
     product.itemQuantity = 1;
     setCart((prevCart) => [...prevCart, product]);

@@ -4,18 +4,18 @@ import { Link } from "react-router-dom";
 
 import AddProduct from "./AddProduct";
 import AllUsers from "./AllUsers";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 /**
  * COMPONENT
  */
 export const Home = (props) => {
-  const { username } = props;
-  const { id } = props;
+
 
   return (
     <div>
-      <h3>Welcome, {username}</h3>
-
+      <h3>Welcome, {props.username}</h3>
       <AddProduct />
       <div>
         <div>
@@ -29,10 +29,12 @@ export const Home = (props) => {
 /**
  * CONTAINER
  */
+
+
 const mapState = (state) => {
   return {
     username: state.auth.username,
-    id: state.auth.id,
+    userId: state.auth.id,
   };
 };
 
