@@ -9948,11 +9948,10 @@ const OrderHistory = ({
       const {
         data
       } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/users/${userId}/orderHistory`);
-      setOrderHistory(data);
-      console.log(data);
+      if (data) setOrderHistory(data);
     })();
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return orderHistory.length === 0 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "order-history"
   }, orderHistory.map(order => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {

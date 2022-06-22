@@ -6,12 +6,11 @@ const OrderHistory = ({ userId }) => {
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(`/api/users/${userId}/orderHistory`);
-      setOrderHistory(data);
-      console.log(data);
+      if (data) setOrderHistory(data);
     })();
   }, []);
 
-  return (
+  return orderHistory.length === 0 ? null : (
     <div className="order-history">
       {orderHistory.map((order) => {
         return (
