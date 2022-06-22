@@ -8,7 +8,12 @@ const DeleteProduct = (props) => {
       let text = "Warning! Pressing OK will delete the product from the database\nPress OK to confirm."
       if (confirm(text) == true) {
       event.preventDefault();
-      await axios.delete(`/api/products/${props.product.id}`);
+      const token = window.localStorage.getItem("token");
+      await axios.delete(`/api/products/${props.product.id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       props.history.push("/");
       }
     } catch (error) {

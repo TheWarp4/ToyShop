@@ -24,17 +24,20 @@ const populateUserData = async () => {
       username: "cody",
       password: "123",
       email: "cody123@gmail.com",
+      isAdmin: false,
     }),
     User.create({
       username: "murphy",
       password: "123",
       email: "murphy123@gmail.com",
+      isAdmin: false,
     }),
     User.create({
       username: "admin",
       password: "123",
       email: "admin@gmail.com",
       type: "admin",
+      isAdmin: true,
     }),
   ]);
 

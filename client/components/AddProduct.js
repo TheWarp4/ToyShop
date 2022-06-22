@@ -15,7 +15,11 @@ const AddProduct = (props) => {
   const handleSubmit = async function (event) {
     try {
       event.preventDefault();
-      const { data } = await axios.post("/api/products", product);
+      const token = window.localStorage.getItem("token");
+      await axios.post("/api/products", {
+        authorization: token,
+        product: product,
+      });
       setProduct({
         productName: "",
         price: 0,

@@ -2,9 +2,10 @@ const router = require("express").Router();
 const {
   models: { User, OrderSession, ShoppingCart, Product },
 } = require("../db");
+const { requireToken } = require("./gatekeepingMiddleWare");
 module.exports = router;
 
-router.get("/", async (req, res, next) => {
+router.get("/", requireToken, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
@@ -12,13 +13,14 @@ router.get("/", async (req, res, next) => {
       // send everything to anyone who asks!
       attributes: ["id", "username", "email", "createdAt", "imageUrl"],
     });
+
     res.json(users);
   } catch (err) {
     next(err);
   }
 });
 
-router.get("/:userId", async (req, res, next) => {
+router.get("/:userId", requireToken, async (req, res, next) => {
   try {
     const singleUser = await User.findByPk(req.params.userId);
     res.json(singleUser);
