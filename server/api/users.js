@@ -45,6 +45,10 @@ router.get("/:userId/orderHistory", async (req, res, next) => {
         },
       ],
     });
+    if (!orderHistory) {
+      res.json([]);
+      return;
+    }
     res.json(orderHistory.orderSessions);
   } catch (error) {
     next(error);
