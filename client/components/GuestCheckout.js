@@ -4,10 +4,12 @@ import state from "../../public/states";
 
 function GuestCheckout() {
 
+
   const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]')
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
   const [total, setTotal] = useState(0.00);
-  const [emailValue, setEmailValue] = useState('')
+  const [emailValue, setEmailValue] = useState('');
+
   const sumTotal = (arr) => {
     setTotal(arr.reduce((accum, element) => {
       return accum += element.price*element.itemQuantity
@@ -15,7 +17,7 @@ function GuestCheckout() {
   }
 
   const handleSavingInfo = () => {
-    localStorage.setItem("email", JSON.stringify(emailValue));
+    localStorage.setItem("email", emailValue);
 
   }
 

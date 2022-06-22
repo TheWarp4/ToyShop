@@ -21,7 +21,7 @@ const fetchLocalCart = () => {
 }
 
 const handleSavingInfo = () => {
-  localStorage.setItem("email", JSON.stringify(emailValue));
+  localStorage.setItem("email", emailValue);
 
 }
 

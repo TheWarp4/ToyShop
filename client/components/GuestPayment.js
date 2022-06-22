@@ -94,7 +94,7 @@ function GuestPayment(props) {
                 {product.productName}
                 </div>
                 <div>
-                  ${product.price*product.itemQuantity}
+                  ${(product.price*product.itemQuantity).toFixed(2)}
                 </div>
               </div>
               <hr/>

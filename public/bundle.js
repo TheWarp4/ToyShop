@@ -9271,7 +9271,7 @@ function Checkout(props) {
   };
 
   const handleSavingInfo = () => {
-    localStorage.setItem("email", JSON.stringify(emailValue));
+    localStorage.setItem("email", emailValue);
   };
 
   const fetchShoppingCart = async userId => {
@@ -9683,7 +9683,7 @@ function GuestCheckout() {
   };
 
   const handleSavingInfo = () => {
-    localStorage.setItem("email", JSON.stringify(emailValue));
+    localStorage.setItem("email", emailValue);
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -9898,7 +9898,7 @@ function GuestPayment(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     className: "gc-product-photo",
     src: product.image
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "$", product.price * product.itemQuantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "$", (product.price * product.itemQuantity).toFixed(2))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "gc-subtotal-total-price"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Subtotal"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "$", total.toFixed(2))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "gc-subtotal-total-price"
@@ -10061,6 +10061,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function OrderConfirmation() {
+  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]');
+  const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(fetchCartFromLocalStorage);
+  console.log(cart);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    localStorage.removeItem('cart');
+  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     id: "oc-logo",
     src: "https://as2.ftcdn.net/v2/jpg/01/58/01/63/1000_F_158016300_pcGwEK4sMMIFCQI7X1jeNyIad2cVNnd3.jpg"
@@ -10068,7 +10074,7 @@ function OrderConfirmation() {
     id: "oc-thank-you-text"
   }, "Thank you!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
     className: "oc-confirmation-sent-text"
-  }, "A confirmation has been sent to your email, $", localStorage.getItem("email")));
+  }, "A confirmation has been sent to your email, ", localStorage.getItem("email")));
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OrderConfirmation);
@@ -10206,7 +10212,7 @@ function Payment(props) {
       handleOrderStatusChange(props.userId, event);
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "gc-shipping-address-title"
+    className: "gc-payment-title"
   }, "Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-card-number",
     placeholder: "Card Number",
