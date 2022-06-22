@@ -20,6 +20,10 @@ form div {
   display: inline-block;
 }
 
+.bar {
+  color: #7fc469;
+}
+
 .single-product {
   align-items: center;
   padding-left: 40%;
@@ -70,6 +74,11 @@ form div {
   height: 280px;
   align-items: center;
   flex: 1;
+  margin-bottom:10px;
+}
+
+.login-button {
+  width: 30px;
 }
 
 .product-info-container {
@@ -85,6 +94,17 @@ form div {
   display: flex;
   flex-direction: column;
   /* margin-left: 300px; */
+}
+
+.product-name-price {
+  color: blue;
+  background-color: pink;
+  text-align: center;
+}
+
+.filterBar {
+  color: blue;
+  background-color: lightpink;
 }
 
 .sc-photo {

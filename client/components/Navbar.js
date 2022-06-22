@@ -9,7 +9,7 @@ const Navbar = ({ handleClick, isLoggedIn, id }) => (
   <div>
     <nav>
       <div className="navbar-container">
-        <h1>Toy Store</h1>
+        <h1>𝕋𝕙𝕖 𝕋𝕠𝕪 ℂ𝕙𝕖𝕤𝕥'</h1>
         <Link to="/home">
           <BiHomeAlt className="home-button" size={30} />
         </Link>
@@ -35,7 +35,7 @@ const Navbar = ({ handleClick, isLoggedIn, id }) => (
             <Link to="/login" className="login-button">
               Login
             </Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/signup">𝕊𝕚𝕘𝕟 𝕦𝕡</Link>
           </>
         )}
       </div>

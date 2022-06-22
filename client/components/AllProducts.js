@@ -13,7 +13,7 @@ const AllProducts = (props) => {
     window.localStorage.getItem("cart") || "[]"
   );
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
-  console.log(props);
+
   const getProducts = () => {
     try {
       (async () => {
@@ -29,6 +29,24 @@ const AllProducts = (props) => {
       console.error(error);
     }
   };
+
+  const mergeLocalCart = async (userId) => {
+    try {
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
+      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
+      cart.map(async (prodData) => {
+        await axios.post(`/api/shoppingcarts`, {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: prodData.id,
+          itemQuantity: prodData.itemQuantity,
+        })
+      })
+      localStorage.setItem('cart', JSON.stringify([]))
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleAddToCart = async (userId, productId) => {
     try {
@@ -60,6 +78,7 @@ const AllProducts = (props) => {
 
   useEffect(() => {
     getProducts();
+    mergeLocalCart(props.userId);
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [props.userId, cart, filter]);
 
@@ -77,8 +96,10 @@ const AllProducts = (props) => {
                   location.href = `/products/${product.id}`;
                 }}
               />
+              <div className="product-name-price">
               <div>{product.productName}</div>
               <div>${product.price}</div>
+              </div>
               <button
                 onClick={() => {
                   props.isLoggedIn
@@ -93,6 +114,8 @@ const AllProducts = (props) => {
           );
         })}
       </div>
+      <div className="fa-3x">
+  </div>
     </div>
   );
 };
