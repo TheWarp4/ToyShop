@@ -8831,7 +8831,7 @@ const AllProducts = props => {
           itemQuantity: prodData.itemQuantity
         });
       });
-      localStorage.setItem('cart', JSON.stringify([]));
+      localStorage.setItem("cart", JSON.stringify([]));
     } catch (error) {
       console.log(error);
     }
@@ -8888,8 +8888,7 @@ const guestCart = (cart, product, setCart) => {
 
   if (isInCart) {
     cart[index].itemQuantity += 1;
-    console.log(cart);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
   } else {
     product.itemQuantity = 1;
     setCart(prevCart => [...prevCart, product]);
@@ -9000,9 +8999,6 @@ const AuthForm = props => {
     handleSubmit,
     error
   } = props;
-  console.log({
-    displayName
-  });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: event => {
       handleSubmit(event);
@@ -9255,9 +9251,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Checkout(props) {
-  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]');
+  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart") || "[]");
   const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(fetchCartFromLocalStorage);
-  const [total, setTotal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.00);
+  const [total, setTotal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.0);
   const [shoppingCart, setShoppingCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
 
   const fetchLocalCart = () => {
@@ -9268,7 +9264,6 @@ function Checkout(props) {
   };
 
   const handleSavingInfo = () => {
-    console.log(document.getElementsByClassName("gc-email-input")[0]);
     localStorage.setItem("email", `${document.getElementsByClassName("gc-email-input")}`);
   };
 
@@ -10222,6 +10217,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function SingleProduct(props) {
   // LOCAL STATE
   const [product, setProduct] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}); // FETCH SINGLE PRODUCT AXIOS REQ
@@ -10245,12 +10241,16 @@ function SingleProduct(props) {
     className: "single-product"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     src: product.image
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Name: ", product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Description: ", product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Category: ", product.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Price: ", product.price), props.userType === "customer" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DeleteProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "single-product-info"
+  }, product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Category: ", product.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Price: $ ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", {
+    className: "single-product-info"
+  }, product.price))), props.userType !== "admin" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DeleteProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
     product: product,
     history: props.history
-  }), props.userType === "customer" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_EditProduct__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_EditProduct__WEBPACK_IMPORTED_MODULE_2__["default"], {
     product: product
-  }));
+  })));
 }
 
 const mapState = state => {

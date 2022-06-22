@@ -33,22 +33,26 @@ const AllProducts = (props) => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
-    const [foundProduct] = data.filter((product)=> product.productId == productId)
-    if (foundProduct) {
-      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-    await axios.put(
-      `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
-    );
-    }
-
-    else{
-      await axios.post("/api/shoppingcarts", {
-        orderSessionId: getOrderSessionId.data.id,
-        productId: productId,
-        itemQuantity: 1,
-      });
-    }
+      const { data } = await axios.get(
+        `/api/shoppingcarts/${getOrderSessionId.data.id}`
+      );
+      const [foundProduct] = data.filter(
+        (product) => product.productId == productId
+      );
+      if (foundProduct) {
+        const getOrderSessionId = await axios.get(
+          `/api/ordersessions/${userId}`
+        );
+        await axios.put(
+          `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
+        );
+      } else {
+        await axios.post("/api/shoppingcarts", {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: productId,
+          itemQuantity: 1,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -56,26 +60,27 @@ const AllProducts = (props) => {
 
   const mergeLocalCart = async (userId) => {
     try {
-      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+      const { data } = await axios.get(
+        `/api/shoppingcarts/${getOrderSessionId.data.id}`
+      );
       cart.map(async (prodData) => {
         await axios.post(`/api/shoppingcarts`, {
           orderSessionId: getOrderSessionId.data.id,
           productId: prodData.id,
           itemQuantity: prodData.itemQuantity,
-        })
-      })
-      localStorage.setItem('cart', JSON.stringify([]))
+        });
+      });
+      localStorage.setItem("cart", JSON.stringify([]));
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  };
 
   useEffect(() => {
     getProducts();
-    if (props.userId){
-    mergeLocalCart(props.userId);
+    if (props.userId) {
+      mergeLocalCart(props.userId);
     }
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [props.userId, cart, filter]);
@@ -95,8 +100,8 @@ const AllProducts = (props) => {
                 }}
               />
               <div className="product-name-price">
-              <div>{product.productName}</div>
-              <div>${product.price}</div>
+                <div>{product.productName}</div>
+                <div>${product.price}</div>
               </div>
               <button
                 onClick={() => {
@@ -112,8 +117,7 @@ const AllProducts = (props) => {
           );
         })}
       </div>
-      <div className="fa-3x">
-  </div>
+      <div className="fa-3x"></div>
     </div>
   );
 };
@@ -131,8 +135,7 @@ const guestCart = (cart, product, setCart) => {
   const [isInCart, index] = isProductInCart(cart, product.id);
   if (isInCart) {
     cart[index].itemQuantity += 1;
-    console.log(cart)
-    localStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem("cart", JSON.stringify(cart));
   } else {
     product.itemQuantity = 1;
     setCart((prevCart) => [...prevCart, product]);
