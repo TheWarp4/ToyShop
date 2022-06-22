@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import AddProduct from "./AddProduct";
 import AllUsers from "./AllUsers";
 
@@ -13,6 +15,7 @@ export const Home = (props) => {
   return (
     <div>
       <h3>Welcome, {username}</h3>
+
       <AddProduct />
       <div>
         <div>

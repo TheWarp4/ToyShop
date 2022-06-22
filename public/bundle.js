@@ -2139,6 +2139,10 @@ class Routes extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       exact: true,
       component: _components_AllProducts__WEBPACK_IMPORTED_MODULE_5__["default"]
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+      path: "/users",
+      exact: true,
+      component: _components_AllUsers__WEBPACK_IMPORTED_MODULE_7__["default"]
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
       path: "/products",
       exact: true,
       component: _components_AllProducts__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -2258,9 +2262,11 @@ const AddProduct = props => {
   const handleSubmit = async function (event) {
     try {
       event.preventDefault();
-      const {
-        data
-      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/products", product);
+      const token = window.localStorage.getItem("token");
+      await axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/products", {
+        authorization: token,
+        product: product
+      });
       setProduct({
         productName: "",
         price: 0,
@@ -2358,7 +2364,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const AllProducts = props => {
   const [products, setProducts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{}]);
-  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem('cart') || '[]');
+  const fetchCartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart") || "[]");
   const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(fetchCartFromLocalStorage);
 
   const getProducts = () => {
@@ -2377,7 +2383,7 @@ const AllProducts = props => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
-      await axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/shoppingcarts', {
+      await axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/shoppingcarts", {
         orderSessionId: getOrderSessionId.data.id,
         productId: productId,
         itemQuantity: 1
@@ -2389,7 +2395,7 @@ const AllProducts = props => {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     getProducts();
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
   }, [props.userId, cart]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "allProducts"
@@ -2470,9 +2476,14 @@ const AllUsers = props => {
   const getUsers = () => {
     try {
       (async () => {
+        const token = window.localStorage.getItem("token");
         const {
           data
-        } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/users");
+        } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/users", {
+          headers: {
+            authorization: token
+          }
+        });
         setUsers(data);
       })();
     } catch (error) {
@@ -2771,7 +2782,12 @@ const DeleteProduct = props => {
   const handleClick = async function (event) {
     try {
       event.preventDefault();
-      await axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"](`/api/products/${props.product.id}`);
+      const token = window.localStorage.getItem("token");
+      await axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"](`/api/products/${props.product.id}`, {
+        headers: {
+          authorization: token
+        }
+      });
       props.history.push("/");
     } catch (error) {
       console.log(error);
@@ -2810,23 +2826,25 @@ const EditProduct = props => {
   const [product, setProduct] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     productName: "",
     price: 0,
-    category: "LEGOS",
+    category: "",
+    image: "",
     description: ""
   });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {});
 
   const handleSubmit = async function (event) {
     try {
-      event.preventDefault(); // parse price to Int
-
-      product.price = parseInt(product.price);
-      const {
-        data
-      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/products/${props.product.id}`, product);
+      event.preventDefault();
+      const token = window.localStorage.getItem("token");
+      await axios__WEBPACK_IMPORTED_MODULE_1___default().put(`/api/products/${props.product.id}`, {
+        authorization: token,
+        product: product
+      });
       setProduct({
         productName: "",
         price: 0,
         category: "",
-        // image: "",
+        image: "",
         description: ""
       });
     } catch (err) {
@@ -2868,6 +2886,12 @@ const EditProduct = props => {
   }, "TRANSFORMERS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
     value: "JURASSIC"
   }, "JURASSIC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "image",
+    onChange: handleChange,
+    value: product.image
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
     htmlFor: "description"
   }, "Description:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     name: "description",
@@ -3118,6 +3142,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /**
  * COMPONENT
  */
@@ -3273,10 +3298,10 @@ function SingleProduct(props) {
     className: "single-product"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     src: product.image
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Name: ", product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Description: ", product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Category: ", product.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Price: ", product.price), props.userType === "customer" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DeleteProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Name: ", product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Description: ", product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Category: ", product.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Price: ", product.price), props.userType !== "admin" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DeleteProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
     product: product,
     history: props.history
-  }), props.userType === "customer" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_EditProduct__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }), props.userType !== "admin" || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_EditProduct__WEBPACK_IMPORTED_MODULE_2__["default"], {
     product: product
   }));
 }

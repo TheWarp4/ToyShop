@@ -6,24 +6,26 @@ const EditProduct = (props) => {
   const [product, setProduct] = useState({
     productName: "",
     price: 0,
-    category: "LEGOS",
+    category: "",
+    image: "",
     description: "",
   });
+
+  useEffect(() => {});
+
   const handleSubmit = async function (event) {
     try {
       event.preventDefault();
-      // parse price to Int
-      product.price = parseInt(product.price);
-
-      const { data } = await axios.put(
-        `/api/products/${props.product.id}`,
-        product
-      );
+      const token = window.localStorage.getItem("token");
+      await axios.put(`/api/products/${props.product.id}`, {
+        authorization: token,
+        product: product,
+      });
       setProduct({
         productName: "",
         price: 0,
         category: "",
-        // image: "",
+        image: "",
         description: "",
       });
     } catch (err) {
@@ -54,8 +56,8 @@ const EditProduct = (props) => {
         <option value="JURASSIC">JURASSIC</option>
       </select>
 
-      {/* <label htmlFor="image"></label>
-      <input name="image" onChange={handleChange} value={product.image} /> */}
+      <label htmlFor="image"></label>
+      <input name="image" onChange={handleChange} value={product.image} />
 
       <label htmlFor="description">Description:</label>
       <input

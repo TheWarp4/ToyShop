@@ -30,10 +30,10 @@ function SingleProduct(props) {
       <div>Description: {product.description}</div>
       <div>Category: {product.category}</div>
       <div>Price: {product.price}</div>
-      {props.userType === "customer" || (
+      {props.userType !== "admin" || (
         <DeleteProduct product={product} history={props.history} />
       )}
-      {props.userType === "customer" || <EditProduct product={product} />}
+      {props.userType !== "admin" || <EditProduct product={product} />}
     </div>
   );
 }

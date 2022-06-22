@@ -1,24 +1,20 @@
- const { faker } = require('@faker-js/faker')
+const { faker } = require("@faker-js/faker");
 
- faker.commerce.productDescription()
- faker.commerce.price(100, 200)
- faker.commerce.productName()
+faker.commerce.productDescription();
+faker.commerce.price(100, 200);
+faker.commerce.productName();
 
+// "LEGOS" https://www.pennlive.com/resizer/W-M-ACGvuLR-NwYnQmIBGLhivBk=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/XE6N3UD2RJEU5LS6Q6C7K2PUTA.jpg
 
+// BARBIE https://www.rd.com/wp-content/uploads/2015/09/GettyImages-459000267-2-scaled.jpg?resize=768,512
 
- // "LEGOS" https://www.pennlive.com/resizer/W-M-ACGvuLR-NwYnQmIBGLhivBk=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/XE6N3UD2RJEU5LS6Q6C7K2PUTA.jpg
+// JURASSIC https://m.media-amazon.com/images/I/71uD-zJwM3S._AC_SX425_.jpg
 
- // BARBIE https://www.rd.com/wp-content/uploads/2015/09/GettyImages-459000267-2-scaled.jpg?resize=768,512
+// TRANSFORMERS https://m.media-amazon.com/images/I/61-Vf1z+fSL._AC_SX425_.jpg
 
- // JURASSIC https://m.media-amazon.com/images/I/71uD-zJwM3S._AC_SX425_.jpg
+// STUFFED ANIMALS https://m.media-amazon.com/images/I/71oNgt0-dYL._AC_SX425_.jpg
 
- // TRANSFORMERS https://m.media-amazon.com/images/I/61-Vf1z+fSL._AC_SX425_.jpg
-
- // STUFFED ANIMALS https://m.media-amazon.com/images/I/71oNgt0-dYL._AC_SX425_.jpg
-
-
-
-"use strict";
+("use strict");
 
 const {
   db,
@@ -35,47 +31,64 @@ async function seed() {
 
   const populateUserData = async () => {
     try {
-    for (let i = 0; i < 200; i++) {
-      const username = faker.internet.userName(); // Rowan Nikolaus
-      const password = faker.internet.password()
-      const randomEmail = faker.internet.email()
-      await User.create({
-        username: username,
-        password: password,
-        email: randomEmail,
-      })
+      for (let i = 0; i < 200; i++) {
+        const username = faker.internet.userName(); // Rowan Nikolaus
+        const password = faker.internet.password();
+        const randomEmail = faker.internet.email();
+        await User.create({
+          username: username,
+          password: password,
+          email: randomEmail,
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
-  }
-    catch(err) {
-      console.log(err)
+  };
+
+  const populateProductData = async () => {
+    const productDummyData = [
+      [
+        "LEGOS",
+        "https://www.pennlive.com/resizer/W-M-ACGvuLR-NwYnQmIBGLhivBk=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/XE6N3UD2RJEU5LS6Q6C7K2PUTA.jpg",
+      ],
+      [
+        "BARBIE",
+        "https://www.rd.com/wp-content/uploads/2015/09/GettyImages-459000267-2-scaled.jpg?resize=768,512",
+      ],
+      [
+        "JURASSIC",
+        "https://m.media-amazon.com/images/I/71uD-zJwM3S._AC_SX425_.jpg",
+      ],
+      [
+        "TRANSFORMERS",
+        "https://m.media-amazon.com/images/I/61-Vf1z+fSL._AC_SX425_.jpg",
+      ],
+      [
+        "STUFFED ANIMALS",
+        "https://m.media-amazon.com/images/I/71oNgt0-dYL._AC_SX425_.jpg",
+      ],
+    ];
+
+    try {
+      for (let i = 0; i < 200; i++) {
+        const description = faker.commerce.productDescription();
+        const price = faker.commerce.price(5, 100);
+        const productName = faker.commerce.productName();
+        let randomCatagoryNumber = Math.floor(Math.random() * 5);
+        console.log(productDummyData[randomCatagoryNumber][0]);
+        Product.create({
+          price: price,
+          description: description,
+          category: productDummyData[randomCatagoryNumber][0],
+          image: productDummyData[randomCatagoryNumber][1],
+          productName: productName,
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
-}
-
-const populateProductData = async () => {
-
-  const productDummyData = [["LEGOS", "https://www.pennlive.com/resizer/W-M-ACGvuLR-NwYnQmIBGLhivBk=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/XE6N3UD2RJEU5LS6Q6C7K2PUTA.jpg"], ["BARBIE", "https://www.rd.com/wp-content/uploads/2015/09/GettyImages-459000267-2-scaled.jpg?resize=768,512"], ["JURASSIC", "https://m.media-amazon.com/images/I/71uD-zJwM3S._AC_SX425_.jpg"], ["TRANSFORMERS", "https://m.media-amazon.com/images/I/61-Vf1z+fSL._AC_SX425_.jpg"], ["STUFFED ANIMALS", "https://m.media-amazon.com/images/I/71oNgt0-dYL._AC_SX425_.jpg"]]
-
-  try {
-  for (let i = 0; i < 200; i++) {
-    const description = faker.commerce.productDescription()
-    const price = faker.commerce.price(5, 100)
-    const productName = faker.commerce.productName()
-    let randomCatagoryNumber = Math.floor(Math.random() * 5)
-    console.log(productDummyData[randomCatagoryNumber][0])
-    Product.create({
-      price: price,
-      description: description,
-      category: productDummyData[randomCatagoryNumber][0],
-      image:
-        productDummyData[randomCatagoryNumber][1],
-      productName: productName,
-    })
-  }
-}
-  catch(err) {
-    console.log(err)
-  }
-}
+  };
 
   // Creating Users
   const users = await Promise.all([
@@ -83,21 +96,24 @@ const populateProductData = async () => {
       username: "cody",
       password: "123",
       email: "cody123@gmail.com",
+      isAdmin: false,
     }),
     User.create({
       username: "murphy",
       password: "123",
       email: "murphy123@gmail.com",
+      isAdmin: false,
     }),
     User.create({
       username: "admin",
       password: "123",
       email: "admin@gmail.com",
       type: "admin",
+      isAdmin: true,
     }),
   ]);
 
-  await populateUserData()
+  await populateUserData();
 
   const products = await Promise.all([
     Product.create({
@@ -141,18 +157,18 @@ const populateProductData = async () => {
     }),
   ]);
 
-  populateProductData ();
+  populateProductData();
   // User.hasOne(ShoppingCart)
   // ShoppingCart.belongsTo(User)
 
   const user1 = await User.findByPk(1);
   const user2 = await User.findByPk(2);
 
-  const orderSession1 = await OrderSession.create({status: "open"});
-  const orderSession2 = await OrderSession.create({status: "open"});
+  const orderSession1 = await OrderSession.create({ status: "open" });
+  const orderSession2 = await OrderSession.create({ status: "open" });
 
-  await user1.addOrderSession(orderSession1)
-  await user2.addOrderSession(orderSession2)
+  await user1.addOrderSession(orderSession1);
+  await user2.addOrderSession(orderSession2);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);

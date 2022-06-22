@@ -38,9 +38,9 @@ const User = db.define("user", {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  type: {
-    type: Sequelize.ENUM(["admin", "customer"]),
-    defaultValue: "customer",
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
 });
 
@@ -80,7 +80,7 @@ User.findByToken = async function (token) {
     }
     return user;
   } catch (ex) {
-    const error = Error("bad token");
+    const error = Error("You don't have admin rights!");
     error.status = 401;
     throw error;
   }

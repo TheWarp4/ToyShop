@@ -31,6 +31,7 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             {/* <Redirect to="/home" /> */}
             <Route path="/" exact component={AllProducts} />
+            <Route path="/users" exact component={AllUsers}/>
             <Route path="/products" exact component={AllProducts} />
             <Route path="/users" exact component={AllUsers} />
             {/* <Route path='/' exact component={ Login } /> */}

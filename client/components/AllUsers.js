@@ -9,7 +9,12 @@ const AllUsers = (props) => {
   const getUsers = () => {
     try {
       (async () => {
-        const { data } = await axios.get("/api/users");
+        const token = window.localStorage.getItem("token");
+        const { data } = await axios.get("/api/users", {
+          headers: {
+            authorization: token,
+          },
+        });
         setUsers(data);
       })();
     } catch (error) {
