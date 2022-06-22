@@ -2472,8 +2472,7 @@ const guestCart = (cart, product, setCart) => {
 
   if (isInCart) {
     cart[index].itemQuantity += 1;
-    console.log(cart);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
   } else {
     product.itemQuantity = 1;
     setCart(prevCart => [...prevCart, product]);
@@ -2751,7 +2750,9 @@ const Cart = props => {
       fetchShoppingCart(props.userId);
     }
   }, [props.userId, cart]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    id: "cart-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
     className: "cart-title"
   }, "Shopping Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "shopping-cart"
@@ -3743,10 +3744,10 @@ const ProductFilterbar = ({
     });
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "product-categories"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, categories.map((category, i) => {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+  }, categories.map((category, i) => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       key: i,
       onClick: handleChange,
       className: filter.type === category ? "active" : ""

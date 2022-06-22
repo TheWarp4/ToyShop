@@ -15,20 +15,20 @@ const ProductFilterbar = ({ filter, setFilter }) => {
   };
 
   return (
-    <div className="product-categories">
-      <ul>
+    <div >
+      <div className="product-categories">
         {categories.map((category, i) => {
           return (
-            <li
+            <button
               key={i}
               onClick={handleChange}
               className={filter.type === category ? "active" : ""}
             >
               {category}
-            </li>
+            </button>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ const AllProducts = (props) => {
     window.localStorage.getItem("cart") || "[]"
   );
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
-    console.log(props)
+  console.log(props);
   const getProducts = () => {
     try {
       (async () => {
@@ -33,27 +33,30 @@ const AllProducts = (props) => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
-    const [foundProduct] = data.filter((product)=> product.productId == productId)
-    if (foundProduct) {
-      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-    await axios.put(
-      `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
-    );
-    }
-
-    else{
-      await axios.post("/api/shoppingcarts", {
-        orderSessionId: getOrderSessionId.data.id,
-        productId: productId,
-        itemQuantity: 1,
-      });
-    }
+      const { data } = await axios.get(
+        `/api/shoppingcarts/${getOrderSessionId.data.id}`
+      );
+      const [foundProduct] = data.filter(
+        (product) => product.productId == productId
+      );
+      if (foundProduct) {
+        const getOrderSessionId = await axios.get(
+          `/api/ordersessions/${userId}`
+        );
+        await axios.put(
+          `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
+        );
+      } else {
+        await axios.post("/api/shoppingcarts", {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: productId,
+          itemQuantity: 1,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     getProducts();
@@ -107,8 +110,7 @@ const guestCart = (cart, product, setCart) => {
   const [isInCart, index] = isProductInCart(cart, product.id);
   if (isInCart) {
     cart[index].itemQuantity += 1;
-    console.log(cart)
-    localStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem("cart", JSON.stringify(cart));
   } else {
     product.itemQuantity = 1;
     setCart((prevCart) => [...prevCart, product]);
