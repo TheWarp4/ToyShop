@@ -76,6 +76,9 @@ form div {
 .cart-button,
 .product-info {
   cursor: pointer;
+  margin: 10px;
+  margin-bottom: 20px;
+
 }
 
 .cart-title {
@@ -168,6 +171,10 @@ form div {
   height: 120px;
   margin-left: 150px;
   cursor: pointer;
+}
+
+.login-button {
+  width: 30px;
 }
 
 .delete-sc-item {
@@ -273,6 +280,7 @@ form div {
 
 .gc-shopping-cart {
   text-align: center;
+
 }
 .product-info-container {
   background-color: pink;
@@ -315,38 +323,13 @@ form div {
 
 .product-categories {
   padding: 1px;
-  border-bottom: 1px solid #ebedec;
-}
-
-.product-categories ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
+  border-bottom: 1px solid black;
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.product-categories li {
-  width: 135px;
-  text-align: center;
-  background: #e9ecf1;
-  border-right: 1px solid #c1c4c9;
-  padding: 13px 13px;
-  cursor: pointer;
-  -webkit-transition: all 0.2s ease;
-  -o-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-  display: inline-block;
-}
 
-.product-categories li:hover,
-.product-categories li.active {
-  background: #7fc469;
-  color: #fff;
-}
 
 .order-history {
 }
@@ -407,4 +390,8 @@ form div {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.pfb-individual-buttons {
+  height: 30px;
 }
