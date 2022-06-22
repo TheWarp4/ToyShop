@@ -75,7 +75,7 @@ const AllProducts = (props) => {
   useEffect(() => {
     getProducts();
     if (props.userId){
-    mergeLocalCart(props.userId);
+      mergeLocalCart(props.userId);
     }
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [props.userId, cart, filter]);

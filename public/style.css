@@ -222,14 +222,39 @@ form div {
   margin-top: 15px;
 }
 
-.gc-name-input {
-  margin-top: 40px;
-}
-
 .gc-shipping-address-title {
-  margin-top: 100px;
+  margin-top: 50px;
+  font-weight: bold;
+  margin-left: 0%;
+}
+.gc-payment-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-left: 2px;
+}
+.gc-contact-info-header {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 20px;
 }
 
+.gc-contactinfo-prevuser {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+}
+.c-contact-info-title {
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.gc-first-name {
+  margin-left: -1.8%;
+}
 .gc-first-name,
 .gc-last-name {
   height: 30px;
@@ -240,20 +265,24 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90.75%;
-  margin-top: 15px;
+  width: 89.2%;
+  margin-top: 20px;
   height: 35px;
+  margin-bottom: -2px;
 }
 
 .gc-country-state-zip-input {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90.75%;
+  width: 89.2%;
   margin-top: 15px;
   height: 35px;
+  margin-bottom: -2px;
 }
-
+#gc-country-input {
+  margin-left: -1.8%;
+}
 #gc-country-input,
 #gc-state-input,
 #gc-zipcode-input {
@@ -280,6 +309,8 @@ form div {
 
 .gc-shopping-cart {
   text-align: center;
+  font-family: monospace;
+  font-size: 20px;
 
 }
 .product-info-container {
@@ -359,7 +390,7 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90%;
+  width: 89.2%;
   margin-top: 15px;
   height: 35px;
 }
@@ -367,6 +398,9 @@ form div {
 .gc-exp-input, .gc-CVC-input {
   height: 30px;
   width: 49%;
+}
+.gc-exp-input {
+  margin-left: -16px;
 }
 
 #oc-thank-you-text {
