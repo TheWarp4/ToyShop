@@ -67,7 +67,7 @@ const populateProductData = async () => {
       category: "LEGOS",
       image:
         "https://images-na.ssl-images-amazon.com/images/I/71C-nuAyCPL.__AC_SY300_SX300_QL70_FMwebp_.jpg",
-      productName: "LEGO Classics Building Blocks",
+      productName: "LEGO Building Blocks",
     }),
     Product.create({
       price: 19.99,
