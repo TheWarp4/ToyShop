@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { connect } from "react-redux";
 import ProductFilterbar from "./ProductFilterbar";
+import ReactPaginate from "react-paginate";
 
 const AllProducts = (props) => {
   const [products, setProducts] = useState([{}]);
@@ -14,15 +15,34 @@ const AllProducts = (props) => {
   );
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
 
+  // pagination:
+
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const productsPerPage = 24;
+
+  const paginate = (data) => {
+    let numberOfProductsVistited = page * productsPerPage;
+    setTotalPages(Math.ceil(data.length / productsPerPage));
+    return data.slice(
+      numberOfProductsVistited,
+      numberOfProductsVistited + productsPerPage
+    );
+  };
+
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
+
   const getProducts = () => {
     try {
       (async () => {
         if (filter.type && filter.type !== "ALL") {
           const { data } = await axios.get(`/api/products/${filter.type}`);
-          setProducts(data.filteredProducts);
+          setProducts(paginate(data.filteredProducts));
         } else {
           const { data } = await axios.get("/api/products");
-          setProducts(data);
+          setProducts(paginate(data));
         }
       })();
     } catch (error) {
@@ -83,7 +103,7 @@ const AllProducts = (props) => {
       mergeLocalCart(props.userId);
     }
     localStorage.setItem("cart", JSON.stringify(cart));
-  }, [props.userId, cart, filter]);
+  }, [props.userId, cart, filter, page]);
 
   return (
     <div>
@@ -117,7 +137,18 @@ const AllProducts = (props) => {
           );
         })}
       </div>
-      <div className="fa-3x"></div>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={totalPages}
+        onPageChange={changePage}
+        containerClassName={"navigationButtons"}
+        previousLinkClassName={"previousButton"}
+        nextLinkClassName={"nextButton"}
+        disabledClassName={"navigationDisabled"}
+        activeClassName={"navigationActive"}
+      />
+      ;<div className="fa-3x"></div>
     </div>
   );
 };
