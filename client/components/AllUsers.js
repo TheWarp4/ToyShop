@@ -27,11 +27,13 @@ const AllUsers = (props) => {
             <div className="user-info" key={i}>
               <div>
                 <h3>
-                  <ul>Username:{user.username}</ul>
+                  <ul className="username">Username:{user.username}</ul>
                 </h3>
                 <img src={user.imageUrl} />
+                <div className="userData">
                 <li>E-mail Address:{user.email} </li>
                 <li>Customer Since:{user.createdAt}</li>
+                </div>
               </div>
             </div>
           );
