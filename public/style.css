@@ -2,6 +2,36 @@ body {
   font-family: sans-serif;
 }
 
+#product-form {
+  border-radius: 10%;
+  width: 160px;
+  height: 220px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: content-box;
+  background-color: pink;
+}
+
+.userData {
+  border-radius: 10%;
+  width: 270px;
+  height: 80px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: content-box;
+  background-color: pink;
+}
+
+.username {
+  border-radius: 10%;
+  width: 260px;
+  height: 20px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: content-box;
+  background-color: pink;
+}
+
 a {
   text-decoration: none;
 }
@@ -27,6 +57,10 @@ form div {
 .single-product {
   align-items: center;
   padding-left: 40%;
+}
+
+.single-product-description {
+  color: blue;
 }
 
 .navbar-container {
@@ -58,6 +92,27 @@ form div {
   height: 220px;
   border-radius: 5px;
   border: 2px solid black;
+}
+
+.single-form {
+  border-radius: 10%;
+  width: 160px;
+  height: 200px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: content-box;
+  background-color: pink;
+}
+
+
+.single-product-categories {
+  border-radius: 10%;
+  width: 300px;
+  height: 100px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: content-box;
+  background-color: pink;
 }
 
 .allProducts {
@@ -97,14 +152,18 @@ form div {
 }
 
 .product-name-price {
-  color: blue;
+  border-radius: 10%;
+  width: 220px;
+  height: 40px;
+  box-sizing: content-box;
   background-color: pink;
+  text-align: center;
   text-align: center;
 }
 
 .filterBar {
   color: blue;
-  background-color: lightpink;
+  background-color: pink;
 }
 
 .sc-photo {
@@ -253,6 +312,9 @@ form div {
   font-family: monospace;
   font-size: 20px;
 
+}
+.product-info-container {
+  background-color: pink;
 }
 
 .gc-product-photo {

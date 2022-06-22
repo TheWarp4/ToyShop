@@ -26,7 +26,6 @@ function SingleUser(props) {
   const handleSubmit = async function (event) {
     try {
       // event.preventDefault();
-      alert("EVENT");
       await axios.put(`/api/users/${props.match.params.id}`, user);
       setUser({
         username: "",
@@ -39,7 +38,6 @@ function SingleUser(props) {
     } catch (err) {
       console.error(err);
     }
-    alert("EVENT");
   };
 
   const handleChange = (event) => {
