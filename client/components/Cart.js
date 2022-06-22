@@ -93,7 +93,7 @@ const Cart = (props) => {
   }, [props.userId, cart])
 
   return (
-    <div>
+    <div id="cart-container">
       <h1 className="cart-title">Shopping Cart</h1>
       <div className="shopping-cart">
         {shoppingCart.map((product) => (

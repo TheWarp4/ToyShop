@@ -25,6 +25,7 @@ function GuestCheckout() {
           <div>Contact Information</div>
           <Link to="/login">Already Have an Account? Log in</Link>
         </div>
+
         <input
           className="gc-email-input"
           placeholder="Email"
@@ -75,8 +76,11 @@ function GuestCheckout() {
           placeholder="Phone"
           type="text"
         ></input>
+
       </div>
+
       <hr className="gc-container-divider"/>
+
       <div className="container-right">
         <div className="gc-shopping-cart">Shopping Cart</div>
             {cart.map((product, i) => (
