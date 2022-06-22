@@ -497,3 +497,14 @@ form div {
   color: grey;
   background-color: grey;
 }
+
+.all-users {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.user-info {
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+}

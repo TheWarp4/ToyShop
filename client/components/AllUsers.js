@@ -26,7 +26,7 @@ const AllUsers = (props) => {
 
   return (
     props.userType === "customer" || (
-      <div className="allUsers">
+      <div className="all-users">
         {users.map((user, i) => {
           return (
             <div className="user-info" key={i}>
@@ -36,8 +36,8 @@ const AllUsers = (props) => {
                 </h3>
                 <img src={user.imageUrl} />
                 <div className="userData">
-                <li>E-mail Address:{user.email} </li>
-                <li>Customer Since:{user.createdAt}</li>
+                  <li>E-mail Address:{user.email} </li>
+                  <li>Customer Since:{user.createdAt}</li>
                 </div>
               </div>
             </div>
