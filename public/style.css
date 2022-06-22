@@ -99,6 +99,11 @@ form div {
   text-align: center;
 }
 
+.filterBar {
+  color: blue;
+  background-color: lightpink;
+}
+
 .sc-photo {
   width: 120px;
   height: 120px;
