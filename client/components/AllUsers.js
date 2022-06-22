@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { Avatar } from "@mui/material";
 
 const AllUsers = (props) => {
   const [users, setUsers] = useState([{}]);
@@ -30,11 +29,6 @@ const AllUsers = (props) => {
                 <h3>
                   <ul>Username:{user.username}</ul>
                 </h3>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={user.imageUrl}
-                  sx={{ width: 56, height: 56 }}
-                />
                 <li>E-mail Address:{user.email} </li>
                 <li>Customer Since:{user.createdAt}</li>
               </div>
