@@ -44,6 +44,7 @@ const handleSavingInfo = () => {
   useEffect(() => {
     fetchShoppingCart(props.userId)
     fetchLocalCart()
+
   }, [])
 
   return (
