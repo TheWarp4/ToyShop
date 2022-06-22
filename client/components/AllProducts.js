@@ -110,6 +110,7 @@ const AllProducts = (props) => {
       <ProductFilterbar filter={filter} setFilter={setFilter} />
       <div className="allProducts">
         {products.map((product, i) => {
+          console.log(product.price)
           return (
             <div className="product-info" key={i}>
               <img
@@ -120,7 +121,9 @@ const AllProducts = (props) => {
                 }}
               />
               <div className="product-name-price">
-                <div>{product.productName}</div>
+                <div>
+                  {product.productName}
+                </div>
                 <div>${product.price}</div>
               </div>
               <button
