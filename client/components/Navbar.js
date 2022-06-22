@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 import { BiCart, BiHomeAlt, BiPurchaseTagAlt } from "react-icons/bi";
+import { GiBasketballBall } from "react-icons/gi";
 import { FaUserAlt } from "react-icons/fa";
+
 
 const Navbar = ({ handleClick, isLoggedIn, id }) => (
   <div>
@@ -13,7 +15,9 @@ const Navbar = ({ handleClick, isLoggedIn, id }) => (
         <Link to="/home">
           <BiHomeAlt className="home-button" size={30} />
         </Link>
-        <Link to="/products"> Products</Link>
+        <Link to="/products">
+        <GiBasketballBall size={30}/>
+        </Link>
         <BiCart
           className="cart-button"
           size={30}

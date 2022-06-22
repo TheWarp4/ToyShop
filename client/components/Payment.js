@@ -57,7 +57,7 @@ function Payment(props) {
           onSubmit={(event) => {handleOrderStatusChange(props.userId, event)}}
           >
 
-        <div className="gc-shipping-address-title">Payment</div>
+        <div className="gc-payment-title">Payment</div>
           <input
             className="gc-card-number"
             placeholder="Card Number"

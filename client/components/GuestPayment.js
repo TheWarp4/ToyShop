@@ -42,8 +42,7 @@ function GuestPayment(props) {
           method="POST"
           action="/checkout/order-complete"
           >
-
-        <div className="gc-shipping-address-title">Payment</div>
+        <div className="gc-payment-title">Payment</div>
           <input
             className="gc-card-number"
             placeholder="Card Number"
@@ -77,9 +76,7 @@ function GuestPayment(props) {
           />
 
         </div>
-        {/* <a href="/checkout/payment"> */}
           <input type='submit' value='Pay Now' className="gc-payment-btn" ></input>
-        {/* </a> */}
         </form>
       </div>
 
@@ -97,7 +94,7 @@ function GuestPayment(props) {
                 {product.productName}
                 </div>
                 <div>
-                  ${product.price*product.itemQuantity}
+                  ${(product.price*product.itemQuantity).toFixed(2)}
                 </div>
               </div>
               <hr/>

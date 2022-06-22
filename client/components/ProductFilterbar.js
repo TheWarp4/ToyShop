@@ -18,7 +18,7 @@ const ProductFilterbar = ({ filter, setFilter }) => {
 
 
   const handleChange = (e, newValue) => {
-    setFilter({ type: e.target.innerHTML });
+     setFilter({ type: e.target.innerHTML });
     setValue(newValue)
   };
 

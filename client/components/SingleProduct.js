@@ -23,22 +23,24 @@ function SingleProduct(props) {
   }, []);
 
   return (
-    <div className="single-product">
+    <div className="single-product single-product-description">
       <img src={product.image} />
       <div>
-        <div className="single-product-info">{product.productName}</div>
-        <div>Category: {product.category}</div>
-        <div>{product.description}</div>
-        <div>
-          Price: $ <b className="single-product-info">{product.price}</b>
+        <div className="single-product-categories">
+          <div className="single-product-info">{product.productName}</div>
+          <div>Category: {product.category}</div>
+          <div>{product.description}</div>
+          <div>
+            Price: $ <b className="single-product-info">{product.price}</b>
+          </div>
         </div>
+        {props.userType !== "admin" || (
+          <div>
+            <DeleteProduct product={product} history={props.history} />
+            <EditProduct product={product} />
+          </div>
+        )}
       </div>
-      {props.userType !== "admin" || (
-        <div>
-          <DeleteProduct product={product} history={props.history} />
-          <EditProduct product={product} />
-        </div>
-      )}
     </div>
   );
 }

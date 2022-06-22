@@ -1,85 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import state from "../../public/states";
-import axios from "axios";
-import { connect } from "react-redux";
 
-function Checkout(props) {
+function GuestCheckout() {
   const fetchCartFromLocalStorage = JSON.parse(
     window.localStorage.getItem("cart") || "[]"
   );
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
   const [total, setTotal] = useState(0.0);
-  const [shoppingCart, setShoppingCart] = useState([]);
+  const [emailValue, setEmailValue] = useState("");
 
-  const fetchLocalCart = () => {
-    cart.map((localProduct) => {
-      setShoppingCart((prevCart) => [...prevCart, localProduct]);
-      setTotal(
-        (prevTotal) =>
-          prevTotal + parseFloat(localProduct.price) * localProduct.itemQuantity
-      );
-    });
-  };
-
-  const handleSavingInfo = () => {
-    localStorage.setItem(
-      "email",
-      `${document.getElementsByClassName("gc-email-input")}`
+  const sumTotal = (arr) => {
+    setTotal(
+      arr.reduce((accum, element) => {
+        return (accum += element.price * element.itemQuantity);
+      }, 0)
     );
   };
 
-  const fetchShoppingCart = async (userId) => {
-    try {
-      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-      const { data } = await axios.get(
-        `/api/shoppingcarts/${getOrderSessionId.data.id}`
-      );
-      data.map(async (prodData) => {
-        const productInfo = await axios.get(
-          `/api/products/${prodData.productId}`
-        );
-        productInfo.data.singleProduct.itemQuantity = prodData.itemQuantity;
-        setShoppingCart((prevCart) => [
-          ...prevCart,
-          productInfo.data.singleProduct,
-        ]);
-        setTotal(
-          (prevTotal) =>
-            prevTotal +
-            parseFloat(productInfo.data.singleProduct.price) *
-              prodData.itemQuantity
-        );
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSavingInfo = () => {
+    localStorage.setItem("email", emailValue);
   };
+
   useEffect(() => {
-    fetchShoppingCart(props.userId);
-    fetchLocalCart();
-  }, []);
+    sumTotal(cart);
+  }, [cart]);
 
   return (
     <div id="gc-container">
       <div className="container-left">
         <div className="gc-contactinfo-prevuser">
-          <div>Contact Information</div>
+          <div className="gc-contact-info-header">Contact Information</div>
+          <Link to="/login">Already Have an Account? Log in</Link>
         </div>
         <form
           method="POST"
           action="/checkout/payment"
-          onSubmit={() => {
-            handleSavingInfo();
+          onSubmit={(e) => {
+            handleSavingInfo(e);
           }}
         >
           <input
             className="gc-email-input"
             placeholder="Email"
-            type="email"
+            type="text"
             required
-          />
-
+            value={emailValue}
+            onChange={(e) => {
+              setEmailValue(e.target.value);
+            }}
+          ></input>
           <div className="gc-shipping-address-title">Shipping Address</div>
           <div className="gc-name-input">
             <input
@@ -119,16 +89,16 @@ function Checkout(props) {
             <select id="gc-state-input" type="text" required>
               <option>State</option>
               {state.map((state, i) => (
-                <option key={`gc-${i}`}>{state}</option>
+                <option key={i}>{state}</option>
               ))}
             </select>
             <input
               id="gc-zipcode-input"
               placeholder="ZIP Code"
               type="text"
+              required
               minLength="5"
               maxLength="5"
-              required
             ></input>
           </div>
           <input
@@ -137,7 +107,6 @@ function Checkout(props) {
             type="tel"
             minLength="10"
             maxLength="11"
-            required
           ></input>
           <a href="/checkout/payment">
             <input
@@ -148,17 +117,15 @@ function Checkout(props) {
           </a>
         </form>
       </div>
-
       <hr className="gc-container-divider" />
-
       <div className="container-right">
         <div className="gc-shopping-cart">Shopping Cart</div>
-        {shoppingCart.map((product, i) => (
+        {cart.map((product, i) => (
           <div key={i}>
             <div className="gc-product-container">
               <img className="gc-product-photo" src={product.image} />
               <div>{product.productName}</div>
-              <div>${product.price * product.itemQuantity}</div>
+              <div>${(product.price * product.itemQuantity).toFixed(2)}</div>
             </div>
             <hr />
           </div>
@@ -177,12 +144,4 @@ function Checkout(props) {
   );
 }
 
-const mapState = (state) => {
-  return {
-    username: state.auth.username,
-    userId: state.auth.id,
-    isLoggedIn: !!state.auth.id,
-  };
-};
-
-export default connect(mapState)(Checkout);
+export default GuestCheckout;
