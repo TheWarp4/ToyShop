@@ -10136,23 +10136,24 @@ const ProductFilterbar = ({
   filter,
   setFilter
 }) => {
+  const [value, setValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
   const categories = ["ALL", "LEGOS", "TRANSFORMERS", "JURASSIC", "BARBIE", "STUFFED ANIMALS"];
-  let currentTab = 0;
 
-  const handleChange = (e, i) => {
+  const handleChange = (e, newValue) => {
     setFilter({
       type: e.target.innerHTML
     });
-    currentTab = i;
-    console.log(e.target.innerHTML);
+    setValue(newValue);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_1__["default"], {
     square: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Tabs__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    value: currentTab,
+    value: value,
     textColor: "primary",
-    indicatorColor: "primary" // style='transparent'
+    indicatorColor: "primary",
+    className: "filterBar",
+    centered: true // style='transparent'
 
   }, categories.map((category, i) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Tab__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -10160,7 +10161,8 @@ const ProductFilterbar = ({
       onClick: event => {
         handleChange(event, i);
       },
-      key: i
+      key: i,
+      value: i
     });
   }))));
 };
