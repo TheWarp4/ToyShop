@@ -17,9 +17,14 @@ function GuestCart() {
   const handleDecrement = (productId) => {
     cart.map((element, i) => {
       if (element.id == productId) {
+        if (cart[i].itemQuantity == 1){
+          handleDelete(productId)
+        }
+        else {
         cart[i].itemQuantity--;
         localStorage.setItem('cart', JSON.stringify(cart))
         setCart([...cart])
+        }
       }
     })
   }

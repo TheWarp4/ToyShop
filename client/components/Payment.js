@@ -25,22 +25,27 @@ function Payment(props) {
     }
   };
 
-  const handleOrderStatusChange = async (userId) => {
+  const handleOrderStatusChange = async (userId, event) => {
     try {
+      event.preventDefault();
       await axios.put(`/api/ordersessions/${userId}`, {
         status: 'completed',
-      })
-      await axios.post(`/api/ordersessions/${userId}`)
-      console.log('done')
+      });
+      await axios.post(`/api/ordersessions/${userId}`);
+      props.history.push("/checkout/order-complete")
+      // location.href('/checkout/payment')
     }
+
     catch (error){
       console.log(error)
     }
   }
 
+
   useEffect(() => {
-    if (props.userId)
+    if (props.userId){
     fetchShoppingCart(props.userId)
+    }
   }, [props.userId])
 
   return (
@@ -48,8 +53,9 @@ function Payment(props) {
       <div className="container-left">
         <form
           method="POST"
-          action="/checkout/order-completet"
-          onSubmit={() => {handleOrderStatusChange(props.userId)}}>
+          action="/checkout/order-complete"
+          onSubmit={(event) => {handleOrderStatusChange(props.userId, event)}}
+          >
 
         <div className="gc-shipping-address-title">Payment</div>
           <input
@@ -85,13 +91,15 @@ function Payment(props) {
           />
 
         </div>
-        <a href="/checkout/payment">
-          <input type='submit' value='Pay Now' className="gc-payment-btn"></input>
-        </a>
+        {/* <a href="/checkout/payment"> */}
+          <input type='submit' value='Pay Now' className="gc-payment-btn" ></input>
+        {/* </a> */}
         </form>
       </div>
 
+
       <hr className="gc-container-divider"/>
+
 
       <div className="container-right">
         <div className="gc-shopping-cart">Shopping Cart</div>

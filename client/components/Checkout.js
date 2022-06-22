@@ -18,6 +18,12 @@ const fetchLocalCart = () => {
   })
 }
 
+const handleSavingInfo = () => {
+  console.log(document.getElementsByClassName("gc-email-input")[0])
+  localStorage.setItem("email", `${document.getElementsByClassName("gc-email-input")}`);
+
+}
+
 
   const fetchShoppingCart = async (userId) => {
     try {
@@ -47,7 +53,10 @@ const fetchLocalCart = () => {
         </div>
         <form
         method="POST"
-        action="/checkout/payment">
+        action="/checkout/payment"
+        onSubmit={() => {handleSavingInfo()}}
+        >
+
         <input
           className="gc-email-input"
           placeholder="Email"
@@ -112,7 +121,7 @@ const fetchLocalCart = () => {
           required
         ></input>
         <a href="/checkout/payment">
-          <input type='submit' value='Continue to Payment' className="gc-payment-btn"></input>
+          <input type='submit' value='Continue to Payment' className="gc-payment-btn" ></input>
         </a>
         </form>
       </div>

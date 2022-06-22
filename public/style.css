@@ -319,3 +319,25 @@ form div {
   width: 49%;
 }
 
+#oc-thank-you-text {
+  margin-top: 50px;
+  text-align: center;
+  font-family: "neue-haas-grotesk-display";
+
+
+}
+
+.oc-confirmation-sent-text {
+  text-align: center;
+  font-family: "neue-haas-grotesk-display";
+  font-size: 20px;
+}
+
+#oc-logo {
+  width: 70px;
+  height: 70px;
+  margin-top: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
