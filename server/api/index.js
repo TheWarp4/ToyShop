@@ -6,7 +6,9 @@ router.use("/products", require("./products"));
 router.use("/shoppingcarts", require("./shoppingcarts"));
 router.use("/ordersessions", require("./orderSessions"));
 
+
 router.use((req, res, next) => {
+  console.log(req.body)
   const error = new Error("Not Found");
   error.status = 404;
   next(error);

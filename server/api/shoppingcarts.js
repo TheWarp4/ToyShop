@@ -16,7 +16,8 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    res.status(201).send(await ShoppingCart.create(req.body));
+    console.log(req.body, "THIS IS REQ.BODY")
+    res.status(201).send(await ShoppingCart.create(req.body))
   } catch (error) {
     next(error);
   }
@@ -33,6 +34,7 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
+
 router.put("/:userId", async (req, res, next) => {
   try {
     const shoppingcart = await ShoppingCart.findOne({
@@ -46,46 +48,34 @@ router.put("/:userId", async (req, res, next) => {
 });
 
 router.put("/:ordersessionId/:productId/decrement", async (req, res, next) => {
-  try {
-    const shoppingcart = await ShoppingCart.decrement(
-      { itemQuantity: 1 },
-      {
-        where: {
-          orderSessionId: req.params.ordersessionId,
-          productId: req.params.productId,
-        },
-      }
-    );
-    res.json(shoppingcart);
-  } catch (error) {
-    next(error);
-  }
-});
+    try {
+      const shoppingcart = await ShoppingCart.decrement(
+        {itemQuantity: 1},
+        {where: { orderSessionId: req.params.ordersessionId, productId: req.params.productId },
+    });
+      res.json(shoppingcart);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 router.put("/:ordersessionId/:productId/increment", async (req, res, next) => {
   try {
     const shoppingcart = await ShoppingCart.increment(
-      { itemQuantity: 1 },
-      {
-        where: {
-          orderSessionId: req.params.ordersessionId,
-          productId: req.params.productId,
-        },
-      }
-    );
+      {itemQuantity: 1},
+      {where: { orderSessionId: req.params.ordersessionId, productId: req.params.productId },
+  });
     res.json(shoppingcart);
   } catch (error) {
     next(error);
   }
 });
 
+
 router.delete("/:ordersessionId/:productId", async (req, res, next) => {
   try {
     const shoppingcart = await ShoppingCart.findOne({
-      where: {
-        orderSessionId: req.params.ordersessionId,
-        productId: req.params.productId,
-      },
+      where: { orderSessionId: req.params.ordersessionId, productId: req.params.productId },
     });
     await shoppingcart.destroy();
     res.json(shoppingcart);
@@ -93,3 +83,5 @@ router.delete("/:ordersessionId/:productId", async (req, res, next) => {
     next(error);
   }
 });
+
+
