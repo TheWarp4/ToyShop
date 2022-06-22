@@ -20,6 +20,10 @@ form div {
   display: inline-block;
 }
 
+.bar {
+  color: #7fc469;
+}
+
 .single-product {
   align-items: center;
   padding-left: 40%;
@@ -47,20 +51,27 @@ form div {
 }
 
 .products-photo {
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
+  border-radius: 5px;
+  border: 2px solid black;
 }
 
 .allProducts {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
 }
 
 .product-info {
-  width: 200px;
-  height: 260px;
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  height: 280px;
+  align-items: center;
+  flex: 1;
+  margin-bottom:10px;
 }
 
 .login-button {
@@ -73,12 +84,19 @@ form div {
   justify-content: space-between;
   margin-top: 15px;
   margin-bottom: 15px;
+  background-color: white;
 }
 
 .product-details {
   display: flex;
   flex-direction: column;
   /* margin-left: 300px; */
+}
+
+.product-name-price {
+  color: blue;
+  background-color: pink;
+  text-align: center;
 }
 
 .sc-photo {
