@@ -4,6 +4,9 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 
 const ProductFilterbar = ({ filter, setFilter }) => {
+  const [value, setValue] = useState(0);
+
+
   const categories = [
     "ALL",
     "LEGOS",
@@ -13,26 +16,26 @@ const ProductFilterbar = ({ filter, setFilter }) => {
     "STUFFED ANIMALS",
   ];
 
-  let currentTab = 0
 
-  const handleChange = (e, i) => {
+  const handleChange = (e, newValue) => {
     setFilter({ type: e.target.innerHTML });
-    currentTab = i
-    console.log(e.target.innerHTML )
+    setValue(newValue)
   };
 
   return (
     <div>
     <Paper square>
     <Tabs
-              value={currentTab}
+              value={value}
               textColor="primary"
               indicatorColor="primary"
+              className="filterBar"
+              centered
               // style='transparent'
     >
               {categories.map((category, i) => {
                 return (
-                  <Tab label={category} onClick={(event) =>{handleChange(event, i)}} key={i}/>
+                  <Tab label={category} onClick={(event) =>{handleChange(event, i)}} key={i} value={i}/>
                 );
               })}
       </Tabs>
