@@ -26,14 +26,18 @@ function SingleProduct(props) {
   return (
     <div className="single-product">
       <img src={product.image} />
+      <div className="single-product-description">
+        <div className="single-product-categories">
       <div>Name: {product.productName}</div>
       <div>Description: {product.description}</div>
       <div>Category: {product.category}</div>
       <div>Price: {product.price}</div>
+      </div>
       {props.userType === "customer" || (
         <DeleteProduct product={product} history={props.history} />
       )}
-      {props.userType === "customer" || <EditProduct product={product} />}
+      {props.userType === "customer" || <EditProduct  product={product} />}
+    </div>
     </div>
   );
 }

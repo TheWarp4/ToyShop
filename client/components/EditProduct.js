@@ -11,6 +11,8 @@ const EditProduct = (props) => {
   });
   const handleSubmit = async function (event) {
     try {
+      let text = "Warning! Pressing OK will Change the product data to the included form details\nPress OK to confirm."
+      if (confirm(text) == true) {
       event.preventDefault();
       // parse price to Int
       product.price = parseInt(product.price);
@@ -26,6 +28,7 @@ const EditProduct = (props) => {
         // image: "",
         description: "",
       });
+    }
     } catch (err) {
       console.error(err);
     }
@@ -36,18 +39,18 @@ const EditProduct = (props) => {
   };
 
   return (
-    <form id="product-form" onSubmit={handleSubmit}>
-      <label htmlFor="productName">Product Name:</label>
+    <form id="product-form" className="single-form" onSubmit={handleSubmit}>
+      <label htmlFor="productName"> Change Name:</label>
       <input
         name="productName"
         onChange={handleChange}
         value={product.productName}
       />
 
-      <label htmlFor="price">Price:</label>
+      <label htmlFor="price">Change Price:</label>
       <input name="price" onChange={handleChange} value={product.price} />
 
-      <label htmlFor="category">Category:</label>
+      <label htmlFor="category">Change Category:</label>
       <select name="category" onChange={handleChange} value={product.category}>
         <option value="LEGOS">LEGOS</option>
         <option value="TRANSFORMERS">TRANSFORMERS</option>
@@ -57,7 +60,7 @@ const EditProduct = (props) => {
       {/* <label htmlFor="image"></label>
       <input name="image" onChange={handleChange} value={product.image} /> */}
 
-      <label htmlFor="description">Description:</label>
+      <label htmlFor="description">Change Description:</label>
       <input
         name="description"
         onChange={handleChange}
