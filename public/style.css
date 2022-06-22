@@ -54,9 +54,43 @@ form div {
   color: #7fc469;
 }
 
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@keyframes blur {
+  from {
+    text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 25px #fff,
+      0px 0px 25px #fff, 0px 0px 25px #fff, 0px 0px 25px #fff, 0px 0px 25px #fff,
+      0px 0px 25px #fff, 0px 0px 50px #fff, 0px 0px 50px #fff,
+      0px 0px 50px #7b96b8, 0px 0px 150px #7b96b8, 0px 10px 100px #7b96b8,
+      0px 10px 100px #7b96b8, 0px 10px 100px #7b96b8, 0px 10px 100px #7b96b8,
+      0px -10px 100px #7b96b8, 0px -10px 100px #7b96b8;
+  }
+}
+
 .single-product {
+  display: flex;
+  justify-content: space-evenly;
   align-items: center;
-  padding-left: 40%;
+}
+
+.single-product > div {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-basis: auto;
+}
+
+.single-product-info {
+  color: rgb(100, 100, 255);
+  font-weight: 700;
+  text-transform: uppercase;
+  animation: blur 0.75s ease-out infinite;
+  text-shadow: 0px 0px 5px #fff, 0px 0px 7px #fff;
+}
+
+.single-product img {
+  width: 35%;
+  /* padding-left: 40%; */
 }
 
 .single-product-description {
@@ -78,7 +112,6 @@ form div {
   cursor: pointer;
   margin: 10px;
   margin-bottom: 20px;
-
 }
 
 .cart-title {
@@ -104,7 +137,6 @@ form div {
   background-color: pink;
 }
 
-
 .single-product-categories {
   border-radius: 10%;
   width: 300px;
@@ -129,7 +161,7 @@ form div {
   height: 280px;
   align-items: center;
   flex: 1;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 
 .login-button {
@@ -216,20 +248,51 @@ form div {
   margin-top: 10px;
 }
 
-.gc-email-input, .gc-address-input, .gc-address-line2-input, .gc-city-input, .gc-phone-input, .gc-card-number, .gc-nameoncard-input {
+.gc-email-input,
+.gc-address-input,
+.gc-address-line2-input,
+.gc-city-input,
+.gc-phone-input,
+.gc-card-number,
+.gc-nameoncard-input {
   height: 30px;
   width: 90%;
   margin-top: 15px;
 }
 
-.gc-name-input {
-  margin-top: 40px;
-}
-
 .gc-shipping-address-title {
-  margin-top: 100px;
+  margin-top: 50px;
+  font-weight: bold;
+  margin-left: 0%;
+}
+.gc-payment-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-left: 2px;
+}
+.gc-contact-info-header {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 20px;
 }
 
+.gc-contactinfo-prevuser {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+}
+.c-contact-info-title {
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.gc-first-name {
+  margin-left: -1.8%;
+}
 .gc-first-name,
 .gc-last-name {
   height: 30px;
@@ -240,20 +303,24 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90.75%;
-  margin-top: 15px;
+  width: 89.2%;
+  margin-top: 20px;
   height: 35px;
+  margin-bottom: -2px;
 }
 
 .gc-country-state-zip-input {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90.75%;
+  width: 89.2%;
   margin-top: 15px;
   height: 35px;
+  margin-bottom: -2px;
 }
-
+#gc-country-input {
+  margin-left: -1.8%;
+}
 #gc-country-input,
 #gc-state-input,
 #gc-zipcode-input {
@@ -280,7 +347,8 @@ form div {
 
 .gc-shopping-cart {
   text-align: center;
-
+  font-family: monospace;
+  font-size: 20px;
 }
 .product-info-container {
   background-color: pink;
@@ -329,8 +397,6 @@ form div {
   justify-content: space-between;
 }
 
-
-
 .order-history {
 }
 
@@ -359,22 +425,24 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90%;
+  width: 89.2%;
   margin-top: 15px;
   height: 35px;
 }
 
-.gc-exp-input, .gc-CVC-input {
+.gc-exp-input,
+.gc-CVC-input {
   height: 30px;
   width: 49%;
+}
+.gc-exp-input {
+  margin-left: -16px;
 }
 
 #oc-thank-you-text {
   margin-top: 50px;
   text-align: center;
   font-family: "neue-haas-grotesk-display";
-
-
 }
 
 .oc-confirmation-sent-text {
@@ -394,4 +462,38 @@ form div {
 
 .pfb-individual-buttons {
   height: 30px;
+}
+
+.navigationButtons {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  padding-top: 40px;
+}
+
+.navigationButtons a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid red;
+  color: red;
+  cursor: pointer;
+}
+
+.navigationButtons a:hover {
+  color: white;
+  background-color: red;
+}
+
+.navigationActive a {
+  color: white;
+  background-color: red;
+}
+
+.navigationDisabled a {
+  color: grey;
+  background-color: grey;
 }

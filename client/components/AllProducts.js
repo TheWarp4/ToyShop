@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { connect } from "react-redux";
 import ProductFilterbar from "./ProductFilterbar";
+import ReactPaginate from "react-paginate";
 
 const AllProducts = (props) => {
   const [products, setProducts] = useState([{}]);
@@ -14,15 +15,34 @@ const AllProducts = (props) => {
   );
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
 
+  // pagination:
+
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const productsPerPage = 24;
+
+  const paginate = (data) => {
+    let numberOfProductsVistited = page * productsPerPage;
+    setTotalPages(Math.ceil(data.length / productsPerPage));
+    return data.slice(
+      numberOfProductsVistited,
+      numberOfProductsVistited + productsPerPage
+    );
+  };
+
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
+
   const getProducts = () => {
     try {
       (async () => {
         if (filter.type && filter.type !== "ALL") {
           const { data } = await axios.get(`/api/products/${filter.type}`);
-          setProducts(data.filteredProducts);
+          setProducts(paginate(data.filteredProducts));
         } else {
           const { data } = await axios.get("/api/products");
-          setProducts(data);
+          setProducts(paginate(data));
         }
       })();
     } catch (error) {
@@ -33,22 +53,26 @@ const AllProducts = (props) => {
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
-    const [foundProduct] = data.filter((product)=> product.productId == productId)
-    if (foundProduct) {
-      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
-    await axios.put(
-      `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
-    );
-    }
-
-    else{
-      await axios.post("/api/shoppingcarts", {
-        orderSessionId: getOrderSessionId.data.id,
-        productId: productId,
-        itemQuantity: 1,
-      });
-    }
+      const { data } = await axios.get(
+        `/api/shoppingcarts/${getOrderSessionId.data.id}`
+      );
+      const [foundProduct] = data.filter(
+        (product) => product.productId == productId
+      );
+      if (foundProduct) {
+        const getOrderSessionId = await axios.get(
+          `/api/ordersessions/${userId}`
+        );
+        await axios.put(
+          `/api/shoppingcarts/${getOrderSessionId.data.id}/${productId}/increment`
+        );
+      } else {
+        await axios.post("/api/shoppingcarts", {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: productId,
+          itemQuantity: 1,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -56,29 +80,30 @@ const AllProducts = (props) => {
 
   const mergeLocalCart = async (userId) => {
     try {
-      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`)
-      const {data} = await axios.get(`/api/shoppingcarts/${getOrderSessionId.data.id}`)
+      const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+      const { data } = await axios.get(
+        `/api/shoppingcarts/${getOrderSessionId.data.id}`
+      );
       cart.map(async (prodData) => {
         await axios.post(`/api/shoppingcarts`, {
           orderSessionId: getOrderSessionId.data.id,
           productId: prodData.id,
           itemQuantity: prodData.itemQuantity,
-        })
-      })
-      localStorage.setItem('cart', JSON.stringify([]))
+        });
+      });
+      localStorage.setItem("cart", JSON.stringify([]));
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  };
 
   useEffect(() => {
     getProducts();
-    if (props.userId){
-    mergeLocalCart(props.userId);
+    if (props.userId) {
+      mergeLocalCart(props.userId);
     }
     localStorage.setItem("cart", JSON.stringify(cart));
-  }, [props.userId, cart, filter]);
+  }, [props.userId, cart, filter, page]);
 
   return (
     <div>
@@ -95,8 +120,8 @@ const AllProducts = (props) => {
                 }}
               />
               <div className="product-name-price">
-              <div>{product.productName}</div>
-              <div>${product.price}</div>
+                <div>{product.productName}</div>
+                <div>${product.price}</div>
               </div>
               <button
                 onClick={() => {
@@ -112,8 +137,18 @@ const AllProducts = (props) => {
           );
         })}
       </div>
-      <div className="fa-3x">
-  </div>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={totalPages}
+        onPageChange={changePage}
+        containerClassName={"navigationButtons"}
+        previousLinkClassName={"previousButton"}
+        nextLinkClassName={"nextButton"}
+        disabledClassName={"navigationDisabled"}
+        activeClassName={"navigationActive"}
+      />
+      ;<div className="fa-3x"></div>
     </div>
   );
 };
@@ -131,8 +166,7 @@ const guestCart = (cart, product, setCart) => {
   const [isInCart, index] = isProductInCart(cart, product.id);
   if (isInCart) {
     cart[index].itemQuantity += 1;
-    console.log(cart)
-    localStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem("cart", JSON.stringify(cart));
   } else {
     product.itemQuantity = 1;
     setCart((prevCart) => [...prevCart, product]);

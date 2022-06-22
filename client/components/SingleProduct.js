@@ -3,11 +3,10 @@ import axios from "axios";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
 import { connect } from "react-redux";
-
+import { Container } from "@material-ui/core";
 function SingleProduct(props) {
   // LOCAL STATE
   const [product, setProduct] = useState({});
-
   // FETCH SINGLE PRODUCT AXIOS REQ
   const fetchProduct = async (id) => {
     try {
@@ -24,20 +23,24 @@ function SingleProduct(props) {
   }, []);
 
   return (
-    <div className="single-product">
+    <div className="single-product single-product-description">
       <img src={product.image} />
-      <div className="single-product-description">
+      <div>
         <div className="single-product-categories">
-      <div>Name: {product.productName}</div>
-      <div>Description: {product.description}</div>
-      <div>Category: {product.category}</div>
-      <div>Price: {product.price}</div>
+          <div className="single-product-info">{product.productName}</div>
+          <div>Category: {product.category}</div>
+          <div>{product.description}</div>
+          <div>
+            Price: $ <b className="single-product-info">{product.price}</b>
+          </div>
+        </div>
+        {props.userType !== "admin" || (
+          <div>
+            <DeleteProduct product={product} history={props.history} />
+            <EditProduct product={product} />
+          </div>
+        )}
       </div>
-      {props.userType === "customer" || (
-        <DeleteProduct product={product} history={props.history} />
-      )}
-      {props.userType === "customer" || <EditProduct  product={product} />}
-    </div>
     </div>
   );
 }
