@@ -10,6 +10,8 @@ function Checkout(props) {
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
   const [total, setTotal] = useState(0.00);
   const [shoppingCart, setShoppingCart] = useState([]);
+  const [emailValue, setEmailValue] = useState('')
+
 
 const fetchLocalCart = () => {
   cart.map((localProduct) => {
@@ -19,8 +21,7 @@ const fetchLocalCart = () => {
 }
 
 const handleSavingInfo = () => {
-  console.log(document.getElementsByClassName("gc-email-input")[0])
-  localStorage.setItem("email", `${document.getElementsByClassName("gc-email-input")}`);
+  localStorage.setItem("email", JSON.stringify(emailValue));
 
 }
 
@@ -49,12 +50,12 @@ const handleSavingInfo = () => {
     <div id="gc-container">
       <div className="container-left">
         <div className="gc-contactinfo-prevuser">
-          <div>Contact Information</div>
+          <div className="c-contact-info-title">Contact Information</div>
         </div>
         <form
         method="POST"
         action="/checkout/payment"
-        onSubmit={() => {handleSavingInfo()}}
+        onSubmit={(e) => {handleSavingInfo(e)}}
         >
 
         <input
@@ -62,6 +63,10 @@ const handleSavingInfo = () => {
           placeholder="Email"
           type="email"
           required
+          value={emailValue}
+          onChange = {(e) => {
+            setEmailValue(e.target.value)
+          }}
         />
 
         <div className="gc-shipping-address-title">Shipping Address</div>

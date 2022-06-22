@@ -14,6 +14,7 @@ import GuestCart from "./components/GuestCart";
 import GuestCheckout from "./components/GuestCheckout";
 import Payment from "./components/Payment";
 import OrderConfirmation from "./components/OrderConfirmation";
+import GuestPayment from "./components/GuestPayment";
 
 /**
  * COMPONENT
@@ -59,7 +60,7 @@ class Routes extends Component {
             <Route path="/products/:id" exact component={SingleProduct} />
             <Route path="/cart" exact component={GuestCart} />
             <Route path="/checkout" exact component={GuestCheckout} />
-            <Route exact path="/checkout/payment" component={Payment} />
+            <Route exact path="/checkout/payment" component={GuestPayment} />
             <Route
               exact
               path="/checkout/order-complete"
