@@ -8795,25 +8795,6 @@ const AllProducts = props => {
     }
   };
 
-  const mergeLocalCart = async userId => {
-    try {
-      const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
-      const {
-        data
-      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/shoppingcarts/${getOrderSessionId.data.id}`);
-      cart.map(async prodData => {
-        await axios__WEBPACK_IMPORTED_MODULE_1___default().post(`/api/shoppingcarts`, {
-          orderSessionId: getOrderSessionId.data.id,
-          productId: prodData.id,
-          itemQuantity: prodData.itemQuantity
-        });
-      });
-      localStorage.setItem('cart', JSON.stringify([]));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleAddToCart = async (userId, productId) => {
     try {
       const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
@@ -8837,9 +8818,32 @@ const AllProducts = props => {
     }
   };
 
+  const mergeLocalCart = async userId => {
+    try {
+      const getOrderSessionId = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/ordersessions/${userId}`);
+      const {
+        data
+      } = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/api/shoppingcarts/${getOrderSessionId.data.id}`);
+      cart.map(async prodData => {
+        await axios__WEBPACK_IMPORTED_MODULE_1___default().post(`/api/shoppingcarts`, {
+          orderSessionId: getOrderSessionId.data.id,
+          productId: prodData.id,
+          itemQuantity: prodData.itemQuantity
+        });
+      });
+      localStorage.setItem('cart', JSON.stringify([]));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     getProducts();
-    mergeLocalCart(props.userId);
+
+    if (props.userId) {
+      mergeLocalCart(props.userId);
+    }
+
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [props.userId, cart, filter]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ProductFilterbar__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -8884,7 +8888,8 @@ const guestCart = (cart, product, setCart) => {
 
   if (isInCart) {
     cart[index].itemQuantity += 1;
-    localStorage.setItem("cart", JSON.stringify(cart));
+    console.log(cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
   } else {
     product.itemQuantity = 1;
     setCart(prevCart => [...prevCart, product]);
@@ -9677,9 +9682,14 @@ function GuestCheckout() {
     className: "container-left"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "gc-contactinfo-prevuser"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Contact Information"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "gc-contact-info-header"
+  }, "Contact Information"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/login"
-  }, "Already Have an Account? Log in")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  }, "Already Have an Account? Log in")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    method: "POST",
+    action: "/checkout/payment"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     className: "gc-email-input",
     placeholder: "Email",
     type: "text"
@@ -9726,7 +9736,13 @@ function GuestCheckout() {
     className: "gc-phone-input",
     placeholder: "Phone",
     type: "text"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    href: "/checkout/payment"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "submit",
+    value: "Continue to Payment",
+    className: "gc-payment-btn"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", {
     className: "gc-container-divider"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "container-right"
