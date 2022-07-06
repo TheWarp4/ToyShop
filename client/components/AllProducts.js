@@ -42,7 +42,6 @@ const AllProducts = (props) => {
         numberOfProductsVistited + productsPerPage
       );
     } catch (error) {
-      console.log("data: ", data);
       console.log(error);
     }
   };
