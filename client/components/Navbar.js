@@ -5,7 +5,7 @@ import { logout } from "../store";
 import { BiCart, BiHomeAlt, BiPurchaseTagAlt } from "react-icons/bi";
 import { GiBasketballBall } from "react-icons/gi";
 import { FaUserAlt } from "react-icons/fa";
-
+import history from "../history";
 
 const Navbar = ({ handleClick, isLoggedIn, id }) => (
   <div>
@@ -16,13 +16,13 @@ const Navbar = ({ handleClick, isLoggedIn, id }) => (
           <BiHomeAlt className="home-button" size={30} />
         </Link>
         <Link to="/products">
-        <GiBasketballBall size={30}/>
+          <GiBasketballBall size={30} />
         </Link>
         <BiCart
           className="cart-button"
           size={30}
           onClick={() => {
-            location.href = `/cart`;
+            history.push(`/cart`);
           }}
         />
         {isLoggedIn ? (
@@ -54,7 +54,7 @@ const Navbar = ({ handleClick, isLoggedIn, id }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
-    id: state.auth.id
+    id: state.auth.id,
   };
 };
 
