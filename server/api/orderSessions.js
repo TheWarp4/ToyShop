@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:userId", async (req, res, next) => {
   try {
     const orderSession = await OrderSession.findOne({
-      where: { userId: req.params.userId, status: 'open' },
+      where: { userId: req.params.userId, status: "open" },
     });
     res.json(orderSession);
   } catch (err) {
@@ -27,9 +27,9 @@ router.get("/:userId", async (req, res, next) => {
 router.put("/:userId", async (req, res, next) => {
   try {
     const orderSession = await OrderSession.findOne({
-      where: { userId: req.params.userId, status: 'open' },
+      where: { userId: req.params.userId, status: "open" },
     });
-    await orderSession.update(req.body)
+    await orderSession.update(req.body);
     res.json(orderSession);
   } catch (err) {
     next(err);
@@ -40,10 +40,9 @@ router.post("/:userId", async (req, res, next) => {
   try {
     const newOrderSession = await OrderSession.create();
     const user = await User.findByPk(req.params.userId);
-    await user.addOrderSession(newOrderSession)
+    await user.addOrderSession(newOrderSession);
     res.json(newOrderSession);
   } catch (err) {
     next(err);
   }
 });
-
