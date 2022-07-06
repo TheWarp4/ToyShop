@@ -8,26 +8,43 @@ import ProductFilterbar from "./ProductFilterbar";
 import ReactPaginate from "react-paginate";
 
 const AllProducts = (props) => {
+  const categories = [
+    "ALL",
+    "LEGOS",
+    "TRANSFORMERS",
+    "JURASSIC",
+    "BARBIE",
+    "STUFFED ANIMALS",
+  ];
+
+  const [filteredProducts, setFilteredProducts] = useState({});
+
   const [products, setProducts] = useState([{}]);
-  const [filter, setFilter] = useState({ type: "" });
+  const [filter, setFilter] = useState();
   const fetchCartFromLocalStorage = JSON.parse(
     window.localStorage.getItem("cart") || "[]"
   );
+
   const [cart, setCart] = useState(fetchCartFromLocalStorage);
 
   // pagination:
 
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const productsPerPage = 24;
+  const productsPerPage = 12;
 
   const paginate = (data) => {
-    let numberOfProductsVistited = page * productsPerPage;
-    setTotalPages(Math.ceil(data.length / productsPerPage));
-    return data.slice(
-      numberOfProductsVistited,
-      numberOfProductsVistited + productsPerPage
-    );
+    try {
+      let numberOfProductsVistited = page * productsPerPage;
+      setTotalPages(Math.ceil(data.length / productsPerPage));
+      return data.slice(
+        numberOfProductsVistited,
+        numberOfProductsVistited + productsPerPage
+      );
+    } catch (error) {
+      console.log("data: ", data);
+      console.log(error);
+    }
   };
 
   const changePage = ({ selected }) => {
@@ -37,9 +54,8 @@ const AllProducts = (props) => {
   const getProducts = () => {
     try {
       (async () => {
-        if (filter.type && filter.type !== "ALL") {
-          const { data } = await axios.get(`/api/products/${filter.type}`);
-          setProducts(paginate(data.filteredProducts));
+        if (filter && filter !== "ALL") {
+          await setProducts(paginate(filteredProducts[filter]));
         } else {
           const { data } = await axios.get("/api/products");
           setProducts(paginate(data));
@@ -81,6 +97,7 @@ const AllProducts = (props) => {
   const mergeLocalCart = async (userId) => {
     try {
       const getOrderSessionId = await axios.get(`/api/ordersessions/${userId}`);
+      if (!getOrderSessionId.data) return null;
       const { data } = await axios.get(
         `/api/shoppingcarts/${getOrderSessionId.data.id}`
       );
@@ -105,9 +122,28 @@ const AllProducts = (props) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [props.userId, cart, filter, page]);
 
+  useEffect(() => {
+    try {
+      (async () => {
+        const fProduct = {};
+        for (let i = 1; i < categories.length; i++) {
+          const { data } = await axios.get(`/api/products/${categories[i]}`);
+          fProduct[categories[i]] = data.filteredProducts;
+        }
+        setFilteredProducts(fProduct);
+      })();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   return (
     <div>
-      <ProductFilterbar filter={filter} setFilter={setFilter} />
+      <ProductFilterbar
+        filter={filter}
+        setFilter={setFilter}
+        categories={categories}
+      />
       <div className="allProducts">
         {products.map((product, i) => {
           return (
