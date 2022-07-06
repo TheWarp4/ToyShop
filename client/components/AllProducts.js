@@ -35,7 +35,7 @@ const AllProducts = (props) => {
 
   const paginate = (data) => {
     try {
-      if (!data.length) return products;
+      if (!data || !data.length) return products;
       let numberOfProductsVistited = page * productsPerPage;
       setTotalPages(Math.ceil(data.length / productsPerPage));
       return data.slice(
