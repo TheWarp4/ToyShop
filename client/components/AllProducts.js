@@ -55,7 +55,7 @@ const AllProducts = (props) => {
     try {
       (async () => {
         if (filter && filter !== "ALL") {
-          await setProducts(paginate(filteredProducts[filter]));
+          setProducts(paginate(filteredProducts[filter]));
         } else {
           const { data } = await axios.get("/api/products");
           setProducts(paginate(data));

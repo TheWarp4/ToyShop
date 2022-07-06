@@ -76,7 +76,6 @@ const Cart = (props) => {
               setTotal={setTotal}
               total={total}
             />
-            <hr className="sc-horizontal-line" />
           </div>
         ))}
         <div className="sc-subtotal-checkout">
@@ -147,45 +146,48 @@ const SingleProductInCart = ({ product, userId, setTotal, total }) => {
 
   return (
     !isProductExist || (
-      <div className="product-info-container">
-        <img
-          className="sc-photo"
-          src={`${product.image}`}
-          onClick={() => {
-            location.href = `/products/${product.id}`;
-          }}
-        />
-        <div className="product-details">
-          <div>
-            <div className="sc-product-name">{product.productName}</div>
-            <div className="sc-quantity">
-              <button
-                className="sc-incrementer"
-                onClick={() => {
-                  handleDecrement(userId, product.id);
-                }}
-              >
-                -
-              </button>
-              {productItemQuantity}
-              <button
-                className="sc-incrementer"
-                onClick={() => {
-                  handleIncrement(userId, product.id);
-                }}
-              >
-                +
-              </button>
+      <div>
+        <div className="product-info-container">
+          <img
+            className="sc-photo"
+            src={`${product.image}`}
+            onClick={() => {
+              location.href = `/products/${product.id}`;
+            }}
+          />
+          <div className="product-details">
+            <div>
+              <div className="sc-product-name">{product.productName}</div>
+              <div className="sc-quantity">
+                <button
+                  className="sc-incrementer"
+                  onClick={() => {
+                    handleDecrement(userId, product.id);
+                  }}
+                >
+                  -
+                </button>
+                {productItemQuantity}
+                <button
+                  className="sc-incrementer"
+                  onClick={() => {
+                    handleIncrement(userId, product.id);
+                  }}
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
+          <div>${product.price}</div>
+          <button
+            className="delete-sc-item"
+            onClick={() => deleteFromShoppingCart(userId, product.id)}
+          >
+            X
+          </button>
         </div>
-        <div>${product.price}</div>
-        <button
-          className="delete-sc-item"
-          onClick={() => deleteFromShoppingCart(userId, product.id)}
-        >
-          X
-        </button>
+        <hr className="sc-horizontal-line" />
       </div>
     )
   );
